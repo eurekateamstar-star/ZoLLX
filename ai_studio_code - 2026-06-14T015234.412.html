@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ZOLL X Series (終極相片級復刻版 - 完美按鍵與精準比例)</title>
+    <style>
+        /* =========================================
+           色彩與材質光澤庫
+           ========================================= */
+        :root {
+            /* 藍色機殼 */
+            --zoll-blue-light: #4c82d4;
+            --zoll-blue: #3366b8;
+            --zoll-blue-dark: #1e4585;
+            
+            /* 灰色面板與把手 */
+            --faceplate: #c8ced1;
+            --faceplate-shadow: #a8b0b5;
+            --handle-outer: #c2c9cd;
+            --handle-grip: #5a6065;
+            
+            /* 按鈕模具 */
+            --btn-base: #abb3b8;
+            --btn-bezel: #97a0a6;
+            
+            /* 識別色 */
+            --btn-green: #52a558;
+            --btn-yellow: #efc94c; 
+            --zoll-red: #da3838;
+        }
+
+        body {
+            background-color: #050505;
+            margin: 0; display: flex; justify-content: center; align-items: center;
+            height: 100vh; font-family: 'Helvetica Neue', Arial, sans-serif;
+            overflow: hidden; user-select: none; -webkit-user-select: none;
+        }
+
+        /* 總體機器長寬比 */
+        #machine-assembly {
+            width: 83vmin; 
+            height: 98vmin; 
+            max-width: 950px;
+            max-height: 1120px;
+            display: flex; flex-direction: column; align-items: center;
+            filter: drop-shadow(0 40px 50px rgba(0,0,0,0.9));
+            position: relative;
+        }
+
+        /* --- 1. 頂部一體成型把手 --- */
+        .handle-module {
+            width: 97.5%; 
+            height: 24%; 
+            position: relative; z-index: 1; margin-bottom: -5.5%; 
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+        }
+        .handle-outer-arch {
+            width: 100%; height: 100%;
+            background: linear-gradient(to bottom, #dde2e5, var(--handle-outer));
+            border-radius: 16vmin 16vmin 0 0; 
+            display: flex; justify-content: center; align-items: flex-end;
+            box-shadow: inset 0 8px 15px rgba(255,255,255,0.9), inset 0 -4px 10px rgba(0,0,0,0.3);
+            padding: 3.5vmin 4.8vmin 0 4.8vmin; 
+            box-sizing: border-box;
+        }
+        .handle-inner-grip {
+            width: 100%; height: 100%;
+            background-color: var(--handle-grip);
+            border-radius: 12vmin 12vmin 0 0; 
+            display: flex; justify-content: center; align-items: flex-end;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.6), inset 0 -2px 5px rgba(255,255,255,0.2);
+            padding: 3.5vmin 5.5vmin 0 5.5vmin; 
+            box-sizing: border-box;
+        }
+        .handle-hole {
+            width: 100%; height: 100%;
+            background-color: #050505;
+            border-radius: 8vmin 8vmin 0 0; 
+            box-shadow: inset 0 10px 15px rgba(0,0,0,0.9);
+            margin-bottom: -2%; 
+        }
+
+        /* --- 2. 藍色主機身與細節 --- */
+        .blue-chassis {
+            width: 100%; flex: 1;
+            background: linear-gradient(135deg, var(--zoll-blue-light) 0%, var(--zoll-blue) 35%, var(--zoll-blue-dark) 100%);
+            border-radius: 35px;
+            position: relative; z-index: 2;
+            padding: 3.5% 3% 4% 3%; 
+            box-sizing: border-box;
+            box-shadow: 
+                inset 8px 8px 20px rgba(255,255,255,0.4), 
+                inset -10px -15px 30px rgba(0,0,0,0.7),
+                inset 0 -15px 30px -10px rgba(0,0,0,0.6),
+                inset 0 0 5px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        .left-bracket {
+            position: absolute;
+            left: -2%; top: 40%;
+            width: 2%; height: 15%;
+            background: linear-gradient(to right, #9ea4a9, #c8ced1);
+            border-radius: 5px 0 0 5px;
+            box-shadow: -2px 5px 10px rgba(0,0,0,0.6), inset 2px 2px 5px rgba(255,255,255,0.5);
+            z-index: 1;
+        }
+
+        /* --- 頂部指示燈 --- */
+        .indicator-light {
+            position: absolute; 
+            top: 0; 
+            background: linear-gradient(to bottom, #f4f7f9, #c3c9cd);
+            border-radius: 0 0 5px 5px; 
+            box-shadow: inset 0 2px 3px rgba(255,255,255,0.9), 0 2px 4px rgba(0,0,0,0.3);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-top: none; 
+            z-index: 5;
+        }
+        #top-light-left { left: 12%; width: 18%; height: 2.2%; } 
+        #top-light-right { left: 38%; width: 24%; height: 0.8%; }  
+
+        /* =========================================
+           --- 頂部綠色電源鍵 (支援點擊下壓動畫) ---
+           ========================================= */
+        .green-button-recess {
+            position: absolute; top: 0; right: 14%; width: 6.5%; height: 1.1%; 
+            background-color: #0a1120; border-radius: 0 0 4px 4px; 
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.9), 0 1px 1px rgba(255,255,255,0.2);  
+            display: flex; justify-content: center; align-items: flex-end; z-index: 1;
+            cursor: pointer; 
+        }
+        .green-btn-inner {
+            width: 90%; height: 80%; background: linear-gradient(to bottom, #80f085, #3ca040); 
+            border-radius: 2px 2px 0 0; box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), 0 -1px 2px rgba(0,0,0,0.4);            
+            position: relative; display: flex; justify-content: center; align-items: flex-start;
+            transition: all 0.08s ease; 
+        }
+        /* 點擊時的下凹物理回饋 */
+        .green-button-recess:active .green-btn-inner {
+            height: 30%; /* 陷進去 */
+            background: linear-gradient(to bottom, #4ca650, #225924); /* 變暗 */
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.8); /* 失去高光 */
+        }
+        .green-btn-inner::after {
+            content: ""; margin-top: 0.15vmin; width: 1.6vmin; height: 0.4vmin; 
+            border: 1px solid rgba(255, 255, 255, 0.65); border-top-color: transparent; border-radius: 50%;
+        }
+        .green-btn-inner::before {
+            content: ""; position: absolute; top: 0.1vmin; left: 50%; transform: translateX(-50%);
+            width: 1px; height: 0.35vmin; background-color: rgba(255, 255, 255, 0.7); z-index: 2;
+        }
+
+        /* 閃燈動畫 */
+        @keyframes flash-normal {
+            0%, 90% { background: linear-gradient(to bottom, #f4f7f9, #c3c9cd); box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+            95%, 100% { background: #ffffff; box-shadow: 0 0 10px #fff, 0 0 20px rgba(255,255,255,0.6); }
+        }
+        @keyframes flash-danger {
+            0%, 49% { background: linear-gradient(to bottom, #f4f7f9, #c3c9cd); }
+            50%, 100% { background: #ff3333; box-shadow: 0 0 20px #ff3333, 0 0 40px #ff0000; border-color: #ff3333; }
+        }
+        .status-normal { animation: flash-normal 3s infinite; }
+        .status-danger { animation: flash-danger 0.25s infinite; }
+
+        /* --- 底部厚重腳墊 --- */
+        .feet-container {
+            position: absolute; bottom: -5%; left: 1.5%; width: 97%; height: 12%;   
+            display: flex; justify-content: space-between; z-index: -1;   
+            box-shadow: inset 0 5px 5px -5px rgba(0,0,0,0.8);
+        }
+        .foot {
+            width: 32%; height: 100%; background-color: var(--zoll-blue-dark); position: relative;
+        }
+        #foot-left {
+            border-radius: 0 0 5vmin 8vmin; 
+            box-shadow: inset 8px -3px 12px rgba(255,255,255,0.1), inset -15px -25px 30px rgba(0,0,0,0.9), -5px 15px 20px rgba(0,0,0,0.5);           
+        }
+        #foot-right {
+            border-radius: 0 0 8vmin 5vmin; 
+            box-shadow: inset -8px -3px 12px rgba(255,255,255,0.1), inset 15px -25px 30px rgba(0,0,0,0.9), 5px 15px 20px rgba(0,0,0,0.5);            
+        }
+        .center-arch-shadow {
+            position: absolute; bottom: 20%; left: 20%; width: 60%; height: 60%; border-radius: 50%; 
+            box-shadow: 0 40px 30px rgba(0,0,0,0.95); z-index: -2;
+        }
+
+        /* =========================================
+           --- 3. 內嵌灰色主面板 ---
+           ========================================= */
+        .grey-faceplate {
+            width: 100%; 
+            height: 85%; 
+            background: linear-gradient(145deg, #d3d9dc, #b4bcc1);
+            border-radius: 3.5vmin; 
+            box-shadow: 
+                inset 2px 4px 8px rgba(255,255,255,0.9),
+                inset -3px -5px 10px rgba(0,0,0,0.25),
+                0 10px 25px rgba(0,0,0,0.7);
+            display: flex; flex-direction: column; padding: 1.5% 2%; box-sizing: border-box;
+            margin-top: 0.5%; 
+            position: relative; z-index: 1;
+        }
+
+        /* 【修改重點】移除陰影，使用純色模擬無立體感的表面漆面噴塗 */
+        .faceplate-logo {
+            text-align: center; color: rgba(255, 255, 255, 0.95); font-size: 3.5vmin; font-weight: 900; 
+            font-family: 'Arial Black', sans-serif; letter-spacing: 2px; 
+            margin-bottom: 1.5%; margin-top: -0.5%; 
+        }
+
+        /* --- 螢幕與左側軟鍵 --- */
+        .middle-tier { display: flex; flex: 1; gap: 2%; margin-bottom: 2%; }
+
+        .left-softkeys { 
+            width: 8%; display: flex; flex-direction: column; justify-content: space-between; 
+            padding: 1.5% 1%; background-color: rgba(0,0,0,0.05); border-radius: 10px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .softkey {
+            background: linear-gradient(to bottom, #bcc2c6, #9ea4a9); height: 12%; border-radius: 20px; border: 1px solid #777;
+            box-shadow: inset 1px 1px 3px rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.3); cursor: pointer;
+        }
+
+        .screen-bezel {
+            flex: 1; background-color: #050505; border-radius: 12px; border: 4px solid #1a1a1a;
+            box-shadow: inset 0 0 20px black, 0 2px 4px rgba(255,255,255,0.5); 
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
+        }
+        .screen-topbar { color: white; font-size: 1.6vmin; padding: 1% 2%; border-bottom: 1px solid #333; display: flex; justify-content: space-between; font-weight: bold;}
+        .screen-content { display: flex; flex: 1; position: relative;}
+        .waveform-area { flex: 2.8; position: relative; }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        .vitals-area { flex: 1.2; border-left: 2px solid #222; padding: 2%; display: flex; flex-direction: column; justify-content: center;}
+        .v-label { color: #aaa; font-size: 1.6vmin; font-weight: bold; margin-bottom: -2%;}
+        .hr-val { color: #2ecc71; font-size: 7.5vmin; font-weight: bold; font-family: 'Arial Narrow', sans-serif; line-height: 1; margin-bottom: 8%;}
+        .spo2-val { color: #3498db; font-size: 5.5vmin; font-weight: bold; font-family: 'Arial Narrow', sans-serif; line-height: 1;}
+
+        #screen-msg {
+            position: absolute; top: 50%; left: 40%; transform: translate(-50%, -50%);
+            color: #f1c40f; font-size: 4vmin; font-weight: bold; font-family: 'Arial Black', sans-serif;
+            background: rgba(0,0,0,0.85); padding: 3% 5%; border-radius: 8px; display: none; z-index: 10; text-align: center;
+        }
+
+        /* =========================================
+           --- 右側導航按鍵區 ---
+           ========================================= */
+        .right-navkeys { 
+            width: 15%; display: flex; flex-direction: column; align-items: center; justify-content: space-around; 
+            padding: 1% 0; box-sizing: border-box;
+        }
+        
+        .ir-window-square { 
+            width: 70%; aspect-ratio: 1.2; background-color: #080808; 
+            border-radius: 6px; box-shadow: inset 0 3px 6px black, 0 1px 1px rgba(255,255,255,0.4); 
+            margin-bottom: 1vmin;
+        }
+
+        .nav-row {
+            display: flex; width: 85%; align-items: center; margin-bottom: 0.5vmin;
+        }
+
+        .nav-btn {
+            background: linear-gradient(to bottom, #c5ccd0, #9ea4a9);
+            border: 1px solid #777;
+            box-shadow: inset 1px 1px 3px rgba(255,255,255,0.9), 0 2px 4px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center;
+            color: #222; cursor: pointer; transition: all 0.05s;
+        }
+        .nav-btn:active { transform: translateY(1.5px); box-shadow: 0 1px 1px rgba(0,0,0,0.4); }
+        .nav-btn svg { width: 65%; height: 65%; opacity: 0.85; } /* 稍微調整SVG顯示大小 */
+
+        .small-btn { width: 45%; aspect-ratio: 1.3; border-radius: 6px; }
+        .round-btn { width: 38%; aspect-ratio: 1; border-radius: 50%; font-size: 2vmin; font-weight: 900; }
+
+        .rocker-btn {
+            width: 45%; height: 9vmin;
+            background: linear-gradient(to right, #9ea4a9, #bcc2c6);
+            border-radius: 6px; border: 1px solid #777;
+            box-shadow: inset 1px 1px 3px rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+        .rocker-half {
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            cursor: pointer; background: linear-gradient(to bottom, #c5ccd0, #9ea4a9);
+        }
+        .rocker-half svg { width: 60%; height: 60%; opacity: 0.8; }
+        .rocker-half:first-child { border-bottom: 1px solid #888; }
+        .rocker-half:active { background: #9ea4a9; }
+
+        /* --- 4. 底部 1-2-3 操作區 --- */
+        .bottom-panel {
+            height: 18%; display: flex; justify-content: space-between; align-items: center; padding: 0 5%;
+        }
+        .bezel-frame {
+            border: 3.5px solid var(--btn-bezel); border-radius: 40px;
+            box-shadow: inset 2px 2px 6px rgba(255,255,255,0.8), inset -2px -2px 4px rgba(0,0,0,0.2), 0 4px 6px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center; text-align: center;
+        }
+
+        .aux-group { display: flex; gap: 4vmin; }
+        .btn-round { width: 7vmin; height: 7vmin; border-radius: 50%; font-weight: 900; font-size: 1.2vmin; font-family: 'Arial Black', sans-serif; color: #111; cursor: pointer;}
+        .btn-pacer { background: radial-gradient(circle at 30% 30%, #68c96e, var(--btn-green)); }
+        .btn-analyze { background: radial-gradient(circle at 30% 30%, #ffe066, var(--btn-yellow)); }
+
+        .defib-group { display: flex; gap: 6vmin; align-items: center; position: relative;}
+        .step-col { display: flex; flex-direction: column; align-items: center; position: relative;}
+        .num-label { position: absolute; top: -4vmin; color: var(--zoll-red); font-size: 2.8vmin; font-weight: 900; font-family: 'Arial Black', sans-serif;}
+
+        .energy-frame {
+            background-color: var(--btn-yellow); border: 3px solid var(--btn-bezel); border-radius: 8px; 
+            display: flex; flex-direction: column; box-shadow: inset 2px 2px 5px rgba(255,255,255,0.6), 0 3px 5px rgba(0,0,0,0.4); 
+            overflow: hidden; width: 6.5vmin;
+        }
+        .energy-frame button { background: none; border: none; font-size: 2vmin; padding: 0.5vmin 0; cursor: pointer; font-weight: bold; color: #111;}
+        .energy-frame button:first-child { border-bottom: 1px solid #c9a42e; }
+        .energy-text { font-size: 1vmin; font-weight: 900; text-align: center; line-height: 1.1; padding: 0.4vmin 0; background: rgba(255,255,255,0.2);}
+
+        .btn-capsule {
+            padding: 1.5vmin 2.5vmin; font-size: 2.2vmin; font-weight: 900; font-family: 'Arial Black', sans-serif;
+            background: linear-gradient(to bottom, #ffe066, var(--btn-yellow)); color: var(--zoll-red); cursor: pointer;
+        }
+
+        .shock-text { color: var(--zoll-red); font-size: 1.6vmin; font-weight: 900; font-family: 'Arial Black', sans-serif; position: absolute; top: -3.8vmin; }
+        .btn-shock {
+            background: radial-gradient(circle at 30% 30%, #ff5e5e, var(--zoll-red)); color: white; border: 2px solid rgba(0,0,0,0.3); border-radius: 50%;
+            width: 8.5vmin; height: 8.5vmin; font-size: 5vmin; display: flex; justify-content: center; align-items: center;
+            box-shadow: inset 2px 2px 8px rgba(255,255,255,0.5), 0 6px 10px rgba(0,0,0,0.5); opacity: 0.4; pointer-events: none; cursor: pointer; margin-top: 1vmin;
+        }
+        .btn-shock.ready { opacity: 1; pointer-events: auto; animation: shock-pulse 0.5s infinite alternate; }
+        @keyframes shock-pulse {
+            from { box-shadow: 0 0 5px var(--zoll-red); background-color: var(--zoll-red);}
+            to { box-shadow: 0 0 30px #ff6b6b; background-color: #ff4747;}
+        }
+
+        /* =========================================
+           --- 底部細節 ---
+           ========================================= */
+        .blue-bottom-details {
+            width: 100%; height: 11%; 
+            padding: 0 5%; box-sizing: border-box;
+            display: flex; justify-content: center; align-items: flex-end; 
+            position: relative;
+        }
+        
+        .zoll-embossed-frame {
+            position: absolute;
+            left: 2.8%; 
+            top: 2.5vmin; 
+            padding: 0.2vmin 0.8vmin; 
+            background-color: rgba(0, 0, 0, 0.03); 
+            border-radius: 6px; 
+            box-shadow: 
+                inset 1px 1.5px 2px rgba(0,0,0,0.25), 
+                0 0.5px 0.5px rgba(255,255,255,0.15);
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .zoll-embossed-text {
+            color: #315a9e; 
+            font-size: 6.5vmin; 
+            font-weight: 900; 
+            font-family: 'Arial Black', sans-serif; 
+            letter-spacing: 1px;
+            line-height: 1;
+            text-shadow: 
+                -0.5px -0.5px 0px rgba(255,255,255,0.4), 
+                0.5px 0.5px 0.5px rgba(0,0,0,0.5);         
+        }
+        
+        .ventilation-grill {
+            width: 16%; 
+            height: 5vmin; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+            margin-bottom: 0; 
+            transform: translateY(2.8vmin); 
+        }
+        .ventilation-grill span {
+            width: 100%; height: 12%; background-color: #081226; 
+            border-radius: 4px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.8), 0 1px 1px rgba(255,255,255,0.15); 
+        }
+
+        button:active, .softkey:active { transform: translateY(2px) scale(0.96); box-shadow: 0 1px 2px rgba(0,0,0,0.4); }
+        #dev-panel { position: fixed; top: 10px; right: 10px; background: rgba(255,255,255,0.8); padding: 5px; border-radius: 5px; z-index: 100; display:flex; gap: 5px;}
+        #dev-panel button { font-size: 14px; padding: 5px; cursor: pointer; }
+
+    </style>
+</head>
+<body>
+
+    <div id="dev-panel">
+        <button id="dev-nsr">設為 NSR</button>
+        <button id="dev-vfib">設為 VFib</button>
+    </div>
+
+    <div id="machine-assembly">
+        
+        <div class="handle-module">
+            <div class="handle-outer-arch">
+                <div class="handle-inner-grip">
+                    <div class="handle-hole"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="blue-chassis">
+            
+            <div class="green-button-recess">
+                <div class="green-btn-inner"></div>
+            </div>
+
+            <div class="left-bracket"></div>
+
+            <div class="indicator-light status-normal" id="top-light-left"></div>
+            <div class="indicator-light status-normal" id="top-light-right"></div>
+
+            <div class="grey-faceplate">
+                <div class="faceplate-logo">ZOLL</div>
+
+                <div class="middle-tier">
+                    <div class="left-softkeys">
+                        <div class="softkey"></div><div class="softkey"></div><div class="softkey"></div>
+                        <div class="softkey"></div><div class="softkey"></div><div class="softkey"></div><div class="softkey"></div>
+                    </div>
+
+                    <div class="screen-bezel">
+                        <div class="screen-topbar">
+                            <span id="time-display">00:00:00</span>
+                            <span>Adult &nbsp;&nbsp; Pads</span>
+                        </div>
+                        <div class="screen-content">
+                            <div class="waveform-area">
+                                <canvas id="ecg-canvas"></canvas>
+                                <div id="screen-msg"></div>
+                            </div>
+                            <div class="vitals-area">
+                                    <div class="v-label">HR</div>
+                                    <div class="hr-val" id="hr-text">--</div>
+                                    <div class="v-label">SpO2</div>
+                                    <div class="spo2-val" id="spo2-text">--</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 右側導航按鍵區 -->
+                        <div class="right-navkeys">
+                            <div class="ir-window-square"></div>
+                            
+                            <!-- 【修改重點】第一排：複合靜音與提示圖示 (精準手繪 SVG) -->
+                            <div class="nav-row" style="justify-content: flex-end;">
+                                <div class="nav-btn small-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                                        <!-- 左上：普通鈴鐺 -->
+                                        <g transform="translate(1.5, 1.5) scale(0.42)" stroke-width="3">
+                                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                        </g>
+                                        <!-- 中間：對角線分隔 -->
+                                        <line x1="4.5" y1="20.5" x2="20.5" y2="4.5" stroke-width="1.5"/>
+                                        <!-- 右下：方框 -->
+                                        <rect x="11.5" y="11.5" width="11" height="11" rx="2" stroke-width="1.5"/>
+                                        <!-- 右下框內：劃掉的靜音鈴鐺 -->
+                                        <g transform="translate(13, 13) scale(0.32)" stroke-width="3">
+                                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                            <line x1="2" y1="2" x2="22" y2="22" stroke-width="3.5"/>
+                                        </g>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- 第二排：首頁 -->
+                            <div class="nav-row" style="justify-content: flex-start;">
+                                <div class="nav-btn small-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- 第三排：圓點與翹板 -->
+                            <div class="nav-row" style="justify-content: space-between; align-items: center;">
+                                <div class="nav-btn round-btn">●</div>
+                                <div class="rocker-btn">
+                                    <div class="rocker-half">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M8 7l4-4 4 4"/><path d="M12 3v13a4 4 0 0 0 4 4h1"/>
+                                        </svg>
+                                    </div>
+                                    <div class="rocker-half">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M8 17l4 4 4-4"/><path d="M12 21V8a4 4 0 0 0-4-4H7"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 第四排：相機 -->
+                            <div class="nav-row" style="justify-content: flex-start;">
+                                <div class="nav-btn small-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- 第五排：血壓袖帶 -->
+                            <div class="nav-row" style="justify-content: flex-end;">
+                                <div class="nav-btn small-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="4" y="6" width="16" height="12" rx="2"/><path d="M20 12h3M4 12H1"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="bottom-panel">
+                        <div class="aux-group">
+                            <div class="bezel-frame btn-round btn-pacer">PACER</div>
+                            <div class="bezel-frame btn-round btn-analyze">ANALYZE</div>
+                        </div>
+
+                        <div class="defib-group">
+                            <div class="step-col">
+                                <div class="num-label" style="left: -2vmin;">1</div>
+                                <div class="energy-frame">
+                                    <button>▲</button>
+                                    <div class="energy-text">ENERGY<br>SELECT</div>
+                                    <button>▼</button>
+                                </div>
+                            </div>
+
+                            <div class="step-col">
+                                <div class="num-label" style="left: -2vmin;">2</div>
+                                <button class="bezel-frame btn-capsule" id="btn-charge">CHARGE</button>
+                            </div>
+
+                            <div class="step-col">
+                                <div class="num-label" style="left: -2vmin;">3</div>
+                                <div class="shock-text">SHOCK</div>
+                                <button class="btn-shock" id="btn-shock">⚡</button>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Faceplate 結束 -->
+
+                <!-- 底部細節 -->
+                <div class="blue-bottom-details">
+                    <div class="zoll-embossed-frame">
+                        <span class="zoll-embossed-text">ZOLL</span>
+                    </div>
+                    
+                    <div class="ventilation-grill">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div> <!-- 藍色機身結束 -->
+
+            <!-- 腳墊與機腹陰影 -->
+            <div class="feet-container">
+                <div class="foot" id="foot-left"></div>
+                <div class="center-arch-shadow"></div>
+                <div class="foot" id="foot-right"></div>
+            </div>
+            
+        </div> <!-- Machine Assembly 結束 -->
+
+        <!-- ==========================================
+             JavaScript 核心邏輯
+             ========================================== -->
+        <script type="module">
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+            import { getFirestore, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyB...", 
+                authDomain: "ems-passport-2024.firebaseapp.com",
+                projectId: "ems-passport-2024",
+                storageBucket: "ems-passport-2024.appspot.com",
+                messagingSenderId: "759...",
+                appId: "1:759..."
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            const sessionDocRef = doc(db, "training_sessions", "room_01");
+
+            let monitorState = { hr: 0, rhythm: 'flatline', energy: 150, isCharging: false, isCharged: false };
+
+            const screenMsg = document.getElementById('screen-msg');
+            const btnCharge = document.getElementById('btn-charge');
+            const btnShock = document.getElementById('btn-shock');
+            
+            const topLightLeft = document.getElementById('top-light-left');
+            const topLightRight = document.getElementById('top-light-right');
+
+            setInterval(() => {
+                document.getElementById('time-display').innerText = new Date().toLocaleTimeString('en-US', {hour12: false});
+            }, 1000);
+
+            function showMessage(text, duration = 0) {
+                screenMsg.innerText = text;
+                screenMsg.style.display = 'block';
+                if(duration > 0) setTimeout(() => { screenMsg.style.display = 'none'; }, duration);
+            }
+
+            onSnapshot(sessionDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    monitorState.hr = data.hr; monitorState.rhythm = data.rhythm;
+                    document.getElementById('hr-text').innerText = data.hr > 0 ? data.hr : '--';
+                    document.getElementById('spo2-text').innerText = data.spo2 || '--';
+                } else {
+                    setDoc(sessionDocRef, { hr: 0, rhythm: 'flatline', spo2: 0 });
+                }
+            });
+
+            const clickEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
+
+            btnCharge.addEventListener(clickEvent, (e) => {
+                e.preventDefault();
+                if (monitorState.isCharged || monitorState.isCharging) return;
+                monitorState.isCharging = true;
+                showMessage(`CHARGING ${monitorState.energy}J...`);
+                
+                topLightLeft.className = "indicator-light status-danger";
+                topLightRight.className = "indicator-light status-danger";
+
+                setTimeout(() => {
+                    monitorState.isCharging = false;
+                    monitorState.isCharged = true;
+                    showMessage(`DEFIB ${monitorState.energy}J READY`);
+                    btnShock.classList.add('ready'); 
+                }, 3000);
+            });
+
+            btnShock.addEventListener(clickEvent, (e) => {
+                e.preventDefault();
+                if (!monitorState.isCharged) return;
+                monitorState.isCharged = false;
+                btnShock.classList.remove('ready');
+                
+                topLightLeft.className = "indicator-light status-normal";
+                topLightRight.className = "indicator-light status-normal";
+
+                const screen = document.querySelector('.screen-bezel');
+                screen.style.backgroundColor = "white";
+                showMessage("SHOCK DELIVERED", 1000);
+                setTimeout(() => { screen.style.backgroundColor = "#050505"; }, 150);
+
+                if(monitorState.rhythm === 'vfib') {
+                    setTimeout(() => {
+                        setDoc(sessionDocRef, { hr: 80, rhythm: 'normal', spo2: 98 }, { merge: true });
+                    }, 2000); 
+                }
+            });
+
+            const canvas = document.getElementById('ecg-canvas');
+            const ctx = canvas.getContext('2d');
+            let xPos = 0;
+
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+
+            function drawECG() {
+                ctx.fillStyle = "rgba(5, 5, 5, 0.1)"; 
+                ctx.fillRect(xPos, 0, 10, canvas.height); 
+                ctx.clearRect(xPos + 10, 0, 20, canvas.height); 
+
+                ctx.beginPath();
+                ctx.moveTo(xPos - 2, getYByRhythm(xPos - 2));
+                let yPos = getYByRhythm(xPos);
+                ctx.lineTo(xPos, yPos);
+                
+                ctx.strokeStyle = "#2ecc71"; 
+                ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+                ctx.stroke();
+
+                xPos += 2; 
+                if (xPos >= canvas.width) xPos = 0;
+                requestAnimationFrame(drawECG);
+            }
+
+            function getYByRhythm(x) {
+                let baseLine = canvas.height / 2;
+                if (monitorState.rhythm === 'flatline') return baseLine; 
+                if (monitorState.rhythm === 'normal') {
+                    let interval = 60000 / monitorState.hr / 16; 
+                    let t = x % interval;
+                    if (t > 10 && t < 15) return baseLine - 50; 
+                    if (t > 15 && t < 20) return baseLine + 15; 
+                    if (t > 30 && t < 45) return baseLine - 10; 
+                    return baseLine;
+                } 
+                if (monitorState.rhythm === 'vfib') {
+                    return baseLine + (Math.sin(x/8) * 25) + (Math.random() * 10 - 5);
+                }
+                return baseLine;
+            }
+            drawECG(); 
+
+            document.getElementById('dev-nsr').addEventListener('click', () => {
+                setDoc(sessionDocRef, { hr: 75, rhythm: 'normal', spo2: 99 });
+            });
+            document.getElementById('dev-vfib').addEventListener('click', () => {
+                setDoc(sessionDocRef, { hr: 0, rhythm: 'vfib', spo2: 0 });
+            });
+
+        </script>
+    </body>
+</html>
