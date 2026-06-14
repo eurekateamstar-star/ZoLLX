@@ -209,18 +209,37 @@
             margin-bottom: 1.5%; margin-top: -0.5%; 
         }
 
-        /* --- 螢幕與左側軟鍵 --- */
+       /* --- 螢幕與左側軟鍵 --- */
         .middle-tier { display: flex; flex: 1; gap: 2%; margin-bottom: 2%; }
 
         .left-softkeys { 
-            width: 8%; display: flex; flex-direction: column; justify-content: space-between; 
-            padding: 1.5% 1%; background-color: rgba(0,0,0,0.05); border-radius: 10px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+            width: 8.5%; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 0.7vmin; /* ★ 間距再縮小 (從 1.2vmin 降到 0.7vmin) */
+            padding: 0; 
         }
+        
         .softkey {
-            background: linear-gradient(to bottom, #bcc2c6, #9ea4a9); height: 12%; border-radius: 20px; border: 1px solid #777;
-            box-shadow: inset 1px 1px 3px rgba(255,255,255,0.8), 0 2px 4px rgba(0,0,0,0.3); cursor: pointer;
+            width: 80%; /* ★ 寬度縮小約 10% (從 90% 降到 80%) */
+            height: 8.5%; /* ★ 高度縮小約 10% (從 9.5% 降到 8.5%) */
+            background: linear-gradient(to bottom, #d2d8dc, #b4bbc0); 
+            border-radius: 1.2vmin; /* ★ 圓角更圓一點 (從 0.8vmin 加大到 1.2vmin，維持圓角矩形) */
+            border: 1px solid #9ba2a7; 
+            box-shadow: 
+                inset 0 1px 1.5px rgba(255,255,255,0.85), 
+                inset 0 -1px 1px rgba(0,0,0,0.08),        
+                0 1.5px 2px rgba(0,0,0,0.25);             
+            cursor: pointer;
+            transition: all 0.05s ease;
         }
 
+        .softkey:active { 
+            transform: translateY(1px) scale(0.98); 
+            box-shadow: 0 0.5px 1px rgba(0,0,0,0.3); 
+        }
         .screen-bezel {
             flex: 1; background-color: #050505; border-radius: 12px; border: 4px solid #1a1a1a;
             box-shadow: inset 0 0 20px black, 0 2px 4px rgba(255,255,255,0.5); 
