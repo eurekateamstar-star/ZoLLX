@@ -23,7 +23,7 @@
         }
 
         body {
-            background-color: #222222; 
+            background-color: #222; 
             margin: 0; display: flex; justify-content: center; align-items: center;
             height: 100vh; font-family: 'Helvetica Neue', Arial, sans-serif;
             overflow: hidden; user-select: none; -webkit-user-select: none;
@@ -70,17 +70,17 @@
         .bag-zipper::before { left: 1px; } .bag-zipper::after { right: 1px; }
         .zipper-stitch { position: absolute; top: 0; bottom: 3.5%; width: 5px; border-left: 2px dashed #000; border-right: 2px dashed #000; opacity: 0.8; z-index: 1; }
         .stitch-left { left: calc(50% - 24px); } .stitch-right { left: calc(50% + 18px); }
-        .zipper-pull { position: absolute; top: 6%; z-index: 4; width: 16px; height: 42px; left: 50%; background: linear-gradient(to bottom, #2a2c2e, #050505); border: 1px solid #000; border-radius: 4px 4px 10px 10px; box-shadow: 2px 5px 10px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.3); transform-origin: top center; }
+        .zipper-pull { position: absolute; top: 6%; z-index: 4; width: 16px; height: 42px; left: 50%; background: linear-gradient(to bottom, #2a2c2e, #050505); border: 1px solid #000; border-radius: 4px 4px 10px 10px; box-shadow: 2px 5px 10px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.35); transform-origin: top center; }
         .zipper-pull::before { content: ''; position: absolute; top: -9px; left: 3.5px; width: 5px; height: 9px; border: 2.5px solid #3a3a3a; border-bottom: none; border-radius: 4px 4px 0 0; box-shadow: inset 0 1px 1px rgba(255,255,255,0.2); }
         .zipper-pull::after { content: ''; position: absolute; bottom: 6px; left: 6.5px; width: 3px; height: 16px; background: #000; border-radius: 2px; box-shadow: inset 0 1px 1px rgba(255,255,255,0.2); }
         .left-bag .zipper-pull { transform: translateX(-50%) rotate(4deg); } .right-bag .zipper-pull { transform: translateX(-50%) rotate(-4deg); }
         .zipper-end-patch { position: absolute; width: 24px; height: 24px; background: #080808; border-top: 1px solid #1a1a1a; border-radius: 2px; z-index: 3; box-shadow: inset 0 2px 5px rgba(0,0,0,1); }
         .zipper-end-patch::after { content: ''; position: absolute; top: 2px; bottom: 2px; left: 2px; right: 2px; border: 1.5px dashed #000; opacity: 0.8; }
         .center-patch { bottom: 4.5%; left: 50%; transform: translateX(-50%); }
-        .far-right-zipper { position: absolute; top: 0; bottom: 12%; right: 8%; width: 14px; background: repeating-linear-gradient(to bottom, #222 0px, #222 2px, #050505 2px, #050505 4px) center/8px 100% no-repeat, #111; border-radius: 4px 4px 0 0; box-shadow: inset 1px 0 2px rgba(255,255,255,0.15), inset -1px 0 2px rgba(255,255,255,0.15), -2px 0 6px rgba(0,0,0,0.9); z-index: 1; }
+        .far-right-zipper { position: absolute; top: 0; bottom: 12%; right: 8%; width: 14px; background: repeating-linear-gradient(to bottom, #222 0px, #222 2px, #050505 2px, #050505 4px) center/8px 100% no-repeat, #111; border-radius: 4px 4px 0 0; box-shadow: inset 1px 0 2px rgba(255,255,255,0.15), inset -1px 0 2px rgba(255,255,255,0.15), -2px 0 6px rgba(0,0,0,0.95); z-index: 1; }
         .far-right-zipper::before, .far-right-zipper::after { content: ''; position: absolute; top: 0; bottom: 0; width: 2px; background: repeating-linear-gradient(to bottom, #000 0px, #000 6px, transparent 6px, transparent 10px); z-index: 3; }
         .far-right-zipper::before { left: 1px; } .far-right-zipper::after { right: 1px; }
-        .far-right-pull { position: absolute; top: 6%; right: calc(8% - 1px); width: 16px; height: 42px; background: linear-gradient(to bottom, #2a2c2e, #050505); border: 1px solid #000; border-radius: 4px 4px 10px 10px; box-shadow: 2px 5px 10px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.3); z-index: 4; transform-origin: top center; transform: rotate(5deg); }
+        .far-right-pull { position: absolute; top: 6%; right: calc(8% - 1px); width: 16px; height: 42px; background: linear-gradient(to bottom, #2a2c2e, #050505); border: 1px solid #000; border-radius: 4px 4px 10px 10px; box-shadow: 2px 5px 10px rgba(0,0,0,0.9), inset 0 1px 2px rgba(255,255,255,0.35); z-index: 4; transform-origin: top center; transform: rotate(5deg); }
         .far-right-pull::before { content: ''; position: absolute; top: -9px; left: 3.5px; width: 5px; height: 9px; border: 2.5px solid #3a3a3a; border-bottom: none; border-radius: 4px 4px 0 0; box-shadow: inset 0 1px 1px rgba(255,255,255,0.2); }
         .far-right-pull::after { content: ''; position: absolute; bottom: 6px; left: 6.5px; width: 3px; height: 16px; background: #000; border-radius: 2px; box-shadow: inset 0 1px 1px rgba(255,255,255,0.25); }
         .far-right-patch-pos { bottom: 8.5%; right: calc(8% - 5px); }
@@ -168,15 +168,15 @@
         .is-sensing .bvm-squeezer { animation: squeezeBag 3.5s infinite ease-in-out; transform-origin: 140px 80px; }
         @keyframes squeezeBag { 
             0%, 100% { transform: scaleX(1) scaleY(1); } 
-            20% { transform: scaleX(0.85) scaleY(1.05); } /* 用力捏 */
-            40% { transform: scaleX(1) scaleY(1); } /* 放開 */
+            20% { transform: scaleX(0.85) scaleY(1.05); } 
+            40% { transform: scaleX(1) scaleY(1); } 
         }
         /* 呼氣末的 CO2 氣流特效 */
         .co2-flow { opacity: 0; transition: opacity 0.2s; }
         .is-sensing .co2-flow { animation: flowPulse 3.5s infinite ease-in-out; }
         @keyframes flowPulse { 
-            0%, 40% { opacity: 0; transform: translateX(0); } /* 擠壓給氣時無測量 */
-            60% { opacity: 0.8; transform: translateX(-5px); filter: drop-shadow(0 0 3px rgba(255,255,100,0.8)); } /* 病患吐氣時經過 Sensor */
+            0%, 40% { opacity: 0; transform: translateX(0); } 
+            60% { opacity: 0.8; transform: translateX(-5px); filter: drop-shadow(0 0 3px rgba(255,255,100,0.8)); } 
             90%, 100% { opacity: 0; transform: translateX(-2px); }
         }
 
@@ -220,6 +220,14 @@
         .screen-main-area { display: flex; flex: 1; position: relative; }
         .screen-left-labels { width: 9.5%; background: #000; border-right: 1px solid #222; display: flex; flex-direction: column; justify-content: flex-start; padding: 0.4vmin; box-sizing: border-box; gap: 0.45vmin; }
         .s-label-box { width: 100%; aspect-ratio: 1.12; flex: 0 0 auto; min-height: 0; overflow: hidden; position: relative; background: linear-gradient(180deg, #2d3237 0%, #17191c 100%); border: 1px solid rgba(255, 255, 255, 0.22); color: #eef2f5; font-size: 0.9vmin; font-weight: bold; text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; line-height: 1.15; margin: 0; border-radius: 4px; box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 1px 2px rgba(0,0,0,0.4); box-sizing: border-box; }
+        
+        /* 12-Lead 切換時，左側「12」按鈕高亮藍色 */
+        .s-label-box.active-12-lead {
+            background: linear-gradient(180deg, #1e4585 0%, #11264f 100%) !important;
+            border-color: #4c82d4 !important;
+            color: #ffffff !important;
+        }
+
         .screen-right-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .waveform-area { flex: 1; position: relative; background: #000; } 
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
@@ -237,9 +245,10 @@
         .v-value-area { flex: 1; display: flex; align-items: flex-start; justify-content: center; position: relative; padding-top: 0.2vmin; }
         .global-val-text { font-size: 3.6vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; line-height: 0.9; letter-spacing: -0.5px; }
         .status-msg-text { font-size: 1.15vmin !important; font-weight: bold; font-family: Arial, "Helvetica Neue", sans-serif; letter-spacing: 0.2px; white-space: nowrap !important; line-height: normal !important; }
+        
         .vital-hr .v-title-bar { background-color: var(--zoll-monitor-green); } .vital-hr .v-value-area { justify-content: flex-end; align-items: flex-start; padding-right: 6%; box-sizing: border-box; width: 100%; } .vital-hr .global-val-text { color: var(--zoll-monitor-green); }
         .vital-nibp .v-title-bar { background-color: #00a8ff; } .vital-nibp .v-value-area { flex-direction: row; padding-top: 0.2vmin; } .nibp-fraction { display: flex; flex-direction: column; align-items: center; color: #00a8ff; }
-.nibp-sys { font-size: 3.0vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; border-bottom: none; padding-bottom: 0px; width: 100%; text-align: center; line-height: 0.95; }.nibp-dia { font-size: 3.0vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; padding-top: 2px; width: 100%; text-align: center; line-height: 0.95; } .vital-nibp .v-sub-val { color: #00a8ff; font-size: 2.0vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; margin-left: 0.8vmin; display: flex; align-items: center; align-self: center; }
+        .nibp-sys { font-size: 3.0vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; border-bottom: none; padding-bottom: 0px; width: 100%; text-align: center; line-height: 0.95; }.nibp-dia { font-size: 3.0vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; padding-top: 2px; width: 100%; text-align: center; line-height: 0.95; } .vital-nibp .v-sub-val { color: #00a8ff; font-size: 2.0vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; margin-left: 0.8vmin; display: flex; align-items: center; align-self: center; }
         .vital-co2 .v-title-bar { background-color: #ff3399; } .vital-co2 .v-value-area { flex-direction: column; align-items: flex-end; justify-content: flex-start; color: #ff3399; padding-top: 0.3vmin; padding-right: 6%; box-sizing: border-box; width: 100%; } .co2-main-val { line-height: 0.9; } .co2-dia { display: flex; flex-direction: row; align-items: baseline; justify-content: flex-end; gap: 0.5vmin; margin-top: 0.8vmin; } .co2-sub-lbl { font-size: 1.0vmin; font-weight: 900; color: #ff3399; line-height: 1; } .co2-sub-val { font-size: 2.1vmin; font-weight: 700; font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; color: #ff3399; line-height: 1; }
         
         /* SpO2 佈局與跳動條 */
@@ -279,7 +288,7 @@
             pointer-events: none;
         }
 
-        /* 在 .spo2-wave-label 下方加入 */
+        /* CO2 刻度群組 */
         .co2-scale-group {
             position: absolute; 
             left: 1.5%; 
@@ -300,6 +309,176 @@
             line-height: 1.1;
         }
 
+    /* =========================================================================
+           12 導程（12-Lead）螢幕切換佈局 (對齊實機：優化高度與 NIBP 直式排版)
+           ========================================================================= */
+        .screen-bezel.mode-12-lead .screen-right-panel {
+            flex-direction: row; 
+        }
+        .screen-bezel.mode-12-lead .waveform-area {
+            flex: 1;
+            height: 100%;
+        }
+        .screen-bezel.mode-12-lead .screen-bottom-vitals {
+            width: 22%; 
+            height: 100%;
+            flex-direction: column; 
+            border-top: none;
+            border-left: 1.5px solid #222;
+        }
+        
+        /* 重新分配高度比例：HR 矮一點，NIBP 高一些 */
+        .screen-bezel.mode-12-lead .vital-hr {
+            flex: 0.75; 
+        }
+        .screen-bezel.mode-12-lead .vital-nibp {
+            flex: 1.25; 
+        }
+        .screen-bezel.mode-12-lead .vital-co2 {
+            flex: 1.0;
+        }
+        .screen-bezel.mode-12-lead .vital-spo2 {
+            flex: 1.0;
+        }
+
+        .screen-bezel.mode-12-lead .vital-col {
+            width: 100%;
+            border-right: none;
+            border-bottom: 1.5px solid #222;
+            box-sizing: border-box;
+            padding: 2px 4px;
+        }
+        .screen-bezel.mode-12-lead .vital-col:last-child {
+            border-bottom: none;
+        }
+        .screen-bezel.mode-12-lead .v-title-bar {
+            height: 1.8vmin;
+            font-size: 0.85vmin;
+            padding: 0 4%;
+        }
+        .screen-bezel.mode-12-lead .v-unit {
+            font-size: 0.7vmin;
+        }
+
+        /* 置中與對齊設定 */
+        .screen-bezel.mode-12-lead .vital-hr .v-value-area {
+            justify-content: center;
+            align-items: center;
+            padding-right: 0;
+            width: 100%;
+        }
+        
+        /* NIBP 直向垂直排列 */
+        .screen-bezel.mode-12-lead .vital-nibp .v-value-area {
+            flex-direction: column !important;
+            justify-content: space-evenly;
+            align-items: center;
+            padding-right: 0;
+            padding-top: 2px;
+            padding-bottom: 4px;
+            width: 100%;
+        }
+        
+        .screen-bezel.mode-12-lead .vital-co2 .v-value-area {
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            padding-top: 0;
+            padding-right: 0;
+            width: 100%;
+        }
+        .screen-bezel.mode-12-lead .vital-spo2 .v-value-area {
+            justify-content: center;
+            align-items: center;
+            padding-right: 0;
+            width: 100%;
+        }
+
+        /* 正常連接導線時：主生理數值維持大字體 */
+        .screen-bezel.mode-12-lead .global-val-text {
+            font-size: 3.6vmin !important;
+            font-weight: 900;
+        }
+
+        /* 沒接導線時：提示文字（如 Resp Off, Searching）縮小，避免文字溢出 */
+        .screen-bezel.mode-12-lead .status-msg-text {
+            font-size: 1.1vmin !important;
+            font-weight: bold !important;
+            letter-spacing: 0.1px;
+            white-space: nowrap !important;
+        }
+
+        /* NIBP 數值字體 */
+        .screen-bezel.mode-12-lead .nibp-sys,
+        .screen-bezel.mode-12-lead .nibp-dia {
+            font-size: 2.5vmin !important;
+            font-weight: 900;
+            line-height: 0.95;
+        }
+        
+        /* NIBP 平均壓 (90) 置底 */
+        .screen-bezel.mode-12-lead .vital-nibp .v-sub-val {
+            font-size: 1.3vmin !important;
+            margin-left: 0;
+            margin-top: 3px;
+        }
+
+        /* CO2 副數值 (BR) */
+        .screen-bezel.mode-12-lead .co2-dia {
+            margin-top: 0;
+            margin-left: 1vmin;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .screen-bezel.mode-12-lead .co2-sub-val {
+            font-size: 1.8vmin;
+            font-weight: 900;
+        }
+        .screen-bezel.mode-12-lead .co2-sub-lbl {
+            font-size: 0.8vmin;
+        }
+
+        /* 血氧跳動條 */
+        .screen-bezel.mode-12-lead .spo2-pleth-container {
+            height: 3vmin;
+            width: 1.1vmin;
+            margin-left: 0.8vmin;
+        }
+        /* 12-Lead HTML 靜態疊加標籤專屬樣式 */
+        #labels-12-lead-container {
+            display: none;
+        }
+        .screen-bezel.mode-12-lead #labels-12-lead-container {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(6, 1fr);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 6;
+            box-sizing: border-box;
+            padding: 0.8vmin 0;
+        }
+        .lead-label-item {
+            color: var(--zoll-monitor-green);
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 1.15vmin;
+            font-weight: bold;
+            padding-left: 1.2vmin;
+            display: flex;
+            align-items: flex-start;
+            opacity: 0.95;
+            text-shadow: 1px 1px 1px #000;
+            pointer-events: none;
+        }
+        .screen-bezel.mode-12-lead .text-top-left {
+            display: none;
+        }
 
         .battery-container { display: inline-flex; align-items: center; vertical-align: middle; margin-right: 0.5vmin; } .battery-body { width: 2.2vmin; height: 1.1vmin; border: 1.5px solid var(--zoll-monitor-green); border-radius: 2px; padding: 1px; display: flex; gap: 1px; box-sizing: border-box; } .battery-bar { flex: 1; background-color: var(--zoll-monitor-green); height: 100%; } .battery-tip { width: 0.25vmin; height: 0.5vmin; background-color: var(--zoll-monitor-green); border-radius: 0 1px 1px 0; }
 
@@ -743,7 +922,7 @@
             ['低血鉀（U 波+ST下降）',{atrialRate:80,tAmp:0.12,uAmp:0.2,st:-0.06}],
             ['低體溫（Osborn J 波）',{atrialRate:50,jWave:0.28,qt:0.44,rrVar:10}],
           ]},
-          {cat:'其他 / 危急特殊',items:[
+          {cat:'其他 / 顧慮特殊',items:[
             ['心搏停止 Asystole',{mode:'asystole'}],
             ['心室靜止 V-Standstill',{mode:'dissociated',atrialMorph:'p',atrialRate:75,ventRate:0}],
           ]},
@@ -795,7 +974,7 @@
         <div class="pads-modal" id="pads-modal">
             <div class="pads-title">AED 電擊貼片黏貼模擬</div>
             <div class="pads-subtitle">露出病患胸腔，依圖示貼於右上胸(1)與左側腋下(2)。</div>
-            <div class="placement-container">
+         <div class="placement-container">
                 <svg class="placement-torso" viewBox="0 0 340 590">
                     <defs>
                         <clipPath id="card-clip"><rect x="0" y="0" width="340" height="590" rx="12" /></clipPath>
@@ -1036,7 +1215,7 @@
             <div class="interactive-area" id="etco2-interact">
                 <div class="interact-hint" id="etco2-hint-text">點擊此處連接氣道轉接頭 Click to Connect</div>
                 <svg viewBox="0 0 300 150" style="width: 100%; height: 100%;">
-                    <!-- 面罩 (Mask) 保持在左側固定不動 -->
+                    <!-- 面罩 (Mask) -->
                     <g id="bvm-mask">
                         <path d="M 80 65 L 50 40 C 20 35, 10 50, 10 80 C 10 110, 20 125, 50 120 L 80 95 Z" fill="rgba(100,180,250,0.15)" stroke="#7dd3fc" stroke-width="2"/>
                         <path d="M 50 40 C 20 35, 10 50, 10 80 C 10 110, 20 125, 50 120" fill="none" stroke="#38bdf8" stroke-width="7" stroke-linecap="round" opacity="0.8"/>
@@ -1044,42 +1223,33 @@
                         <rect x="65" y="65" width="15" height="30" fill="rgba(255,255,255,0.4)" stroke="#cbd5e1" stroke-width="2"/>
                     </g>
 
-                    <!-- 右側 BVM 甦醒球組 (點擊後會向右退，讓出空間) -->
+                    <!-- 右側 BVM 甦醒球組 -->
                     <g class="bvm-bag-group">
                         <g class="bvm-squeezer">
-                            <!-- 甦醒球本體 -->
                             <ellipse cx="210" cy="80" rx="55" ry="38" fill="#0d9488"/>
                             <ellipse cx="210" cy="80" rx="55" ry="38" fill="none" stroke="#115e59" stroke-width="3"/>
-                            <!-- 甦醒球橫向紋理 -->
                             <path d="M 175 49 C 185 80, 185 80, 175 111 M 195 43 C 205 80, 205 80, 195 117 M 225 43 C 215 80, 215 80, 225 117 M 245 49 C 235 80, 235 80, 245 111" fill="none" stroke="#0f766e" stroke-width="2"/>
-                            <!-- 甦醒球連接管口 -->
                             <rect x="140" y="65" width="15" height="30" fill="rgba(255,255,255,0.6)" stroke="#cbd5e1" stroke-width="2"/>
                         </g>
                     </g>
 
                     <!-- 中間降落的透明 EtCO2 氣道轉接頭 (Airway Adapter) -->
                     <g class="etco2-adapter-group">
-                        <!-- 主體透明塑膠管 -->
                         <rect x="80" y="63" width="60" height="34" rx="2" fill="rgba(255,255,255,0.25)" stroke="#cbd5e1" stroke-width="2"/>
                         <rect x="80" y="68" width="60" height="24" fill="rgba(255,255,255,0.1)"/>
                         
-                        <!-- 向下凸起的採樣側管 -->
                         <path d="M 105 97 L 105 115 L 115 115 L 115 97" fill="rgba(255,255,255,0.3)" stroke="#cbd5e1" stroke-width="2"/>
                         
-                        <!-- 採樣管 (Sample Line) -->
                         <path d="M 110 115 C 110 160, 150 160, 170 135 C 180 120, 190 120, 200 120" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="3" stroke-linecap="round"/>
                         
-                        <!-- 特色橘色接頭 (Orange FilterLine Connector) -->
                         <g transform="translate(200, 120) rotate(-20)">
                             <rect x="0" y="-6" width="22" height="12" rx="2" fill="#f05a28" stroke="#d0441a" stroke-width="1" />
                             <rect x="22" y="-4" width="6" height="8" rx="1" fill="#d0d0d0" />
-                            <!-- 橘色接頭上的螺旋防滑紋理 -->
                             <line x1="5" y1="-6" x2="5" y2="6" stroke="#d0441a" stroke-width="1.5" opacity="0.6"/>
                             <line x1="10" y1="-6" x2="10" y2="6" stroke="#d0441a" stroke-width="1.5" opacity="0.6"/>
                             <line x1="15" y1="-6" x2="15" y2="6" stroke="#d0441a" stroke-width="1.5" opacity="0.6"/>
                         </g>
 
-                        <!-- CO2 測量時的內部氣流微光 -->
                         <g class="co2-flow">
                             <ellipse cx="110" cy="80" rx="12" ry="6" fill="rgba(255,255,100,0.6)" filter="blur(2px)"/>
                         </g>
@@ -1103,14 +1273,15 @@
                 <div class="faceplate-logo">ZOLL</div>
                 <div class="middle-tier">
                     <div class="left-softkeys">
-                        <div class="softkey-row"><div class="softkey"></div></div>
-                        <div class="softkey-row"><div class="softkey"></div></div>
-                        <div class="softkey-row"><div class="softkey"></div></div>
-                        <div class="softkey-row"><div class="softkey"></div></div>
-                        <div class="softkey-row"><div class="softkey"></div></div>
-                        <div class="softkey-row"><div class="softkey"></div></div>
-                        <div class="softkey-row"><div class="softkey"></div></div>
-                    </div>
+    <!-- 修改這行，加上 ID 與 title -->
+    <div class="softkey-row"><div class="softkey" id="btn-softkey-lead" title="切換導程"></div></div>
+    <div class="softkey-row"><div class="softkey"></div></div>
+    <div class="softkey-row"><div class="softkey"></div></div>
+    <div class="softkey-row"><div class="softkey"></div></div>
+    <div class="softkey-row"><div class="softkey"></div></div>
+    <div class="softkey-row"><div class="softkey"></div></div>
+    <div class="softkey-row"><div class="softkey"></div></div>
+</div>
                     
                     <div class="screen-bezel">
                         <div class="screen-topbar">
@@ -1123,9 +1294,15 @@
                         </div>
                         <div class="screen-main-area">
                             <div class="screen-left-labels">
+                                <!-- 新增 ID 讓「I, II, III...」成為可點擊按鈕 -->
                                 <div class="s-label-box">I, II,<br>III...</div>
-                                <div class="s-label-box"><span style="font-size: 1.5vmin; font-weight: 900; line-height: 1; color: #fff; margin-top: -1.2vmin;">12</span><svg viewBox="0 0 24 10" style="position: absolute; width: 80%; height: 30%; bottom: 8%; left: 10%; fill: none; stroke: var(--zoll-monitor-green); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;"><path d="M0,5 L6,5 L8,2 L10,8 L11,5 L14,5 L15,3 L16,5 L24,5" /></svg></div>
-                                <!-- 修改：CO2 標籤框，並加入內部螢幕綠燈 -->
+                                <!-- 「12」導程標籤按鈕 -->
+                                <div class="s-label-box" id="btn-left-12-lead" style="cursor: pointer;" title="切換 12 導程心電圖顯示">
+                                    <span style="font-size: 1.5vmin; font-weight: 900; line-height: 1; color: #fff; margin-top: -1.2vmin;">12</span>
+                                    <svg viewBox="0 0 24 10" style="position: absolute; width: 80%; height: 30%; bottom: 8%; left: 10%; fill: none; stroke: var(--zoll-monitor-green); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;">
+                                        <path d="M0,5 L6,5 L8,2 L10,8 L11,5 L14,5 L15,3 L16,5 L24,5" />
+                                    </svg>
+                                </div>
                                 <div class="s-label-box" style="color: #ffffff; font-size: 1.05vmin; font-weight: bold; position: relative;">
                                     <span style="transform: translateY(-0.5vmin); display: inline-block;">CO2</span>
                                     <div id="co2-screen-led" style="position: absolute; bottom: 8%; width: 40%; height: 3px; background-color: #222; border-radius: 1px;"></div>
@@ -1140,32 +1317,38 @@
                                     <canvas id="ecg-canvas"></canvas>
                                     <div class="ecg-overlay-text text-top-left"><span id="lead-text">Pads</span><span>1.0 cm/mV</span></div>
                                     
-                                    <!-- SpO2 波型標籤 (加上 1x 符合真實機台) -->
+                                    <!-- 12-Lead HTML 靜態疊加標籤容器 -->
+                                    <div id="labels-12-lead-container">
+                                        <div class="lead-label-item">I</div><div class="lead-label-item">V1</div>
+                                        <div class="lead-label-item">II</div><div class="lead-label-item">V2</div>
+                                        <div class="lead-label-item">III</div><div class="lead-label-item">V3</div>
+                                        <div class="lead-label-item">aVR</div><div class="lead-label-item">V4</div>
+                                        <div class="lead-label-item">aVL</div><div class="lead-label-item">V5</div>
+                                        <div class="lead-label-item">aVF</div><div class="lead-label-item">V6</div>
+                                    </div>
+
+                                    <!-- SpO2 波型標籤 -->
                                     <div class="spo2-wave-label" id="spo2-wave-label">SpO2 &nbsp;&nbsp; 1x</div>
-                                    <!-- 新增：CO2 0-30-60 刻度與標籤 -->
+                                    
+                                    <!-- CO2 0-30-60 刻度與標籤 -->
                                     <div class="co2-scale-group" id="co2-scale-group">
-                                        <!-- 頂部標籤貼齊最上緣 -->
                                         <div class="co2-scale-text" style="top: 0%;">CO2</div>
                                         <div class="co2-scale-text" style="left: 4.5vmin; top: 0%; font-size: 0.95vmin;">0 to 60 mmHg</div>
-                                        <!-- 刻度數字精準對齊虛線 -->
-                                        <!-- 55% 的線對應這裡的 15%，文字放 16% 就會在線的正下方 -->
                                         <div class="co2-scale-text" style="top: 16%;">60</div>
-                                        <!-- 75% 的線對應這裡的 57.4%，Y軸偏移-50%完美置中 -->
                                         <div class="co2-scale-text" style="top: 57.4%; transform: translateY(-50%);">30</div>
-                                        <!-- 95% 的線對應這裡的 100%，Y軸偏移-100%完美站在線上 -->
                                         <div class="co2-scale-text" style="top: 100%; transform: translateY(-100%);">0</div>
                                     </div>
-                                    <div class="ecg-overlay-text text-center-check" id="check-pads-text">Check Pads</div>
+
+                                    <div class="ecg-overlay-text text-center-check" id="check-pads-text">檢查電擊片</div>
                                     <div id="screen-msg"></div>
                                 </div>
-                               <div class="screen-bottom-vitals">
+                                <div class="screen-bottom-vitals">
                                     <div class="vital-col vital-hr">
                                         <div class="v-title-bar"><span>HR</span><span class="v-unit">bpm</span></div>
                                         <div class="v-value-area"><div class="global-val-text" id="hr-text"></div></div>
                                     </div>
                                     <div class="vital-col vital-nibp">
-                                        <div class="v-title-bar"><span>NIBP</span>
-<span class="v-unit">mmHg</span></div>
+                                        <div class="v-title-bar"><span>NIBP</span><span class="v-unit">mmHg</span></div>
                                         <div class="v-value-area">
                                             <div class="nibp-fraction">
                                                 <div class="nibp-sys" id="nibp-sys-text"></div>
@@ -1198,7 +1381,11 @@
                     <div class="right-navkeys">
                         <div class="ir-window-outer"><div class="ir-window-inner"></div></div>
                         <div class="nav-row" style="justify-content: flex-end;"><div class="nav-btn small-btn"><svg style="width: 80%; height: 80%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2" stroke-width="1.5"/><g transform="translate(1, 0.5) scale(0.52)" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></g><rect x="11.5" y="11.5" width="11" height="11" rx="2.5" stroke-width="1.5"/><g transform="translate(13, 13) scale(0.33)" stroke-width="3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="2" y1="2" x2="22" y2="22" stroke-width="4"/></g></svg></div></div>
-                        <div class="nav-row" style="justify-content: flex-start;"><div class="nav-btn small-btn"><svg style="width: 80%; height: 80%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2" stroke-width="1.5"/><g transform="translate(1, 1) scale(0.48)" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></g><rect x="11.5" y="12.5" width="11" height="9" rx="1.5" stroke-width="1.5"/><polyline points="13 17 14.5 17 16 14.5 17.5 19 17 21 17" stroke-width="1.2" stroke-linejoin="round"/></svg></div></div>
+<div class="nav-row" style="justify-content: flex-start;">
+    <div class="nav-btn small-btn" id="btn-hard-lead" style="cursor: pointer;" title="切換導程">
+        <svg style="width: 80%; height: 80%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2" stroke-width="1.5"/><g transform="translate(1, 1) scale(0.48)" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></g><rect x="11.5" y="12.5" width="11" height="9" rx="1.5" stroke-width="1.5"/><polyline points="13 17 14.5 17 16 14.5 17.5 19 17 21 17" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    </div>
+</div>
                         <div class="three-key-group">
                             <div class="nav-btn key-left"><svg style="width: 50%; height: 50%;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="currentColor"/></svg></div>
                             <div class="key-right-col">
@@ -1282,10 +1469,67 @@
 
         const clickEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
 
-        // --- 新增 CO2 波形控制變數 ---
-        let showCo2Waveform = false; // 是否正在顯示 CO2 波形
-        let co2LastBreathTime = 0;   // 記錄上一次呼吸的時間
-        let co2State = 'off';        // 狀態: 'off', 'initializing', 'active'
+        // --- 12-Lead ECG 狀態與事件綁定 ---
+        let is12LeadMode = false;
+        const btnLeft12Lead = document.getElementById('btn-left-12-lead');
+        const btnSoftkey12Lead = document.querySelectorAll('.softkey')[1]; // 左側第二個軟鍵
+
+        const LIMB_LEADS = ['I', 'II', 'III', 'aVR', 'aVL', 'aVF'];
+        const PRECORD_LEADS = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6'];
+
+        // --- 導程切換邏輯 (I, II, III ... Pads) ---
+        const leadCycle = ['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'Pads'];
+        let leadCycleIndex = 12; // 預設為 Pads 導程
+/// 抓取左側第一顆實體按鍵 (Softkey) 來切換導程
+        const btnSoftkeyLead = document.getElementById('btn-softkey-lead');
+        btnSoftkeyLead.addEventListener(clickEvent, (e) => {
+            e.preventDefault(); e.stopPropagation();
+            if (is12LeadMode) {
+                // 這裡是你上次不小心刪掉的代碼，補回來才能正確退出 12-Lead
+                toggle12LeadMode();
+            }
+            leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
+            updateScreenUI();
+            
+            // 重置掃描線
+            xPos = 0;
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+        });
+
+        function toggle12LeadMode() {
+            is12LeadMode = !is12LeadMode;
+            const screenBezel = document.querySelector('.screen-bezel');
+            screenBezel.classList.toggle('mode-12-lead', is12LeadMode);
+            btnLeft12Lead.classList.toggle('active-12-lead', is12LeadMode);
+            
+            resizeCanvas();
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+            xPos = 0;
+            updateWaveformLabels();
+            updateScreenUI();
+        }
+
+        btnLeft12Lead.addEventListener(clickEvent, (e) => {
+            e.preventDefault(); e.stopPropagation();
+            toggle12LeadMode();
+        });
+
+        if (btnSoftkey12Lead) {
+            btnSoftkey12Lead.addEventListener(clickEvent, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                toggle12LeadMode();
+            });
+        }
+
+        // --- CO2 波形控制變數 ---
+        let showCo2Waveform = false; 
+        let co2LastBreathTime = 0;   
+        let co2State = 'off';        
+        
+        let co2DisplayOverride = null; 
+        let brDisplayOverride = null;
         
         // 數值浮動用變數
         let currentDisplayCO2 = 38;
@@ -1296,7 +1540,6 @@
             if (accState.etco2 && co2State === 'active') {
                 let checkRhythm = currentSelectedRhythm;
                 if (checkRhythm !== '心室顫動 VFib' && checkRhythm !== '心搏停止 Asystole' && checkRhythm !== '多形性 VT' && checkRhythm !== '尖端扭轉 Torsades') {
-                    // 真實模擬：EtCO2 在 36~43 之間微浮動，RR 在 11~14 之間微浮動
                     currentDisplayCO2 = 38 + Math.floor(Math.random() * 6 - 2); 
                     currentDisplayRR = 12 + Math.floor(Math.random() * 3 - 1);  
                     
@@ -1306,8 +1549,9 @@
             }
         }, 2000);
 
-      function getCo2Value(t) {
-            if (!accState.etco2 || co2State !== 'active') return 0;
+        function getCo2Value(t) {
+            if (!accState.etco2) return 0;
+            if (co2State === 'initializing' || co2State === 'off') return 0;
             
             let checkRhythm = currentSelectedRhythm;
             if (checkRhythm === '心搏停止 Asystole' || checkRhythm === '心室顫動 VFib' || checkRhythm === '心室靜止 V-Standstill' || checkRhythm === '多形性 VT' || checkRhythm === '尖端扭轉 Torsades') {
@@ -1315,9 +1559,6 @@
             }
 
             let rr = currentDisplayRR; 
-            
-            // 關鍵：ZOLL 螢幕上 CO2 波形的掃描速度通常較慢 (12.5 mm/s)
-            // 將時間流速乘以 2.5，可以讓螢幕上同時顯示出 2~3 個波形！
             let compressedTime = t * 2.5; 
             let cycle = 60 / rr; 
             
@@ -1329,20 +1570,15 @@
             let p = tau / cycle; 
             let val = 0;
 
-            // 完美的方塊狀 Capnogram (無凹陷，標準四階段)
             if (p < 0.2) {
-                // 吸氣基線 (0)
                 val = 0;
             } else if (p < 0.25) {
-                // 快速呼氣上升 (陡峭)
                 let phase = (p - 0.2) / 0.05;
                 val = Math.sin(phase * (Math.PI / 2)); 
             } else if (p < 0.65) {
-                // 肺泡平原期 (平緩向右上升，如圖中頂部略斜)
                 let phase = (p - 0.25) / 0.4;
                 val = 1.0 + (phase * 0.15); 
             } else if (p < 0.70) {
-                // 吸氣快速下降
                 let phase = (p - 0.65) / 0.05;
                 val = 1.15 * Math.cos(phase * (Math.PI / 2)); 
             } else {
@@ -1350,7 +1586,6 @@
             }
 
             let noise = (Math.random() - 0.5) * 0.03;
-            // 轉換為實際 mmHg，並確保不會變成負數
             let actualMmHg = (val + noise) * (currentDisplayCO2 / 1.15);
             return Math.max(0, actualMmHg); 
         }
@@ -1380,7 +1615,7 @@
         etco2Modal.addEventListener(clickEvent, (e) => e.stopPropagation());
 
         // ==========================================
-        //  高擬真 12 導程電纜連接模擬
+        //  12 導程電纜連接模擬
         // ==========================================
         const ecg12Interact = document.getElementById('ecg12-interact');
         const ecg12Hint = document.getElementById('ecg12-hint-text');
@@ -1435,7 +1670,7 @@
         });
 
         // ==========================================
-        //  高擬真 NIBP 壓脈帶測量模擬邏輯
+        //  NIBP 壓脈帶測量模擬邏輯
         // ==========================================
         const nibpInteract = document.getElementById('nibp-interact');
         const nibpHint = document.getElementById('nibp-hint-text');
@@ -1495,11 +1730,9 @@
         btnHardNibp.addEventListener(clickEvent, (e) => {
             e.preventDefault();
             
-            if (!accState.nibp) {
-                return;
-            }
+            if (!accState.nibp) return;
 
-           if (isMeasuringNIBP) {
+            if (isMeasuringNIBP) {
                 isMeasuringNIBP = false;
                 clearInterval(nibpMeasureInterval);
                 nibpInteract.classList.remove('is-measuring');
@@ -1527,7 +1760,6 @@
             document.getElementById('nibp-mean-text').innerText = ''; 
 
             const cuffAssembly = document.querySelector('#nibp-interact .cuff-front-assembly');
-
             clearInterval(nibpMeasureInterval);
             nibpMeasureInterval = setInterval(() => {
                 if (!isMeasuringNIBP) return;
@@ -1594,7 +1826,7 @@
         });
 
         // ==========================================
-        //  高擬真 SpO2 夾手指互動邏輯
+        //  SpO2 夾手指互動邏輯
         // ==========================================
         const spo2Interact = document.getElementById('spo2-interact');
         const spo2Hint = document.getElementById('spo2-hint-text');
@@ -1651,7 +1883,7 @@
         }
 
         // ==========================================
-        //  高擬真 EtCO2 氣道轉接頭連接模擬邏輯 (BVM)
+        //  EtCO2 氣道轉接頭連接模擬邏輯 (BVM)
         // ==========================================
         const etco2Interact = document.getElementById('etco2-interact');
         const etco2Hint = document.getElementById('etco2-hint-text');
@@ -1662,7 +1894,7 @@
                 accState.etco2 = false;
                 co2State = 'off';
                 showCo2Waveform = false; 
-                document.getElementById('co2-screen-led').classList.remove('screen-led-on'); // 拔除時熄滅螢幕綠燈
+                document.getElementById('co2-screen-led').classList.remove('screen-led-on');
                 updateWaveformLabels();  
                 etco2Interact.classList.remove('is-placed', 'is-sensing');
                 updateEtco2MonitorDisplay();
@@ -1675,100 +1907,92 @@
             }
         });
 
-        etco2Interact.addEventListener(clickEvent, () => {
-            if (!accState.etco2) {
-                etco2Interact.classList.add('is-placed');
-                etco2Hint.innerText = "Initializing Microstream... 請稍候";
-                
-                accState.etco2 = true;
-                co2State = 'initializing';
-                updateEtco2MonitorDisplay();
-                
-                clearTimeout(etco2Timer);
-                etco2Timer = setTimeout(() => {
-                    etco2Interact.classList.add('is-sensing'); 
-                    co2State = 'active'; 
-                    showCo2Waveform = true; 
-                    
-                    // 自動亮起螢幕框框內的綠燈並切換波形
-                    document.getElementById('co2-screen-led').classList.add('screen-led-on');
-                    
-                    updateWaveformLabels();
-                    updateEtco2MonitorDisplay();
-                    
-                    btnToggleEtco2.innerText = '拔除'; btnToggleEtco2.classList.add('active');
-                    document.getElementById('status-etco2').innerHTML = '已連接 (Connected)'; document.getElementById('status-etco2').classList.add('connected');
-                    etco2Hint.innerText = "測量中。再次點擊可拔除 Click to Remove";
-                }, 4000); 
-            } else {
-                clearTimeout(etco2Timer);
-                accState.etco2 = false;
-                co2State = 'off';
-                showCo2Waveform = false; 
-                document.getElementById('co2-screen-led').classList.remove('screen-led-on'); // 拔除時熄滅螢幕綠燈
-                updateWaveformLabels();  
-                etco2Interact.classList.remove('is-placed', 'is-sensing');
-                updateEtco2MonitorDisplay();
-                btnToggleEtco2.innerText = '連接'; btnToggleEtco2.classList.remove('active');
-                document.getElementById('status-etco2').innerHTML = '未連接 (Disconnected)'; document.getElementById('status-etco2').classList.remove('connected');
-                etco2Hint.innerText = "點擊此處連接氣道轉接頭 Click to Connect";
-            }
-        });
-
         btnCloseEtco2Panel.addEventListener(clickEvent, (e) => {
             e.preventDefault(); e.stopPropagation();
             etco2Modal.style.display = 'none';
             accModal.style.display = 'flex';
         });
 
-       function updateEtco2MonitorDisplay() {
+        function updateWaveformLabels() {
+            const spo2Label = document.getElementById('spo2-wave-label');
+            const co2ScaleGroup = document.getElementById('co2-scale-group');
+            const plethContainer = document.getElementById('spo2-pleth-container');
+
+            if (is12LeadMode) {
+                if (co2ScaleGroup) co2ScaleGroup.style.display = 'none';
+                if (spo2Label) spo2Label.style.display = 'none';
+                if (plethContainer) plethContainer.style.display = 'none';
+                return;
+            }
+
+            if (showCo2Waveform) {
+                if (co2ScaleGroup) co2ScaleGroup.style.display = 'block';
+                if (spo2Label) spo2Label.style.display = 'none';
+                if (accState.spo2) {
+                    if (plethContainer) plethContainer.style.display = 'block';
+                } else {
+                    if (plethContainer) plethContainer.style.display = 'none';
+                }
+            } else {
+                if (co2ScaleGroup) co2ScaleGroup.style.display = 'none';
+                if (accState.spo2) {
+                    if (spo2Label) spo2Label.style.display = 'block';
+                    if (plethContainer) plethContainer.style.display = 'block';
+                } else {
+                    if (spo2Label) spo2Label.style.display = 'none';
+                    if (plethContainer) plethContainer.style.display = 'none';
+                }
+            }
+        }
+
+        function updateEtco2MonitorDisplay() {
             const co2TextEl = document.getElementById('co2-text');
             const co2AreaEl = document.getElementById('co2-value-area');
             const diaContainer = document.getElementById('co2-dia-container');
 
             if (!accState.etco2) {
-                co2TextEl.classList.add('status-msg-text');
+                co2TextEl.className = 'global-val-text co2-main-val status-msg-text';
+                co2AreaEl.style.flexDirection = 'row';
                 co2AreaEl.style.justifyContent = 'center';
                 co2AreaEl.style.alignItems = 'center';
                 diaContainer.style.display = 'none';
                 co2TextEl.innerText = 'Resp Off';
                 co2TextEl.style.backgroundColor = 'transparent';
                 co2TextEl.style.color = '#ff3399';
-                co2TextEl.style.padding = '0';
-                co2TextEl.style.fontSize = '';
             } else if (co2State === 'initializing') {
-                co2TextEl.classList.add('status-msg-text');
+                co2TextEl.className = 'global-val-text co2-main-val status-msg-text';
+                co2AreaEl.style.flexDirection = 'row';
                 co2AreaEl.style.justifyContent = 'center';
                 co2AreaEl.style.alignItems = 'center';
                 diaContainer.style.display = 'none';
                 co2TextEl.innerText = 'Initializing';
-                
-                // 【修改這裡】將藍底白字改為透明底、粉紅字
                 co2TextEl.style.backgroundColor = 'transparent';
                 co2TextEl.style.color = '#ff3399';
-                co2TextEl.style.padding = '0';
-                co2TextEl.style.borderRadius = '0';
-                co2TextEl.style.fontSize = ''; 
             } else if (co2State === 'active') {
-                co2TextEl.classList.remove('status-msg-text');
+                co2TextEl.className = 'global-val-text co2-main-val';
+                co2AreaEl.style.flexDirection = 'column';
                 co2AreaEl.style.justifyContent = 'flex-start';
                 co2AreaEl.style.alignItems = 'flex-end';
-                diaContainer.style.display = 'flex';
+                co2AreaEl.style.paddingTop = '0.3vmin';
+                co2AreaEl.style.paddingRight = '6%';
                 
+                diaContainer.style.display = 'flex';
+                diaContainer.style.flexDirection = 'row';
+                diaContainer.style.alignItems = 'baseline';
+                diaContainer.style.justifyContent = 'flex-end';
                 co2TextEl.style.backgroundColor = 'transparent';
                 co2TextEl.style.color = '#ff3399';
-                co2TextEl.style.padding = '0';
-                co2TextEl.style.fontSize = '';
 
                 if (currentSelectedRhythm !== '心室顫動 VFib' && currentSelectedRhythm !== '心搏停止 Asystole') {
-                    co2TextEl.innerText = currentDisplayCO2; 
-                    document.getElementById('br-text').innerText = currentDisplayRR; 
+                    co2TextEl.innerText = co2DisplayOverride !== null ? co2DisplayOverride : currentDisplayCO2; 
+                    document.getElementById('br-text').innerText = brDisplayOverride !== null ? brDisplayOverride : currentDisplayRR; 
                 } else {
                     co2TextEl.innerText = '---';
                     document.getElementById('br-text').innerText = '---';
                 }
             }
         }
+
         // ==========================================
         //  右側包包：貼片點擊黏貼與檢測邏輯
         // ==========================================
@@ -1841,15 +2065,52 @@
             } else { btnTogglePads.innerText = '⚡ 一鍵貼上貼片 (Auto Apply)'; btnTogglePads.className = 'pads-btn btn-connect-pads'; }
         }
 
-        // --- 綁定左側第三個 Softkey 按鈕 (控制 CO2/SpO2 切換與螢幕框內亮綠燈) ---
+        // --- 綁定左側第三個 Softkey 按鈕 (控制 CO2 校正與波形切換) ---
         const softkeys = document.querySelectorAll('.softkey');
         const btnCo2Softkey = softkeys[2]; 
         const screenLedCo2 = document.getElementById('co2-screen-led'); 
 
         btnCo2Softkey.addEventListener(clickEvent, (e) => {
             e.preventDefault();
-            if (accState.etco2 && co2State === 'active') {
-                // 切換波形
+            
+            if (!accState.etco2) {
+                showMessage("EtCO2 NOT CONNECTED", 1500);
+                return;
+            }
+
+            if (co2State === 'off') {
+                co2State = 'initializing';
+                showCo2Waveform = true; 
+                screenLedCo2.classList.add('screen-led-on');
+                updateWaveformLabels();
+                updateEtco2MonitorDisplay(); 
+                
+                clearTimeout(etco2Timer);
+                
+                etco2Timer = setTimeout(() => {
+                    etco2Interact.classList.add('is-sensing'); 
+                    co2State = 'active'; 
+                    
+                    co2DisplayOverride = '??';
+                    brDisplayOverride = '---';
+                    updateEtco2MonitorDisplay();
+                    etco2Hint.innerText = "測量中。點擊此處可拔除 Click to Remove";
+
+                    setTimeout(() => {
+                        co2DisplayOverride = '0';
+                        updateEtco2MonitorDisplay();
+
+                        setTimeout(() => {
+                            co2DisplayOverride = null;
+                            brDisplayOverride = null;
+                            updateEtco2MonitorDisplay();
+                        }, 1200);
+
+                    }, 800);
+
+                }, 4000); 
+
+            } else if (co2State === 'active') {
                 showCo2Waveform = !showCo2Waveform;
                 if (showCo2Waveform) {
                     screenLedCo2.classList.add('screen-led-on');
@@ -1857,35 +2118,37 @@
                     screenLedCo2.classList.remove('screen-led-on');
                 }
                 updateWaveformLabels();
-            } else if (!accState.etco2) {
-                showMessage("EtCO2 NOT CONNECTED", 1500);
+                
+            } else if (co2State === 'initializing') {
+                showMessage("INITIALIZING CO2...", 1000);
             }
         });
-       function updateWaveformLabels() {
-            const spo2Label = document.getElementById('spo2-wave-label');
-            const co2ScaleGroup = document.getElementById('co2-scale-group'); // 改抓新的群組
-            const plethContainer = document.getElementById('spo2-pleth-container');
 
-            if (showCo2Waveform) {
-                co2ScaleGroup.style.display = 'block';
-                spo2Label.style.display = 'none';
-                if (accState.spo2) {
-                    plethContainer.style.display = 'block';
-                } else {
-                    plethContainer.style.display = 'none';
-                }
+        etco2Interact.addEventListener(clickEvent, () => {
+            if (!accState.etco2) {
+                etco2Interact.classList.add('is-placed');
+                etco2Hint.innerText = "已連接。請按主機面板左側「CO2」按鍵啟動校正";
+                accState.etco2 = true;
+                co2State = 'off'; 
+                updateEtco2MonitorDisplay();
+                btnToggleEtco2.innerText = '拔除'; btnToggleEtco2.classList.add('active');
+                document.getElementById('status-etco2').innerHTML = '已連接 (Connected)'; document.getElementById('status-etco2').classList.add('connected');
             } else {
-                co2ScaleGroup.style.display = 'none';
-                if (accState.spo2) {
-                    spo2Label.style.display = 'block';
-                    plethContainer.style.display = 'block';
-                } else {
-                    spo2Label.style.display = 'none';
-                    plethContainer.style.display = 'none';
-                }
+                clearTimeout(etco2Timer);
+                accState.etco2 = false;
+                co2State = 'off';
+                showCo2Waveform = false; 
+                co2DisplayOverride = null;
+                brDisplayOverride = null;
+                document.getElementById('co2-screen-led').classList.remove('screen-led-on'); 
+                updateWaveformLabels();  
+                etco2Interact.classList.remove('is-placed', 'is-sensing');
+                updateEtco2MonitorDisplay();
+                btnToggleEtco2.innerText = '連接'; btnToggleEtco2.classList.remove('active');
+                document.getElementById('status-etco2').innerHTML = '未連接 (Disconnected)'; document.getElementById('status-etco2').classList.remove('connected');
+                etco2Hint.innerText = "點擊此處連接氣道轉接頭 Click to Connect";
             }
-        }
-        
+        });
 
         // ==========================================
         //  時間與系統顯示
@@ -1913,15 +2176,37 @@
             if(duration > 0) setTimeout(() => { screenMsg.style.display = 'none'; }, duration); 
         }
 
+        // ==========================================
+        //  UI 與導線狀態檢查
+        // ==========================================
         function updateScreenUI() {
             const checkPads = document.getElementById('check-pads-text');
             const leadText = document.getElementById('lead-text');
-            if (monitorState.rhythm === 'flatline') {
-                checkPads.style.display = 'block';
-                leadText.innerText = 'Pads';
-            } else {
+            const currentLead = leadCycle[leadCycleIndex];
+            
+            if (is12LeadMode) {
                 checkPads.style.display = 'none';
-                leadText.innerText = accState.ecg12 ? 'II (12-L)' : 'II';
+                leadText.innerText = '12-Lead';
+                return;
+            }
+
+            leadText.innerText = currentLead;
+
+            if (currentLead === 'Pads') {
+                if (!isPadsConnected) {
+                    checkPads.innerText = "檢查電擊片";
+                    checkPads.style.display = 'block';
+                } else {
+                    checkPads.style.display = 'none';
+                }
+            } else {
+                // 如果切換至 I, II, III... 等一般心電圖導程
+                if (!accState.ecg12) {
+                    checkPads.innerText = "檢查導線";
+                    checkPads.style.display = 'block';
+                } else {
+                    checkPads.style.display = 'none';
+                }
             }
         }
 
@@ -1982,8 +2267,7 @@
                 trueSpO2 = 0;
             }
 
-            let actualRhythmName = (isPadsConnected || accState.ecg12) ? rhythmName : 'flatline';
-
+            let actualRhythmName = rhythmName; // 保持引擎正常生成心律
             applyRhythmStateLocally(actualRhythmName, trueHR, trueSpO2);
         }
 
@@ -2072,32 +2356,15 @@
             val = (val * ampVariation * 2.6) + breathVariation;
             return Math.max(0, val);
         }
-function drawECG() {
+
+        // ==========================================
+        //  心電圖訊號繪製主流程 (優化：單導程切換渲染與 12 導程雙欄渲染)
+        // ==========================================
+        function drawECG() {
             let speed = 1.3; let pxPerSec = 70; let dt = speed / pxPerSec; 
             let ecgPxPerMv = logicalHeight * 0.14; let spo2PxPerMv = logicalHeight * 0.13; 
             
-            // 1. 清除舊軌跡 (把寬度從 25 縮小為 12，讓掃描縫隙變窄)
-            ctx.fillStyle = "#000000"; 
-            ctx.fillRect(xPos, 0, 12, logicalHeight); 
-            
-            // 2. 如果顯示 CO2，在背景畫上 30 與 60 的虛線
-            if (showCo2Waveform) {
-                ctx.strokeStyle = "rgba(255, 51, 153, 0.4)";
-                ctx.lineWidth = 1;
-                ctx.setLineDash([3, 4]); // 虛線樣式
-                
-                // 設定虛線高度：55%對應60mmHg，75%對應30mmHg
-                let y60 = logicalHeight * 0.55; 
-                let y30 = logicalHeight * 0.75; 
-                
-                ctx.beginPath();
-                // 這裡的長度也同步縮小為 12
-                ctx.moveTo(xPos, y60); ctx.lineTo(xPos + 12, y60);
-                ctx.moveTo(xPos, y30); ctx.lineTo(xPos + 12, y30);
-                ctx.stroke();
-                ctx.setLineDash([]); // 恢復實線
-            }
-
+            let limit = is12LeadMode ? (logicalWidth / 2) : logicalWidth;
             let startX = xPos - speed;
             if (startX < 0) { 
                 xPos += speed; simTime += dt; ecgEngine.advance(simTime + dt + 0.5); 
@@ -2105,111 +2372,173 @@ function drawECG() {
             }
 
             ecgEngine.advance(simTime + dt + 0.5); 
-            
-            // 3. 調整 ECG 的高度
-            let targetEcgBaseRatio = accState.spo2 || showCo2Waveform ? 0.28 : 0.5;
-            currentEcgBaseRatio += (targetEcgBaseRatio - currentEcgBaseRatio) * 0.1;
-            let curY = lastY;
 
-            if (monitorState.rhythm === 'flatline') {
-                curY = Math.round(logicalHeight * currentEcgBaseRatio); 
-                ctx.fillStyle = "#32FF32"; 
-                for (let px = Math.floor(startX); px < Math.floor(xPos); px++) {
-                    if (Math.abs(px) % 9 < 4) ctx.fillRect(px, curY, 1, 1); 
-                }
-                lastY = curY;
-            } else {
-                ctx.beginPath(); ctx.moveTo(startX, lastY); 
-                for (let i = 1; i <= speed; i++) {
-                    let cx = startX + i; let ct = simTime + (i / pxPerSec); 
-                    let mv = ecgEngine.sample(ct);
-                    curY = (logicalHeight * currentEcgBaseRatio) - (mv * ecgPxPerMv); 
-                    ctx.lineTo(cx, curY);
-                }
-                ctx.strokeStyle = "#32FF32"; ctx.lineWidth = 1.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke();
-                lastY = curY;
-            }
+            if (is12LeadMode) {
+                let colWidth = logicalWidth / 2;
+                let labelMargin = 23; 
 
-            // ===== 完美的實心粉紅 CO2 波形繪製 (帶精準刻度與標準波形) =====
-            if (showCo2Waveform) {
-                let curCo2Y = lastSpo2Y;
-                let pts = [];
+                ctx.fillStyle = "#000000"; 
+                ctx.fillRect(xPos, 0, 12, logicalHeight); 
+                ctx.fillRect(xPos + colWidth, 0, 12, logicalHeight);
 
-                let co2BaselineY = logicalHeight * 0.95; // 0 mmHg 的 Y 座標
-                // 動態計算 60mmHg 的繪圖高度，確保波峰能精準碰到 60 的虛線 (對應 55% 處)
-                let co2RangeY = co2BaselineY - (logicalHeight * 0.55); 
+                if (xPos >= labelMargin) {
+                    let slotH = logicalHeight / 6;
+                    let gain12 = 0.42; 
+                    let drawStartX = Math.max(labelMargin, startX);
 
-                ctx.fillStyle = "#ff3399";
-                for (let i = 1; i <= speed; i++) {
-                    let cx = startX + i; 
-                    let ct = simTime + (i / pxPerSec); 
-                    let currentCo2Val = getCo2Value(ct); // 直接取得真實 mmHg 數值
-                    
-                    // 計算對應的 Y 座標
-                    curCo2Y = co2BaselineY - ((currentCo2Val / 60.0) * co2RangeY);
-                    pts.push({x: cx, y: curCo2Y});
+                    for (let r = 0; r < 6; r++) {
+                        let centerY = slotH * (r + 0.5);
 
-                    // 畫出向下延伸到基準線的矩形
-                    let rectHeight = co2BaselineY - curCo2Y;
-                    if (rectHeight > 0) {
-                        ctx.fillRect(cx - 1.5, curCo2Y, 2.5, rectHeight);
+                        // 左半欄波形 (LIMB_LEADS)
+                        let prevMvL = (!accState.ecg12 || monitorState.rhythm === 'flatline') ? 0 : ecgEngine.sampleLead(simTime, LIMB_LEADS[r], false);
+                        let startYL = centerY - (prevMvL * ecgPxPerMv * gain12);
+                        let mvL = (!accState.ecg12 || monitorState.rhythm === 'flatline') ? 0 : ecgEngine.sampleLead(simTime + dt, LIMB_LEADS[r], false);
+                        let endYL = centerY - (mvL * ecgPxPerMv * gain12);
+
+                        ctx.beginPath();
+                        ctx.moveTo(drawStartX, startYL);
+                        ctx.lineTo(xPos, endYL);
+                        ctx.strokeStyle = "#32FF32";
+                        ctx.lineWidth = 1.1;
+                        ctx.stroke();
+
+                        // 右半欄波形 (PRECORD_LEADS)
+                        let prevMvR = (!accState.ecg12 || monitorState.rhythm === 'flatline') ? 0 : ecgEngine.sampleLead(simTime, PRECORD_LEADS[r], false);
+                        let startYR = centerY - (prevMvR * ecgPxPerMv * gain12);
+                        let mvR = (!accState.ecg12 || monitorState.rhythm === 'flatline') ? 0 : ecgEngine.sampleLead(simTime + dt, PRECORD_LEADS[r], false);
+                        let endYR = centerY - (mvR * ecgPxPerMv * gain12);
+
+                        ctx.beginPath();
+                        ctx.moveTo(drawStartX + colWidth, startYR);
+                        ctx.lineTo(xPos + colWidth, endYR);
+                        ctx.strokeStyle = "#32FF32";
+                        ctx.lineWidth = 1.1;
+                        ctx.stroke();
                     }
                 }
 
-                // 畫上緣的線條
-                ctx.beginPath();
-                ctx.moveTo(startX, lastSpo2Y);
-                for(let p of pts) {
-                    ctx.lineTo(p.x, p.y);
+            } else {
+                // 單欄標準繪製模式
+                ctx.fillStyle = "#000000"; 
+                ctx.fillRect(xPos, 0, 12, logicalHeight); 
+
+                if (showCo2Waveform) {
+                    ctx.fillStyle = "rgba(255, 51, 153, 0.5)"; 
+                    let y60 = logicalHeight * 0.55; 
+                    let y30 = logicalHeight * 0.75; 
+                    let y0  = logicalHeight * 0.95; 
+                    for (let px = Math.floor(xPos); px < Math.floor(xPos + 12); px++) {
+                        if (px % 3 === 0) {
+                            ctx.fillRect(px, y60, 1, 1);
+                            ctx.fillRect(px, y30, 1, 1);
+                            ctx.fillRect(px, y0,  1, 1);
+                        }
+                    }
                 }
-                ctx.strokeStyle = "#ff3399";
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
 
-                lastSpo2Y = curCo2Y;
+                let targetEcgBaseRatio = accState.spo2 || showCo2Waveform ? 0.28 : 0.5;
+                currentEcgBaseRatio += (targetEcgBaseRatio - currentEcgBaseRatio) * 0.1;
+                let curY = lastY;
 
-                // 保持 SpO2 的跳動條連動更新
-                if (accState.spo2) {
-                    let currentSpo2Val = getSpo2Value(simTime); 
+                // 根據當前選擇導線與硬體連接狀態決定是否繪製有效心律波形
+                const currentLead = leadCycle[leadCycleIndex];
+                let isLeadConnected = (currentLead === 'Pads') ? isPadsConnected : accState.ecg12;
+
+                if (!isLeadConnected || monitorState.rhythm === 'flatline') {
+                    // 若對應硬體未接上或目前心律為平線，繪製斷續的背景虛平線
+                    curY = Math.round(logicalHeight * currentEcgBaseRatio); 
+                    ctx.fillStyle = "#32FF32"; 
+                    for (let px = Math.floor(startX); px < Math.floor(xPos); px++) {
+                        if (Math.abs(px) % 9 < 4) ctx.fillRect(px, curY, 1, 1); 
+                    }
+                    lastY = curY;
+                } else {
+                    // 硬體連通時，呈現完整心波
+                    ctx.beginPath(); ctx.moveTo(startX, lastY); 
+                    for (let i = 1; i <= speed; i++) {
+                        let cx = startX + i; let ct = simTime + (i / pxPerSec); 
+                        let mv = 0;
+                        if (currentLead === 'Pads') {
+                            mv = ecgEngine.sample(ct);
+                        } else {
+                            mv = ecgEngine.sampleLead(ct, currentLead, false);
+                        }
+                        curY = (logicalHeight * currentEcgBaseRatio) - (mv * ecgPxPerMv); 
+                        ctx.lineTo(cx, curY);
+                    }
+                    ctx.strokeStyle = "#32FF32"; ctx.lineWidth = 1.2; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.stroke();
+                    lastY = curY;
+                }
+
+                if (showCo2Waveform) {
+                    let curCo2Y = lastSpo2Y;
+                    let pts = [];
+                    let co2BaselineY = logicalHeight * 0.95; 
+                    let co2RangeY = co2BaselineY - (logicalHeight * 0.55); 
+
+                    ctx.fillStyle = "#ff3399";
+                    for (let i = 1; i <= speed; i++) {
+                        let cx = startX + i; 
+                        let ct = simTime + (i / pxPerSec); 
+                        let currentCo2Val = getCo2Value(ct); 
+                        
+                        curCo2Y = co2BaselineY - ((currentCo2Val / 60.0) * co2RangeY);
+                        pts.push({x: cx, y: curCo2Y});
+
+                        let rectHeight = co2BaselineY - curCo2Y;
+                        if (rectHeight > 0) {
+                            ctx.fillRect(cx - 1.5, curCo2Y, 2.5, rectHeight);
+                        }
+                    }
+
+                    ctx.beginPath();
+                    ctx.moveTo(startX, lastSpo2Y);
+                    for(let p of pts) ctx.lineTo(p.x, p.y);
+                    ctx.strokeStyle = "#ff3399";
+                    ctx.lineWidth = 1.5;
+                    ctx.stroke();
+
+                    lastSpo2Y = curCo2Y;
+
+                    if (accState.spo2) {
+                        let currentSpo2Val = getSpo2Value(simTime); 
+                        const plethBarFill = document.getElementById('spo2-pleth-fill');
+                        if (plethBarFill) {
+                            let fillPercentage = Math.max(15, Math.min(100, 15 + (currentSpo2Val / 2.6) * 85));
+                            plethBarFill.style.height = `${fillPercentage}%`;
+                        }
+                    }
+                } else if (accState.spo2) {
+                    ctx.beginPath(); ctx.moveTo(startX, lastSpo2Y);
+                    let currentSpo2Val = 0; let curSpo2Y = lastSpo2Y;
+                    
+                    for (let i = 1; i <= speed; i++) {
+                        let cx = startX + i; let ct = simTime + (i / pxPerSec); 
+                        currentSpo2Val = getSpo2Value(ct);
+                        curSpo2Y = (logicalHeight * 0.98) - (currentSpo2Val * spo2PxPerMv);
+                        ctx.lineTo(cx, curSpo2Y);
+                    }
+                    ctx.strokeStyle = "#f1c40f"; 
+                    ctx.lineWidth = 2.0; ctx.stroke();
+                    lastSpo2Y = curSpo2Y;
+
                     const plethBarFill = document.getElementById('spo2-pleth-fill');
                     if (plethBarFill) {
                         let fillPercentage = Math.max(15, Math.min(100, 15 + (currentSpo2Val / 2.6) * 85));
                         plethBarFill.style.height = `${fillPercentage}%`;
                     }
+                } else { 
+                    lastSpo2Y = logicalHeight * 0.98; 
                 }
-            } else if (accState.spo2) {
-                // 原本黃色的 SpO2 畫線波形
-                ctx.beginPath(); ctx.moveTo(startX, lastSpo2Y);
-                let currentSpo2Val = 0; let curSpo2Y = lastSpo2Y;
-                
-                for (let i = 1; i <= speed; i++) {
-                    let cx = startX + i; let ct = simTime + (i / pxPerSec); 
-                    currentSpo2Val = getSpo2Value(ct);
-                    curSpo2Y = (logicalHeight * 0.98) - (currentSpo2Val * spo2PxPerMv);
-                    ctx.lineTo(cx, curSpo2Y);
-                }
-                ctx.strokeStyle = "#f1c40f"; 
-                ctx.lineWidth = 2.0; ctx.stroke();
-                lastSpo2Y = curSpo2Y;
 
-                const plethBarFill = document.getElementById('spo2-pleth-fill');
-                if (plethBarFill) {
-                    let fillPercentage = Math.max(15, Math.min(100, 15 + (currentSpo2Val / 2.6) * 85));
-                    plethBarFill.style.height = `${fillPercentage}%`;
+                if (showCo2Waveform) {
+                    ctx.fillStyle = "#000000";
+                    ctx.fillRect(0, logicalHeight * 0.48, logicalWidth * 0.065, logicalHeight * 0.52);
                 }
-            } else { 
-                lastSpo2Y = logicalHeight * 0.98; 
-            }
-
-            // 【新增這段遮罩】：只在 CO2 顯示時，把左側數字區塊塗黑，讓波形藏在後面
-            if (showCo2Waveform) {
-                ctx.fillStyle = "#000000";
-                // 從螢幕 48% 高度開始，蓋住左側約 6.5% 寬度的區域
-                ctx.fillRect(0, logicalHeight * 0.48, logicalWidth * 0.065, logicalHeight * 0.52);
             }
 
             xPos += speed; simTime += dt;
-            if (xPos >= logicalWidth) xPos = 0; 
+            if (xPos >= limit) xPos = 0; 
             requestAnimationFrame(drawECG);
         }
 
