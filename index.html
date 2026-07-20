@@ -228,6 +228,24 @@
             color: #ffffff !important;
         }
 
+        /* 標籤群組排版與切換邏輯 */
+        .label-group-standard, .label-group-12lead {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+            gap: 0.45vmin;
+        }
+        .label-group-12lead {
+            display: none;
+        }
+        .screen-bezel.mode-12-lead .label-group-standard {
+            display: none;
+        }
+        .screen-bezel.mode-12-lead .label-group-12lead {
+            display: flex;
+        }
+
         .screen-right-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
         .waveform-area { flex: 1; position: relative; background: #000; } 
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
@@ -1025,9 +1043,9 @@
                                 <path d="M1561 5769 c-266 -52 -454 -225 -532 -489 -17 -60 -23 -110 -27 -250 l-5 -175 -41 -20 c-30 -15 -47 -33 -65 -69 -49 -96 -26 -288 50 -423 28 -48 73 -96 100 -105 6 -2 15 -26 20 -53 13 -70 49 -139 114 -217 l55 -66 0 -179 c0 -98 -4 -183 -8 -190 -4 -6 -100 -48 -212 -93 -113 -45 -275 -116 -360 -157 -117 -56 -187 -82 -285 -108 -71 -18 -164 -46 -205 -63 -69 -27 -75 -32 -78 -61 l-3 -32 38 19 c21 11 89 36 150 56 l113 36 190 0 c204 0 263 -5 605 -50 249 -33 325 -40 325 -29 0 11 -71 36 -151 53 -163 33 -517 66 -724 66 -49 0 -75 4 -70 9 18 18 295 141 488 217 124 49 200 84 215 100 21 24 22 33 22 195 0 93 4 169 9 169 5 0 15 -8 22 -17 23 -28 153 -120 225 -160 l69 -38 150 0 150 0 55 32 c58 34 104 69 189 141 l51 44 0 -171 c0 -162 1 -171 23 -195 14 -16 87 -51 212 -99 105 -41 222 -89 260 -107 39 -18 89 -40 113 -51 l42 -18 0 28 c0 27 -7 32 -137 89 -76 34 -208 88 -293 122 -85 33 -158 66 -162 73 -4 6 -8 93 -8 192 l0 180 54 67 c61 75 100 152 111 215 5 34 14 47 40 63 59 37 120 150 147 273 6 28 8 87 6 131 -5 102 -32 156 -92 186 l-40 20 -1 152 c-1 120 -6 172 -23 240 -68 277 -250 456 -522 513 -78 16 -294 19 -369 4z m378 -59 c236 -57 400 -221 461 -463 21 -86 38 -287 24 -287 -5 0 -17 33 -26 73 -31 137 -114 274 -190 313 -40 21 -112 20 -228 -2 -124 -23 -385 -24 -526 -2 -105 17 -156 13 -214 -17 -62 -32 -126 -133 -167 -265 l-24 -75 5 105 c3 58 12 132 21 165 60 221 228 393 440 449 91 24 92 24 220 25 89 1 142 -4 204 -19z m226 -381 c82 -23 165 -145 205 -302 32 -126 44 -327 31 -491 -21 -258 -40 -375 -69 -435 -36 -75 -248 -290 -353 -358 -69 -45 -84 -50 -151 -56 -118 -10 -205 1 -268 34 -87 46 -220 151 -303 239 -103 110 -143 191 -157 320 -58 548 -37 784 86 952 64 86 123 105 266 82 150 -24 412 -22 543 4 122 25 121 24 170 11z m-1145 -576 c0 -27 7 -137 16 -246 9 -109 14 -201 10 -204 -19 -20 -87 91 -111 183 -18 70 -21 197 -5 239 15 39 49 75 72 75 15 0 18 -8 18 -47z m1487 32 c12 -8 29 -35 39 -60 35 -92 -1 -288 -70 -377 -37 -50 -59 -61 -52 -26 6 24 36 403 36 451 0 30 15 34 47 12z M2665 3159 c-308 -13 -512 -39 -640 -81 l-70 -23 47 -3 c26 -2 128 8 225 23 241 34 441 55 541 55 75 0 82 2 82 20 0 11 -3 19 -7 18 -5 0 -84 -4 -178 -9z M1650 2940 c0 -6 11 -22 25 -36 31 -31 90 -31 90 0 0 14 -12 22 -50 32 -62 16 -65 16 -65 4z M1728 2420 c-4 -19 -12 -145 -19 -280 -10 -188 -10 -276 -1 -374 10 -121 15 -146 27 -135 2 3 10 61 16 130 11 120 6 452 -10 624 -5 61 -7 65 -13 35z M307 1744 c-4 -4 -5 -16 -2 -28 2 -12 9 -70 16 -131 15 -137 8 -188 -71 -585 -77 -383 -119 -688 -120 -857 0 -38 3 -43 23 -43 23 0 24 2 36 158 6 86 21 220 32 297 18 129 136 735 144 743 2 2 7 -13 10 -34 13 -75 58 -231 130 -455 41 -124 79 -254 84 -290 6 -35 11 -134 11 -219 0 -181 4 -200 35 -200 l22 0 -4 188 c-2 103 -11 221 -19 264 -8 42 -48 180 -89 306 -86 262 -113 362 -122 447 l-6 60 24 -18 c49 -36 145 -77 219 -94 83 -19 360 -25 484 -10 61 8 67 10 53 24 -13 13 -55 16 -259 17 -266 2 -323 12 -421 69 -102 60 -137 116 -167 273 -22 108 -30 131 -43 118z M3155 1739 c-2 -8 -13 -60 -24 -116 -11 -56 -28 -119 -38 -140 -44 -94 -155 -161 -307 -188 -114 -19 -369 -20 -498 0 -93 14 -128 12 -128 -5 0 -23 250 -60 406 -60 194 0 348 34 446 100 l43 29 3 -37 c1 -20 -8 -80 -21 -132 -24 -95 -23 -109 10 -110 13 0 35 66 54 161 6 33 13 58 15 57 1 -2 30 -138 63 -303 63 -314 96 -521 110 -690 7 -89 8 -75 10 121 1 239 -4 278 -79 624 -44 203 -79 448 -69 485 14 53 27 200 18 209 -5 6 -10 4 -14 -5z M900 1595 c-15 -8 -29 -21 -32 -29 -25 -66 93 -115 157 -65 76 60 -35 143 -125 94z M2450 1589 c-76 -60 32 -142 124 -94 50 26 50 74 -1 100 -40 21 -92 19 -123 -6z M1340 1331 c-91 -31 -87 -28 -69 -46 12 -12 22 -10 74 11 33 14 69 33 80 44 26 26 11 25 -85 -9z M1706 858 c-3 -62 -9 -258 -12 -435 l-7 -323 27 0 26 0 0 233 c0 293 -11 637 -20 637 -4 0 -10 -51 -14 -112z M2830 272 c0 -43 -3 -100 -6 -126 l-7 -48 29 4 29 3 3 118 c1 69 -1 117 -7 117 -5 0 -16 3 -25 6 -14 5 -16 -5 -16 -74z"/>
                             </g>
                         </g>
-                       <rect x="249" y="525" width="13" height="9" rx="1.5" fill="#ffffff" stroke="none" />
-<path d="M 241,514 Q 228,522 218,529" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="1.5,1.5" />
-<circle cx="218" cy="529" r="1.5" fill="#ffffff" />
+                        <rect x="241" y="509" width="13" height="9" rx="1.5" fill="#ffffff" stroke="none" />
+                        <path d="M 241,514 Q 228,522 218,529" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="1.5,1.5" />
+                        <circle cx="218" cy="529" r="1.5" fill="#ffffff" />
                     </g>
                     
                     <rect x="0" y="0" width="340" height="590" rx="12" fill="none" stroke="#d1dee8" stroke-width="6" />
@@ -1294,23 +1312,128 @@
                         </div>
                         <div class="screen-main-area">
                             <div class="screen-left-labels">
-                                <!-- 新增 ID 讓「I, II, III...」成為可點擊按鈕 -->
-                                <div class="s-label-box">I, II,<br>III...</div>
-                                <!-- 「12」導程標籤按鈕 -->
-                                <div class="s-label-box" id="btn-left-12-lead" style="cursor: pointer;" title="切換 12 導程心電圖顯示">
-                                    <span style="font-size: 1.5vmin; font-weight: 900; line-height: 1; color: #fff; margin-top: -1.2vmin;">12</span>
-                                    <svg viewBox="0 0 24 10" style="position: absolute; width: 80%; height: 30%; bottom: 8%; left: 10%; fill: none; stroke: var(--zoll-monitor-green); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;">
-                                        <path d="M0,5 L6,5 L8,2 L10,8 L11,5 L14,5 L15,3 L16,5 L24,5" />
-                                    </svg>
+                                <!-- 標準模式標籤組 -->
+                                <div class="label-group-standard">
+                                    <div class="s-label-box" id="btn-left-lead-cycle">I, II,<br>III...</div>
+                                    <div class="s-label-box" id="btn-left-12-lead" style="cursor: pointer;" title="切換 12 導程心電圖顯示">
+                                        <span style="font-size: 1.5vmin; font-weight: 900; line-height: 1; color: #fff; margin-top: -1.2vmin;">12</span>
+                                        <svg viewBox="0 0 24 10" style="position: absolute; width: 80%; height: 30%; bottom: 8%; left: 10%; fill: none; stroke: var(--zoll-monitor-green); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;">
+                                            <path d="M0,5 L6,5 L8,2 L10,8 L11,5 L14,5 L15,3 L16,5 L24,5" />
+                                        </svg>
+                                    </div>
+                                    <div class="s-label-box" style="color: #ffffff; font-size: 1.05vmin; font-weight: bold; position: relative;">
+                                        <span style="transform: translateY(-0.5vmin); display: inline-block;">CO2</span>
+                                        <div id="co2-screen-led" style="position: absolute; bottom: 8%; width: 40%; height: 3px; background-color: #222; border-radius: 1px;"></div>
+                                    </div>
+                                    <div class="s-label-box"><svg viewBox="0 0 24 24" style="position: absolute; width: 86%; height: 86%; top: 7%; left: 7%;"><path d="M 8,2 h 8 v 6 h 6 v 8 h -6 v 6 h -8 v -6 h -6 v -8 h 6 z" fill="#ffffff" /><text x="10.9" y="11.2" fill="#17191c" font-size="5.3" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" text-anchor="middle">P</text><text x="13.1" y="14.6" fill="#17191c" font-size="5.3" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" text-anchor="middle">X</text></svg></div>
+                                    <div class="s-label-box" style="color: #ffffff; font-size: 1.05vmin; font-weight: bold;">SYNC</div>
+                                    <div class="s-label-box"><svg viewBox="0 0 24 24" style="position: absolute; width: 95%; height: 95%; top: 2.5%; left: 2.5%; fill: none;"><path d="M 2.5,4 V 18 C 2.5,18 8.5,19.5 14.5,18 V 4 Z" fill="rgba(255,255,255,0.22)" stroke="#ffffff" stroke-width="1.2" /><ellipse cx="8.5" cy="4" rx="6.0" ry="2.0" fill="rgba(255,255,255,0.45)" stroke="#ffffff" stroke-width="1.2" /><ellipse cx="8.5" cy="4" rx="1.8" ry="0.6" fill="#17191c" /><path d="M 2.5,5.5 C 2.5,5.5 12.5,6.5 22.5,5.5 V 18 C 22.5,18 12.5,19 2.5,18 Z" fill="#ffffff" /><path d="M 5.5,12.5 H 8 L 8.5,9 L 9.1,16 L 9.6,12.5 H 12.5 L 13,9 L 13.6,16 L 14.1,12.5 H 17 L 17.5,9 L 18.1,16 L 18.6,12.5 H 21.5" stroke="#17191c" stroke-width="0.5" fill="none" stroke-linejoin="round" stroke-linecap="round" /></svg></div>
+                                    <div class="s-label-box"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; width: 76%; height: 76%; top: 12%; left: 12%;"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg></div>
                                 </div>
-                                <div class="s-label-box" style="color: #ffffff; font-size: 1.05vmin; font-weight: bold; position: relative;">
-                                    <span style="transform: translateY(-0.5vmin); display: inline-block;">CO2</span>
-                                    <div id="co2-screen-led" style="position: absolute; bottom: 8%; width: 40%; height: 3px; background-color: #222; border-radius: 1px;"></div>
-                                </div>
-                                <div class="s-label-box"><svg viewBox="0 0 24 24" style="position: absolute; width: 86%; height: 86%; top: 7%; left: 7%;"><path d="M 8,2 h 8 v 6 h 6 v 8 h -6 v 6 h -8 v -6 h -6 v -8 h 6 z" fill="#ffffff" /><text x="10.9" y="11.2" fill="#17191c" font-size="5.3" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" text-anchor="middle">P</text><text x="13.1" y="14.6" fill="#17191c" font-size="5.3" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" text-anchor="middle">X</text></svg></div>
-                                <div class="s-label-box" style="color: #ffffff; font-size: 1.05vmin; font-weight: bold;">SYNC</div>
-                                <div class="s-label-box"><svg viewBox="0 0 24 24" style="position: absolute; width: 95%; height: 95%; top: 2.5%; left: 2.5%; fill: none;"><path d="M 2.5,4 V 18 C 2.5,18 8.5,19.5 14.5,18 V 4 Z" fill="rgba(255,255,255,0.22)" stroke="#ffffff" stroke-width="1.2" /><ellipse cx="8.5" cy="4" rx="6.0" ry="2.0" fill="rgba(255,255,255,0.45)" stroke="#ffffff" stroke-width="1.2" /><ellipse cx="8.5" cy="4" rx="1.8" ry="0.6" fill="#17191c" /><path d="M 2.5,5.5 C 2.5,5.5 12.5,6.5 22.5,5.5 V 18 C 22.5,18 12.5,19 2.5,18 Z" fill="#ffffff" /><path d="M 5.5,12.5 H 8 L 8.5,9 L 9.1,16 L 9.6,12.5 H 12.5 L 13,9 L 13.6,16 L 14.1,12.5 H 17 L 17.5,9 L 18.1,16 L 18.6,12.5 H 21.5" stroke="#17191c" stroke-width="0.5" fill="none" stroke-linejoin="round" stroke-linecap="round" /></svg></div>
-                                <div class="s-label-box"><svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; width: 76%; height: 76%; top: 12%; left: 12%;"><path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/></svg></div>
+
+                               <!-- 12 導程專用標籤組 -->
+<div class="label-group-12lead">
+   <!-- 1. 左上相機 (放大版) / 右下 12 圖標 -->
+    <div class="s-label-box">
+        <svg viewBox="0 0 24 24" style="width: 82%; height: 82%; position: relative;">
+            <!-- 左上角：相機圖標 (放大比例至 0.68，位置微調至 0.5, 0.5) -->
+            <g transform="translate(0.5, 0.5) scale(0.68)" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4.5" y="2.5" width="3" height="3" fill="#ffffff" stroke="none"/>
+                <rect x="2" y="5.5" width="20" height="14" rx="2" stroke-width="1.6"/>
+                <path d="M 6.5 5.5 Q 8.5 12.5 6.5 19.5" stroke-width="1.6"/>
+                <circle cx="15.5" cy="14.5" r="3.5" stroke-width="1.6"/>
+                <rect x="10" y="8" width="3" height="1.8" rx="0.3" stroke-width="1.6"/>
+                <circle cx="19" cy="8.5" r="1.1" fill="#ffffff" stroke="none"/>
+            </g>
+            
+            <!-- 右下角：綠色 12 導程標誌 -->
+            <text x="23" y="22" fill="#32ff32" font-size="9" font-weight="900" font-family="Arial Black, Arial, sans-serif" text-anchor="end">12</text>
+            
+            <!-- 底部裝飾性心電波形 -->
+            <path d="M 2 21 L 6 21 L 7.5 18 L 8.5 23 L 9.5 21 L 12 21" fill="none" stroke="#4bc3ff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+<!-- 2. 臨床病歷文件/夾板圖標 (精準板 18 / 紙 16 + 全周 1px 邊框 + 灰色認證徽章) -->
+    <div class="s-label-box">
+        <svg viewBox="0 0 24 24" style="width: 82%; height: 82%;">
+            <!-- 1. 最底層：咖啡色板子 (寬度設定為 18，x="3") -->
+            <rect x="3" y="1" width="18" height="22" rx="0.5" fill="#8c5230" stroke="#5c341a" stroke-width="0.5" />
+            
+            <!-- 2. 中間層：白色紙張 (寬度設定為 16，x="4"，達成完美 1px 全周窄邊) -->
+            <rect x="4" y="2" width="16" height="20" rx="0.3" fill="#ffffff" />
+            
+            <!-- 3. 頂部：金屬銀色夾子 -->
+            <path d="M 8 3.5 L 8 1.2 L 16 1.2 L 16 3.5" fill="none" stroke="#dcdde1" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+            <rect x="8.5" y="1.5" width="7" height="2.2" rx="0.2" fill="#b2bec3" stroke="#7f8c8d" stroke-width="0.4" />
+            
+            <!-- 4. 紙張內橫線：精細極細橫線 (配合紙張寬度縮放，第三行避讓獎牌) -->
+            <line x1="5.5" y1="6.5" x2="18.5" y2="6.5" stroke="#95a5a6" stroke-width="0.7" stroke-linecap="round" />
+            <line x1="5.5" y1="10.5" x2="18.5" y2="10.5" stroke="#95a5a6" stroke-width="0.7" stroke-linecap="round" />
+            <line x1="5.5" y1="14.5" x2="12" y2="14.5" stroke="#95a5a6" stroke-width="0.7" stroke-linecap="round" />
+            
+            <!-- 5. 右下角灰色獎牌 (適配至 x=15.5 軸心) -->
+            <!-- 亮銀灰色緞帶 -->
+            <polygon points="14,17.5 12.7,21.2 14.7,20.5 15.3,18.2" fill="#b2bec3" />
+            <polygon points="17,17.5 18.3,21.2 16.3,20.5 15.7,18.2" fill="#b2bec3" />
+            <!-- 深石板灰圓形封蠟章 -->
+            <circle cx="15.5" cy="16" r="3.5" fill="#7f8c8d" stroke="#5c6366" stroke-width="0.4" />
+            <!-- 獎牌內部的白色打勾 -->
+            <path d="M 14,16 L 15,17 L 17,15" fill="none" stroke="#ffffff" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+    <!-- 3. 空白框 (移除原本隱藏邊框的樣式，保留框線) -->
+    <div class="s-label-box"></div>
+
+   <!-- 4. 一張紙 + 綠色大勾勾 (大一號極限版：加大白紙與極限粗體大勾勾驗證章) -->
+    <div class="s-label-box">
+        <svg viewBox="0 0 24 24" style="width: 82%; height: 82%;">
+            <!-- 1. 文件白紙主體 (加大至 17x21) -->
+            <rect x="3.5" y="1.5" width="17" height="21" rx="0.5" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.6" />
+            
+            <!-- 2. 紙張內部精細橫線 (第二、三行完美避讓超大號大勾勾) -->
+            <line x1="5.5" y1="5" x2="18.5" y2="5" stroke="#95a5a6" stroke-width="0.7" stroke-linecap="round" />
+            <line x1="5.5" y1="9" x2="12.5" y2="9" stroke="#95a5a6" stroke-width="0.7" stroke-linecap="round" />
+            <line x1="5.5" y1="13" x2="8" y2="13" stroke="#95a5a6" stroke-width="0.7" stroke-linecap="round" />
+            
+            <!-- 3. 右下角綠色盾章 (半徑放大至 7.5，再大一號) -->
+            <circle cx="14" cy="15" r="7.5" fill="#32ff32" stroke="#22aa22" stroke-width="0.6" />
+            <!-- 盾章內部超粗體白色打勾 (粗細加粗至 2.2) -->
+            <path d="M 10.5,15.0 L 13.0,17.5 L 17.5,12.0" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+
+    <!-- 5. 圓大一點 (右半白色、左半中空無底、中間貫穿精細綠色心電圖) -->
+    <div class="s-label-box">
+        <svg viewBox="0 0 24 24" style="width: 82%; height: 82%;">
+            <!-- 1. 右半圓填充實心純白色 -->
+            <path d="M 12,2.5 A 9.5,9.5 0 0,1 12,21.5 Z" fill="#ffffff" />
+            
+            <!-- 2. 整體圓形白色外框 (使左半邊呈現中空透底效果) -->
+            <circle cx="12" cy="12" r="9.5" fill="none" stroke="#ffffff" stroke-width="1.6" />
+            
+            <!-- 3. 中間橫向貫穿的精細綠色心電圖波形 (調細至 1.2) -->
+            <path d="M 3.5,12 L 7,12 Q 8,10.2 8.7,12 L 9.5,14.5 L 11,4 L 12.5,19 L 13.3,12 Q 14.5,8.8 15.5,12 L 20.5,12" 
+                  fill="none" stroke="#32ff32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+
+    <!-- 6. 空白框 (移除原本隱藏邊框的樣式，保留框線) -->
+    <div class="s-label-box"></div>
+<!-- 7. Exit 12 按鈕 (文字再大一點，心電圖小巧化) -->
+    <div class="s-label-box" id="btn-exit-12-lead" style="cursor: pointer;" title="離開 12 導程">
+        <svg viewBox="0 0 24 24" style="width: 82%; height: 82%;">
+            <!-- 頂部：Exit 文字 (適度放大) -->
+            <text x="12" y="6" fill="#ffffff" font-size="8" font-weight="bold" font-family="Arial, sans-serif" text-anchor="middle">Exit</text>
+            
+            <!-- 中間：12 標誌 (適度放大) -->
+            <text x="12" y="16.8" fill="#32ff32" font-size="12" font-weight="900" font-family="Arial Black, Arial, sans-serif" text-anchor="middle">12</text>
+            
+            <!-- 底部：心電圖小一點 (縮短寬度、調降振幅高度，細線 1.1) -->
+            <path d="M 5,19 L 9,19 L 10,17.5 L 11,20.5 L 12,19 L 13.5,19 L 14.2,18 L 15,19 L 19,19" 
+                  fill="none" stroke="#32ff32" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+</div>
                             </div>
                             <div class="screen-right-panel">
                                 <div class="waveform-area">
@@ -1381,11 +1504,11 @@
                     <div class="right-navkeys">
                         <div class="ir-window-outer"><div class="ir-window-inner"></div></div>
                         <div class="nav-row" style="justify-content: flex-end;"><div class="nav-btn small-btn"><svg style="width: 80%; height: 80%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2" stroke-width="1.5"/><g transform="translate(1, 0.5) scale(0.52)" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></g><rect x="11.5" y="11.5" width="11" height="11" rx="2.5" stroke-width="1.5"/><g transform="translate(13, 13) scale(0.33)" stroke-width="3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="2" y1="2" x2="22" y2="22" stroke-width="4"/></g></svg></div></div>
-<div class="nav-row" style="justify-content: flex-start;">
-    <div class="nav-btn small-btn" id="btn-hard-lead" style="cursor: pointer;" title="切換導程">
-        <svg style="width: 80%; height: 80%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2" stroke-width="1.5"/><g transform="translate(1, 1) scale(0.48)" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></g><rect x="11.5" y="12.5" width="11" height="9" rx="1.5" stroke-width="1.5"/><polyline points="13 17 14.5 17 16 14.5 17.5 19 17 21 17" stroke-width="1.2" stroke-linejoin="round"/></svg>
-    </div>
-</div>
+                        <div class="nav-row" style="justify-content: flex-start;">
+                            <div class="nav-btn small-btn" id="btn-hard-lead" style="cursor: pointer;" title="切換導程">
+                                <svg style="width: 80%; height: 80%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2" stroke-width="1.5"/><g transform="translate(1, 1) scale(0.48)" stroke-width="2.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></g><rect x="11.5" y="12.5" width="11" height="9" rx="1.5" stroke-width="1.5"/><polyline points="13 17 14.5 17 16 14.5 17.5 19 17 21 17" stroke-width="1.2" stroke-linejoin="round"/></svg>
+                            </div>
+                        </div>
                         <div class="three-key-group">
                             <div class="nav-btn key-left"><svg style="width: 50%; height: 50%;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5" fill="currentColor"/></svg></div>
                             <div class="key-right-col">
@@ -1472,7 +1595,9 @@
         // --- 12-Lead ECG 狀態與事件綁定 ---
         let is12LeadMode = false;
         const btnLeft12Lead = document.getElementById('btn-left-12-lead');
-        const btnSoftkey12Lead = document.querySelectorAll('.softkey')[1]; // 左側第二個軟鍵
+        const btnExit12Lead = document.getElementById('btn-exit-12-lead'); // 新增的 Exit 按鈕
+        const btnSoftkey12Lead = document.querySelectorAll('.softkey')[1]; // 左邊第2顆實體鍵
+        const btnSoftkeyExit12 = document.querySelectorAll('.softkey')[6]; // 左邊最下面(第7顆)實體鍵
 
         const LIMB_LEADS = ['I', 'II', 'III', 'aVR', 'aVL', 'aVF'];
         const PRECORD_LEADS = ['V1', 'V2', 'V3', 'V4', 'V5', 'V6'];
@@ -1480,12 +1605,12 @@
         // --- 導程切換邏輯 (I, II, III ... Pads) ---
         const leadCycle = ['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'Pads'];
         let leadCycleIndex = 12; // 預設為 Pads 導程
-/// 抓取左側第一顆實體按鍵 (Softkey) 來切換導程
+        
+        // 抓取左側第一顆實體按鍵 (Softkey) 來切換導程
         const btnSoftkeyLead = document.getElementById('btn-softkey-lead');
         btnSoftkeyLead.addEventListener(clickEvent, (e) => {
             e.preventDefault(); e.stopPropagation();
             if (is12LeadMode) {
-                // 這裡是你上次不小心刪掉的代碼，補回來才能正確退出 12-Lead
                 toggle12LeadMode();
             }
             leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
@@ -1511,15 +1636,33 @@
             updateScreenUI();
         }
 
+        // 進入 12 導程 (點擊螢幕上的12)
         btnLeft12Lead.addEventListener(clickEvent, (e) => {
             e.preventDefault(); e.stopPropagation();
-            toggle12LeadMode();
+            if(!is12LeadMode) toggle12LeadMode();
         });
 
+        // 進入 12 導程 (按機身左側第二顆實體鍵)
         if (btnSoftkey12Lead) {
             btnSoftkey12Lead.addEventListener(clickEvent, (e) => {
                 e.preventDefault(); e.stopPropagation();
-                toggle12LeadMode();
+                if(!is12LeadMode) toggle12LeadMode();
+            });
+        }
+
+        // 離開 12 導程 (點擊螢幕上的 Exit 12)
+        if (btnExit12Lead) {
+            btnExit12Lead.addEventListener(clickEvent, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                if(is12LeadMode) toggle12LeadMode();
+            });
+        }
+
+        // 離開 12 導程 (按機身左側最下方實體鍵)
+        if (btnSoftkeyExit12) {
+            btnSoftkeyExit12.addEventListener(clickEvent, (e) => {
+                e.preventDefault(); e.stopPropagation();
+                if(is12LeadMode) toggle12LeadMode();
             });
         }
 
