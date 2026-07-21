@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -247,8 +248,8 @@
             display: flex;
         }
 
-        .screen-right-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .waveform-area { flex: 1; position: relative; background: #000; } 
+        .screen-right-panel { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+        .waveform-area { flex: 1; position: relative; background: #000; transition: width 0.15s ease; } 
         canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
         .ecg-overlay-text { position: absolute; color: var(--zoll-monitor-green); font-family: Arial, "Helvetica Neue", Helvetica, sans-serif; font-weight: bold; z-index: 5; pointer-events: none; }
@@ -256,7 +257,7 @@
         .text-center-check { top: 13%; left: 50%; transform: translateX(-50%); font-size: 1.4vmin; letter-spacing: 0.3px; }
         #screen-msg { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); color: #f1c40f; font-size: 3.1vmin; font-weight: bold; font-family: 'Arial Black', sans-serif; background: rgba(0,0,0,0.85); padding: 3% 5%; border-radius: 8px; display: none; z-index: 10; text-align: center; }
 
-        .screen-bottom-vitals { height: 33%; background: #000; border-top: 1.5px solid #222; display: flex; flex-direction: row; box-sizing: border-box; }
+        .screen-bottom-vitals { height: 33%; background: #000; border-top: 1.5px solid #222; display: flex; flex-direction: row; box-sizing: border-box; transition: width 0.15s ease; }
         .vital-hr { flex: 0.75; } .vital-nibp { flex: 1.45; } .vital-co2 { flex: 0.95; } .vital-spo2 { flex: 0.95; }
         .vital-col { border-right: 1px solid #222; display: flex; flex-direction: column; background: #000; overflow: hidden; } .vital-col:last-child { border-right: none; }
         .v-title-bar { height: 2.1vmin; display: flex; justify-content: space-between; align-items: center; font-size: 0.9vmin; font-weight: 900; padding: 0 6%; color: #000; margin-top: 0; box-sizing: border-box; }
@@ -328,7 +329,7 @@
             line-height: 1.1;
         }
 
-    /* =========================================================================
+        /* =========================================================================
            12 導程（12-Lead）與 分析模式（Analyze Mode）螢幕切換佈局
            ========================================================================= */
         .screen-bezel.mode-12-lead .screen-right-panel,
@@ -442,6 +443,7 @@
             font-weight: bold !important;
             letter-spacing: 0.1px;
             white-space: nowrap !important;
+            line-height: normal !important;
         }
 
         /* NIBP 數值字體 */
@@ -531,6 +533,26 @@
             height: 100%;
             gap: 0.45vmin;
         }
+/* 去顫充電/已充電專用標籤組樣式 */
+.label-group-defib {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 0.45vmin;
+}
+
+/* 充電或已充電狀態下，強制隱藏其他標籤組，並顯示去顫專用標籤組 */
+.screen-bezel.mode-defib-charging .label-group-standard,
+.screen-bezel.mode-defib-charging .label-group-12lead,
+.screen-bezel.mode-defib-charging .label-group-analyze {
+    display: none !important;
+}
+.screen-bezel.mode-defib-charging .label-group-defib {
+    display: flex !important;
+}
+
+
         .screen-bezel.mode-analyze .label-group-standard {
             display: none;
         }
@@ -578,27 +600,23 @@
        .btn-shock.ready {
             opacity: 1.0 !important;
             pointer-events: auto !important;
-            /* 讓整個按鈕包含圖示一起閃爍 */
             animation: shock-flash 0.35s infinite !important;
         }
-        /* 讓裡面的閃電在準備狀態時發光，但透明度交給父元素的動畫控制 */
         .btn-shock.ready svg { filter: drop-shadow(0 0 6px #ffffff); } 
         .btn-shock.ready:active { transform: scale(0.96) translateY(1px); box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 3px 6px rgba(0,0,0,0.6) !important; }
         
         @keyframes shock-flash {
             0%, 49% {
-                /* 極亮狀態：高飽和度紅橘色 + 強烈發光 */
                 background: #ff2a00 !important; 
                 border-color: #ffea00 !important; 
                 box-shadow: 0 0 40px #ff2a00, 0 0 20px #ff8c00, inset 0 0 20px rgba(255, 255, 255, 0.9) !important;
-                filter: brightness(1.3); /* 提亮整個按鈕(包含閃電) */
+                filter: brightness(1.3);
             }
             50%, 100% {
-                /* 徹底熄滅狀態：變成非常暗的紅褐色，製造強烈視覺對比 */
                 background: #541d08 !important; 
                 border-color: #2b0e03 !important; 
                 box-shadow: 0 3px 5px rgba(0,0,0,0.8), inset 0 2.5px 3.5px rgba(0,0,0,0.9) !important;
-                filter: brightness(0.4); /* 壓暗整個按鈕(包含閃電圖示也會變暗) */
+                filter: brightness(0.4);
             }
         }
         .blue-bottom-details { width: 100%; height: 11%; padding: 0 5%; box-sizing: border-box; display: flex; justify-content: center; align-items: flex-end; position: relative; z-index: 10; }
@@ -614,6 +632,258 @@
         #dev-panel select { width: 100%; padding: 4px; font-size: 13px; font-weight: bold; }
         .dev-btn-group { display: flex; gap: 4px; }
         #dev-panel button { font-size: 11px; padding: 4px; cursor: pointer; flex: 1; }
+
+        /* =========================================================================
+           去顫模式 (Defib Mode) 樣式
+           ========================================================================= */
+        .energy-scale-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 16%;
+            height: 100%;
+            background-color: #080a0d;
+            border-left: 2px solid #222;
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            box-sizing: border-box;
+            padding: 0.2vmin 0;
+            z-index: 8;
+        }
+        .screen-bezel.mode-defib .energy-scale-container {
+            display: flex;
+        }
+        .energy-scale-title {
+            font-size: 0.8vmin;
+            color: #8c969d;
+            text-align: center;
+            line-height: 1.1;
+            border-bottom: 1px solid #333;
+            width: 100%;
+            padding-bottom: 2px;
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+       .energy-scale-list {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* 改為 flex-start，避免產生剩餘間距 */
+    align-items: center;
+    overflow: hidden;
+}
+   .energy-scale-item {
+    font-size: 1.0vmin;         
+    flex: 1;                     
+    
+    /* === 新增以下兩行屬性，解決底部數字被裁切的問題 === */
+    min-height: 0;               /* 允許格子高度壓縮至小於文字預設高度 */
+    line-height: 1;              /* 緊縮文字行高，釋放垂直空間 */
+    
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8c969d;
+    font-weight: 900;            
+    box-sizing: border-box;
+
+    /* 邊框設定 */
+    border-left: 1px solid rgba(255, 255, 255, 0.4);
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* 頂部第一個補上頂邊框 */
+.energy-scale-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* 2. 當前選中的項目樣式 */
+.energy-scale-item.active {
+    /* === 改為藍底白字 === */
+    background-color: #3366b8;   /* 藍色背景（使用標準 ZOLL 藍） */
+    color: #ffffff;              /* 白色文字 */
+    
+    font-weight: 900;            /* 確保選中狀態維持極粗 */
+    font-size: 1.3vmin;          /* 您先前調整好的選中字型大小 */
+}
+
+
+        
+   /* 1. 去顫底欄容器：整體高度變扁矮至 28%，間距縮小至 2px */
+.screen-bottom-defib {
+    height: 28%;               /* 整體高度矮一點 */
+    background: #000;
+    border-top: 1.5px solid #222;
+    display: none;
+    flex-direction: row;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0px;
+    gap: 0.2px;                  /* 大外框間距小一點 */
+}
+
+/* 2. 左邊去顫器大外框 */
+.defib-status-box {
+    flex: 1.6;
+    background-color: #efc94c; 
+    border: 2px solid #ffffff; 
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 3px;        
+    overflow: hidden;
+}
+
+/* 3. 中間閃電大外框 (黑底置中排版) */
+.defib-shock-box {
+    width: 13%;
+    background-color: #000000;
+    border: 2px solid #ffffff; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* 垂直置中 */
+    align-items: center;
+    gap: 0.4vmin;              /* 閃電與數字的間距 */
+    box-sizing: border-box;
+    border-radius: 3px;        
+}
+
+/* 4. 右邊能量大外框 */
+.defib-energy-box {
+    flex: 1.0;
+    background-color: #efc94c; 
+    border: 2px solid #ffffff; 
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 3px;        
+    overflow: hidden;
+}
+.defib-energy-val-box {
+    background-color: transparent !important;
+    color: #000000;
+    font-size: 3.2vmin;          /* 能量數字縮小適配空間 */
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    border: none !important;
+    box-sizing: border-box;
+}
+.defib-energy-unit {
+    font-size: 1.5vmin;          /* J 單位字體縮小 */
+    font-weight: 900;
+    color: #000000;
+    background: none !important;
+    margin-left: 0.1vmin;
+    line-height: 1;
+    align-self: flex-end;
+    margin-bottom: 0.3vmin;      /* 對齊數值底部 */
+}
+        /* 進入去顫模式時，寬度重新分配，留下 16% 給右邊貫穿底部的能量條 */
+        .screen-bezel.mode-defib .waveform-area,
+        .screen-bezel.mode-defib .screen-bottom-vitals,
+        .screen-bezel.mode-defib .screen-bottom-defib {
+            width: 84% !important;
+        }
+
+        .screen-bezel.mode-defib .screen-bottom-vitals {
+            display: none !important;
+        }
+        .screen-bezel.mode-defib .screen-bottom-defib {
+            display: flex !important;
+        }
+      
+       /* 5. 綠色標題框：字體更大、且新增底部單獨白色框 (白線) */
+.defib-status-title, .defib-energy-title {
+    background-color: #00a854;   /* 醫療綠底 */
+    color: #ffffff;
+    font-size: 1.25vmin;         /* 標題字體大一點 */
+    font-weight: bold;
+    padding: 0.5vmin 0;          
+    text-align: center;          
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1;
+    border-bottom: 2px solid #ffffff; /* 標題獨立的白色分隔框 */
+}/* 6. 左側去顫狀態內容：配合整體變矮 */
+.defib-status-main-box {
+    border: none !important;
+    background-color: transparent !important;
+    color: #000000;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.1vmin 0;          
+    box-sizing: border-box;
+}
+.defib-status-main {
+    font-size: 2.5vmin;          /* 字體微調，適配變矮的空間 */
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+}
+.defib-status-sub {
+    font-size: 0.95vmin;         /* 字體微調 */
+    font-weight: bold;
+    text-align: center;
+    color: #da3838;
+    margin-top: 0.1vmin;
+}
+/* 7. 右側能量選取排版：垂直與水平皆「完全置中」 */
+.defib-energy-row {
+    display: flex;
+    align-items: center;         /* 垂直置中 */
+    justify-content: center;     /* 水平置中 */
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+.defib-energy-val-box {
+    background-color: transparent !important;
+    color: #000000;
+    font-size: 4.0vmin;          /* 數字大一點 */
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    border: none !important;
+    box-sizing: border-box;
+}
+.defib-energy-unit {
+    font-size: 1.8vmin;          /* J 單位字體配合放大 */
+    font-weight: 900;
+    color: #000000;
+    background: none !important;
+    margin-left: 0.3vmin;
+    line-height: 1;
+}
+
+/* 1.0 秒循環：0.5秒橘底、0.5秒無底色 */
+/* 1.0 秒循環：0.5秒橘底、0.5秒無底色 */
+@keyframes defib-bg-square-wave {
+    0%, 49% { background-color: #e05316; }       /* 0.5秒：橘底 */
+    50%, 100% { background-color: transparent; } /* 0.5秒：無底色 */
+}
+/* 配合背景切換文字顏色：橘底時用黑字，無底色時文字轉為白字 */
+@keyframes defib-text-square-wave {
+    0%, 49% { color: #000000; }                  /* 橘底黑字 */
+    50%, 100% { color: #ffffff; }                  /* 無底白字 */
+}
+
+/* 將閃爍動畫套用在去顫器大外框上 */
+.defib-flash-active {
+    animation: defib-bg-square-wave 1.0s infinite !important;
+}
+/* 控制大框內部的文字元件進行顏色同步切換 */
+.defib-flash-active #defib-status-main,
+.defib-flash-active #defib-status-sub {
+    animation: defib-text-square-wave 1.0s infinite !important;
+}
     </style>
 </head>
 <body>
@@ -833,7 +1103,7 @@
           }
           deflVal(d,x){
             const w=d.w||1;
-            if(d.type==='p'){ const tpl=d.pTpl || (d.pShape==='peaked'?TPL_P_PEAK:d.pShape==='bifid'?TPL_P_BIFID:TPL_P); return (d.pamp??0.11)*(d.pol??1)*interp(tpl, x/w); }
+            if(d.type==='p'){ const tpl=d.pTpl || (d.pShape==='peaked'?TPL_P_BIFID:d.pShape==='bifid'?TPL_P_BIFID:TPL_P); return (d.pamp??0.11)*(d.pol??1)*interp(tpl, x/w); }
             if(d.type==='strain') return d.amp*d.pol * interp(TPL_STRAIN, x/(w*1.05));
             if(d.type==='t')  return d.amp*d.pol * interp(d.tShape==='tent'?TPL_T_TENT:TPL_T, x/w);
             if(d.type==='u')  return d.amp*d.pol * interp(TPL_U, x/(w*1.4));
@@ -1050,7 +1320,7 @@
             <div class="bag-bottom-seam"></div> 
         </div>
 
-        <!-- 高擬真 AED 貼片放置人體面板 -->
+          <!-- 高擬真 AED 貼片放置人體面板 -->
         <div class="pads-modal" id="pads-modal">
             <div class="pads-title">AED 電擊貼片黏貼模擬</div>
             <div class="pads-subtitle">露出病患胸腔，依圖示貼於右上胸(1)與左側腋下(2)。</div>
@@ -1105,6 +1375,9 @@
                             <path d="M1561 5769 c-266 -52 -454 -225 -532 -489 -17 -60 -23 -110 -27 -250 l-5 -175 -41 -20 c-30 -15 -47 -33 -65 -69 -49 -96 -26 -288 50 -423 28 -48 73 -96 100 -105 6 -2 15 -26 20 -53 13 -70 49 -139 114 -217 l55 -66 0 -179 c0 -98 -4 -183 -8 -190 -4 -6 -100 -48 -212 -93 -113 -45 -275 -116 -360 -157 -117 -56 -187 -82 -285 -108 -71 -18 -164 -46 -205 -63 -69 -27 -75 -32 -78 -61 l-3 -32 38 19 c21 11 89 36 150 56 l113 36 190 0 c204 0 263 -5 605 -50 249 -33 325 -40 325 -29 0 11 -71 36 -151 53 -163 33 -517 66 -724 66 -49 0 -75 4 -70 9 18 18 295 141 488 217 124 49 200 84 215 100 21 24 22 33 22 195 0 93 4 169 9 169 5 0 15 -8 22 -17 23 -28 153 -120 225 -160 l69 -38 150 0 150 0 55 32 c58 34 104 69 189 141 l51 44 0 -171 c0 -162 1 -171 23 -195 14 -16 87 -51 212 -99 105 -41 222 -89 260 -107 39 -18 89 -40 113 -51 l42 -18 0 28 c0 27 -7 32 -137 89 -76 34 -208 88 -293 122 -85 33 -158 66 -162 73 -4 6 -8 93 -8 192 l0 180 54 67 c61 75 100 152 111 215 5 34 14 47 40 63 59 37 120 150 147 273 6 28 8 87 6 131 -5 102 -32 156 -92 186 l-40 20 -1 152 c-1 120 -6 172 -23 240 -68 277 -250 456 -522 513 -78 16 -294 19 -369 4z m378 -59 c236 -57 400 -221 461 -463 21 -86 38 -287 24 -287 -5 0 -17 33 -26 73 -31 137 -114 274 -190 313 -40 21 -112 20 -228 -2 -124 -23 -385 -24 -526 -2 -105 17 -156 13 -214 -17 -62 -32 -126 -133 -167 -265 l-24 -75 5 105 c3 58 12 132 21 165 60 221 228 393 440 449 91 24 92 24 220 25 89 1 142 -4 204 -19z m226 -381 c82 -23 165 -145 205 -302 32 -126 44 -327 31 -491 -21 -258 -40 -375 -69 -435 -36 -75 -248 -290 -353 -358 -69 -45 -84 -50 -151 -56 -118 -10 -205 1 -268 34 -87 46 -220 151 -303 239 -103 110 -143 191 -157 320 -58 548 -37 784 86 952 64 86 123 105 266 82 150 -24 412 -22 543 4 122 25 121 24 170 11z m-1145 -576 c0 -27 7 -137 16 -246 9 -109 14 -201 10 -204 -19 -20 -87 91 -111 183 -18 70 -21 197 -5 239 15 39 49 75 72 75 15 0 18 -8 18 -47z m1487 32 c12 -8 29 -35 39 -60 35 -92 -1 -288 -70 -377 -37 -50 -59 -61 -52 -26 6 24 36 403 36 451 0 30 15 34 47 12z M2665 3159 c-308 -13 -512 -39 -640 -81 l-70 -23 47 -3 c26 -2 128 8 225 23 241 34 441 55 541 55 75 0 82 2 82 20 0 11 -3 19 -7 18 -5 0 -84 -4 -178 -9z M1650 2940 c0 -6 11 -22 25 -36 31 -31 90 -31 90 0 0 14 -12 22 -50 32 -62 16 -65 16 -65 4z M1728 2420 c-4 -19 -12 -145 -19 -280 -10 -188 -10 -276 -1 -374 10 -121 15 -146 27 -135 2 3 10 61 16 130 11 120 6 452 -10 624 -5 61 -7 65 -13 35z M307 1744 c-4 -4 -5 -16 -2 -28 2 -12 9 -70 16 -131 15 -137 8 -188 -71 -585 -77 -383 -119 -688 -120 -857 0 -38 3 -43 23 -43 23 0 24 2 36 158 6 86 21 220 32 297 18 129 136 735 144 743 2 2 7 -13 10 -34 13 -75 58 -231 130 -455 41 -124 79 -254 84 -290 6 -35 11 -134 11 -219 0 -181 4 -200 35 -200 l22 0 -4 188 c-2 103 -11 221 -19 264 -8 42 -48 180 -89 306 -86 262 -113 362 -122 447 l-6 60 24 -18 c49 -36 145 -77 219 -94 83 -19 360 -25 484 -10 61 8 67 10 53 24 -13 13 -55 16 -259 17 -266 2 -323 12 -421 69 -102 60 -137 116 -167 273 -22 108 -30 131 -43 118z M3155 1739 c-2 -8 -13 -60 -24 -116 -11 -56 -28 -119 -38 -140 -44 -94 -155 -161 -307 -188 -114 -19 -369 -20 -498 0 -93 14 -128 12 -128 -5 0 -23 250 -60 406 -60 194 0 348 34 446 100 l43 29 3 -37 c1 -20 -8 -80 -21 -132 -24 -95 -23 -109 10 -110 13 0 35 66 54 161 6 33 13 58 15 57 1 -2 30 -138 63 -303 63 -314 96 -521 110 -690 7 -89 8 -75 10 121 1 239 -4 278 -79 624 -44 203 -79 448 -69 485 14 53 27 200 18 209 -5 6 -10 4 -14 -5z M900 1595 c-15 -8 -29 -21 -32 -29 -25 -66 93 -115 157 -65 76 60 -35 143 -125 94z M2450 1589 c-76 -60 32 -142 124 -94 50 26 50 74 -1 100 -40 21 -92 19 -123 -6z M1340 1331 c-91 -31 -87 -28 -69 -46 12 -12 22 -10 74 11 33 14 69 33 80 44 26 26 11 25 -85 -9z M1706 858 c-3 -62 -9 -258 -12 -435 l-7 -323 27 0 26 0 0 233 c0 293 -11 637 -20 637 -4 0 -10 -51 -14 -112z M2830 272 c0 -43 -3 -100 -6 -126 l-7 -48 29 4 29 3 3 118 c1 69 -1 117 -7 117 -5 0 -16 3 -25 6 -14 5 -16 -5 -16 -74z"/>
                         </g>
                     </g>
+                    
+
+
                     <rect x="241" y="509" width="13" height="9" rx="1.5" fill="#ffffff" stroke="none" />
                     <path d="M 241,514 Q 228,522 218,529" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-dasharray="1.5,1.5" />
                     <circle cx="218" cy="529" r="1.5" fill="#ffffff" />
@@ -1116,7 +1389,6 @@
         <button class="pads-btn btn-connect-pads" id="btn-toggle-pads">一鍵貼上貼片 (Auto Apply)</button>
         <button class="pads-btn btn-close-pads" id="btn-close-pads-panel">關閉面板 (Close)</button>
     </div>
-
    <!-- 左側監測配件選單面板 -->
     <div class="pads-modal accessories-modal" id="acc-modal">
         <div class="pads-title">監測導線與配件 (Accessories)</div>
@@ -1348,11 +1620,16 @@
 
         <div class="grey-faceplate">
             <div class="faceplate-logo">ZOLL</div>
+
+
+
+
             <div class="middle-tier">
                 <div class="left-softkeys">
                     <div class="softkey-row"><div class="softkey" id="btn-softkey-lead" title="切換導程"></div></div>
                     <div class="softkey-row"><div class="softkey"></div></div>
-                    <div class="softkey-row"><div class="softkey"></div></div>
+                    <!-- === 修正：為第 3 個實體灰色按鍵加上 ID === -->
+                    <div class="softkey-row"><div class="softkey" id="btn-softkey-cancel" title="解除充電"></div></div>
                     <div class="softkey-row"><div class="softkey"></div></div>
                     <div class="softkey-row"><div class="softkey"></div></div>
                     <div class="softkey-row"><div class="softkey"></div></div>
@@ -1450,21 +1727,15 @@
                                 </div>
                             </div>
 
-                           <!-- 專屬分析模式標籤組 (與第一頁圖示同步) -->
+                            <!-- 專屬分析模式標籤組 (與第一頁圖示同步) -->
                             <div class="label-group-analyze">
-                                <!-- 第 1 格：導程文字 -->
-                                <div class="s-label-box">I, II,<br>III...</div>
-                                
-                                <!-- 第 2 格：空 -->
+                                <!-- 第 1 格：導程文字（加上 ID 與手勢） -->
+                                <div class="s-label-box" id="btn-analyze-lead-cycle" style="cursor: pointer;">I, II,<br>III...</div>
                                 <div class="s-label-box"></div>
-                                
-                                <!-- 第 3 格：CO2 -->
                                 <div class="s-label-box" style="color: #ffffff; font-size: 1.05vmin; font-weight: bold; position: relative;">
                                     <span style="transform: translateY(-0.5vmin); display: inline-block;">CO2</span>
                                     <div style="position: absolute; bottom: 8%; width: 40%; height: 3px; background-color: #222; border-radius: 1px;"></div>
                                 </div>
-                                
-                                <!-- 第 4 格：醫療十字 (P X) -->
                                 <div class="s-label-box">
                                     <svg viewBox="0 0 24 24" style="position: absolute; width: 86%; height: 86%; top: 7%; left: 7%;">
                                         <path d="M 8,2 h 8 v 6 h 6 v 8 h -6 v 6 h -8 v -6 h -6 v -8 h 6 z" fill="#ffffff" />
@@ -1472,11 +1743,49 @@
                                         <text x="13.1" y="14.6" fill="#17191c" font-size="5.3" font-family="'Helvetica Neue', Arial, sans-serif" font-weight="700" text-anchor="middle">X</text>
                                     </svg>
                                 </div>
+                                <div class="s-label-box"></div>
+                                <div class="s-label-box">
+                                    <svg viewBox="0 0 24 24" style="position: absolute; width: 95%; height: 95%; top: 2.5%; left: 2.5%; fill: none;">
+                                        <path d="M 2.5,4 V 18 C 2.5,18 8.5,19.5 14.5,18 V 4 Z" fill="rgba(255,255,255,0.22)" stroke="#ffffff" stroke-width="1.2" />
+                                        <ellipse cx="8.5" cy="4" rx="6.0" ry="2.0" fill="rgba(255,255,255,0.45)" stroke="#ffffff" stroke-width="1.2" />
+                                        <ellipse cx="8.5" cy="4" rx="1.8" ry="0.6" fill="#17191c" />
+                                        <path d="M 2.5,5.5 C 2.5,5.5 12.5,6.5 22.5,5.5 V 18 C 22.5,18 12.5,19 2.5,18 Z" fill="#ffffff" />
+                                        <path d="M 5.5,12.5 H 8 L 8.5,9 L 9.1,16 L 9.6,12.5 H 12.5 L 13,9 L 13.6,16 L 14.1,12.5 H 17 L 17.5,9 L 18.1,16 L 18.6,12.5 H 21.5" stroke="#17191c" stroke-width="0.5" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <div class="s-label-box" id="btn-exit-analyze" style="cursor: pointer;" title="返回標準畫面">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; width: 76%; height: 76%; top: 12%; left: 12%;">
+                                        <path d="M9 14L4 9l5-5"/>
+                                        <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- 去顫充電/已充電專用標籤組 -->
+                            <div class="label-group-defib">
+                                <!-- 1. 導程切換 (與前面一樣) -->
+                                <div class="s-label-box" id="btn-defib-lead-cycle" style="cursor: pointer;">I, II,<br>III...</div>
                                 
-                                <!-- 第 5 格：空 -->
+                                <!-- 2. 空白 -->
                                 <div class="s-label-box"></div>
                                 
-                                <!-- 第 6 格：印表機圖示 -->
+                               <!-- 3. 取消充電 (橘色底標籤，不帶 cursor: pointer 手勢) -->
+                                <div class="s-label-box" id="btn-defib-cancel" style="background: #e05316 !important; border-color: #ff9100 !important; color: #ffffff !important; font-weight: bold; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; box-sizing: border-box; padding: 2px 0;">
+                                    <span style="font-size: 0.8vmin; line-height: 1; letter-spacing: 0.5px; margin-top: 1px;">解除</span>
+                                    <svg viewBox="0 0 24 24" style="width: 2.8vmin; height: 2.8vmin; stroke-linecap: round; stroke-linejoin: round; margin-bottom: 1px;">
+                                        <circle cx="12" cy="12" r="10.8" fill="#ffffff" stroke="#000000" stroke-width="1.2" />
+                                        <line x1="4.4" y1="4.4" x2="19.6" y2="19.6" stroke="#000000" stroke-width="1.35" />
+                                        <path d="M12.5,5.5 L9.5,11.5 H12 L11,16.5 L14,10.5 H11.5 Z" stroke="#000000" stroke-width="1.3" fill="none" />
+                                    </svg>
+                                </div>
+                                
+                                <!-- 4. 空白 -->
+                                <div class="s-label-box"></div>
+                                
+                                <!-- 5. 同步 (同步 2個字) -->
+                                <div class="s-label-box" style="color: #ffffff; font-weight: bold; font-size: 1.25vmin;">同步</div>
+                                
+                                <!-- 6. 印表機 (與前面一樣) -->
                                 <div class="s-label-box">
                                     <svg viewBox="0 0 24 24" style="position: absolute; width: 95%; height: 95%; top: 2.5%; left: 2.5%; fill: none;">
                                         <path d="M 2.5,4 V 18 C 2.5,18 8.5,19.5 14.5,18 V 4 Z" fill="rgba(255,255,255,0.22)" stroke="#ffffff" stroke-width="1.2" />
@@ -1487,15 +1796,11 @@
                                     </svg>
                                 </div>
                                 
-                                <!-- 第 7 格：返回箭頭圖示 (保留點擊返回的功能) -->
-                                <div class="s-label-box" id="btn-exit-analyze" style="cursor: pointer;" title="返回標準畫面">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="position: absolute; width: 76%; height: 76%; top: 12%; left: 12%;">
-                                        <path d="M9 14L4 9l5-5"/>
-                                        <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11"/>
-                                    </svg>
-                                </div>
+                                <!-- 7. 空白 -->
+                                <div class="s-label-box"></div>
                             </div>
-                        </div>
+                        </div> <!-- screen-left-labels end -->
+
                         <div class="screen-right-panel">
                             <div class="waveform-area">
                                 <canvas id="ecg-canvas"></canvas>
@@ -1522,36 +1827,32 @@
                                     <div class="co2-scale-text" style="top: 57.4%; transform: translateY(-50%);">30</div>
                                     <div class="co2-scale-text" style="top: 100%; transform: translateY(-100%);">0</div>
                                 </div>
-<!-- 分析模式大警示橫幅 (極限滿版貼底、成人格放大版) -->
-<div id="analyze-banner" style="display: none; position: absolute; bottom: 1.5%; left: 1%; right: 1%; flex-direction: column; gap: 0.5px; z-index: 10; pointer-events: none; width: 98%;">
-    
-    <!-- 上方：黃底、白框黑字「連接電擊片」 -->
-    <div style="background-color: #efc94c; color: #000000; font-family: sans-serif; font-weight: 900; font-size: 2.0vmin; text-align: center; padding: 0.15vmin 0; border: 2.5px solid #ffffff; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
-        <span id="analyze-banner-text">連接電擊片</span>
-    </div>
-    
-    <!-- 下方三個方格：設定 0.5px 的極細間隙 -->
-    <div id="analyze-banner-sub" style="display: flex; gap: 0.5px; width: 100%;">
-        <!-- 第一格：成人模式 -->
-        <div id="banner-box-adult" style="flex: 2.1; background-color: #000000; border: 2.5px solid #ffffff; color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0.25vmin 0; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">
-            <span style="font-size: 1.15vmin; opacity: 0.9; font-weight: bold; line-height: 1;">成人模式</span>
-            <span style="color: #ffffff; font-weight: 900; font-size: 1.6vmin; line-height: 1.2; margin-top: 0.1vmin; letter-spacing: 0.1px;">120 J 選定約</span>
-        </div>
-        <!-- 第二格：CPR時間 -->
-        <div id="banner-box-timer" style="flex: 0.7; background-color: #000000; border: 2.5px solid #ffffff; color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0.25vmin 0; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">
-            <span id="banner-cpr-label" style="font-size: 1.05vmin; opacity: 0.85; font-weight: bold; line-height: 1; display: none;">CPR時間</span>
-            <span id="banner-cpr-timer-text" style="color: #ffffff; font-weight: 900; font-size: 1.5vmin; line-height: 1.2; margin-top: 0.1vmin;"></span>
-        </div>
-        <!-- 第三格：⚡ 0 -->
-        <div id="banner-box-shocks" style="flex: 0.5; background-color: #000000; border: 2.5px solid #ffffff; color: #ffffff; display: flex; justify-content: center; align-items: center; gap: 0.4vmin; padding: 0.25vmin 0; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">
-            <span style="color: #efc94c; font-weight: 900; font-size: 1.7vmin; line-height: 1;">⚡</span>
-            <span id="banner-shock-count" style="color: #ffffff; font-weight: 900; font-size: 1.5vmin; line-height: 1;">0</span>
-        </div>
-    </div>
-</div>
+
+                                <!-- 分析模式大警示橫幅 -->
+                                <div id="analyze-banner" style="display: none; position: absolute; bottom: 1.5%; left: 1%; right: 1%; flex-direction: column; gap: 0.5px; z-index: 10; pointer-events: none; width: 98%;">
+                                    <div style="background-color: #efc94c; color: #000000; font-family: sans-serif; font-weight: 900; font-size: 2.0vmin; text-align: center; padding: 0.15vmin 0; border: 2.5px solid #ffffff; border-radius: 2px; box-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                                        <span id="analyze-banner-text">連接電擊片</span>
+                                    </div>
+                                    <div id="analyze-banner-sub" style="display: flex; gap: 0.5px; width: 100%;">
+                                        <div id="banner-box-adult" style="flex: 2.1; background-color: #000000; border: 2.5px solid #ffffff; color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0.25vmin 0; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">
+                                            <span style="font-size: 1.15vmin; opacity: 0.9; font-weight: bold; line-height: 1;">成人模式</span>
+                                            <span style="color: #ffffff; font-weight: 900; font-size: 1.6vmin; line-height: 1.2; margin-top: 0.1vmin; letter-spacing: 0.1px;">120 J 選定約</span>
+                                        </div>
+                                        <div id="banner-box-timer" style="flex: 0.7; background-color: #000000; border: 2.5px solid #ffffff; color: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0.25vmin 0; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">
+                                            <span id="banner-cpr-label" style="font-size: 1.05vmin; opacity: 0.85; font-weight: bold; line-height: 1; display: none;">CPR時間</span>
+                                            <span id="banner-cpr-timer-text" style="color: #ffffff; font-weight: 900; font-size: 1.5vmin; line-height: 1.2; margin-top: 0.1vmin;"></span>
+                                        </div>
+                                        <div id="banner-box-shocks" style="flex: 0.5; background-color: #000000; border: 2.5px solid #ffffff; color: #ffffff; display: flex; justify-content: center; align-items: center; gap: 0.4vmin; padding: 0.25vmin 0; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.4);">
+                                            <span style="color: #efc94c; font-weight: 900; font-size: 1.7vmin; line-height: 1;">⚡</span>
+                                            <span id="banner-shock-count" style="color: #ffffff; font-weight: 900; font-size: 1.5vmin; line-height: 1;">0</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="ecg-overlay-text text-center-check" id="check-pads-text">檢查電擊片</div>
                                 <div id="screen-msg"></div>
-                            </div>
+                            </div> <!-- waveform-area close -->
+                            
+                            <!-- 標準生命徵象底欄 -->
                             <div class="screen-bottom-vitals">
                                 <div class="vital-col vital-hr">
                                     <div class="v-title-bar"><span>HR</span><span class="v-unit">bpm</span></div>
@@ -1584,10 +1885,39 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
-                    </div> 
-                </div>
 
+                            <div class="screen-bottom-defib" id="screen-bottom-defib">
+                                <!-- 左：去顫器大外框 (白外框、綠標題、黃底黑字) -->
+                                <div class="defib-status-box">
+                                    <div class="defib-status-title">去顫器</div>
+                                    <div class="defib-status-main-box" id="defib-status-main-box">
+                                        <div class="defib-status-main" id="defib-status-main">未充電</div>
+                                        <div class="defib-status-sub" id="defib-status-sub">檢查電擊片</div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 中：獨立閃電電擊次數區 (白外框) -->
+                                <div class="defib-shock-box">
+                                    <div class="defib-shock-icon">⚡</div>
+                                    <div class="defib-shock-count" id="defib-shock-count">0</div>
+                                </div>
+                                
+                                <!-- 右：選定能量大外框 (白外框、綠標題、黃底黑字) -->
+                                <div class="defib-energy-box">
+                                    <div class="defib-energy-title">選定能量</div>
+                                    <div class="defib-energy-row" style="display: flex; align-items: flex-end; justify-content: center; flex: 1; padding-bottom: 0.5vmin;">
+                                        <div class="defib-energy-val-box" id="defib-selected-energy-val">120</div>
+                                        <span class="defib-energy-unit">J</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 去顫模式右側直列能量刻度欄 (垂直貫穿全高) -->
+                            <div class="energy-scale-container" id="energy-scale-container"></div>
+                        </div> <!-- screen-right-panel end -->
+                    </div> <!-- screen-main-area end -->
+                </div> <!-- screen-bezel end -->
+                
                 <div class="right-navkeys">
                     <div class="ir-window-outer"><div class="ir-window-inner"></div></div>
                     <div class="nav-row" style="justify-content: flex-end;"><div class="nav-btn small-btn"><svg style="width: 80%; height: 80%;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="22" x2="22" y2="2" stroke-width="1.5"/><g transform="translate(1, 0.5) scale(0.52)" stroke-width="2.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></g><rect x="11.5" y="11.5" width="11" height="11" rx="2.5" stroke-width="1.5"/><g transform="translate(13, 13) scale(0.33)" stroke-width="3"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/><line x1="2" y1="2" x2="22" y2="22" stroke-width="4"/></g></svg></div></div>
@@ -1616,17 +1946,17 @@
                 <div class="defib-group">
                     <div class="step-col">
                         <div class="num-label">1</div>
-                        <div class="energy-frame">
-                            <button><span>▲</span></button>
+                        <div class="energy-frame" id="energy-frame-panel" style="cursor: pointer;" title="進入能量選擇模式">
+                            <button id="btn-energy-up"><span>▲</span></button>
                             <div class="energy-text">能量選擇</div>
-                            <button><span>▼</span></button>
+                            <button id="btn-energy-down"><span>▼</span></button>
                         </div>
                     </div>
                     <div class="step-col">
                         <div class="num-label">2</div>
                         <button class="btn-capsule" id="btn-charge">充電</button>
                     </div>
-           <div class="step-col">
+                    <div class="step-col">
                         <div class="num-label">3</div>
                         <div class="shock-text">電擊</div>
                         <button class="btn-shock" id="btn-shock">
@@ -1655,7 +1985,12 @@
     let isApexPlaced = false;    
 
     let accState = { nibp: false, spo2: false, ecg12: false, etco2: false };
-    let monitorState = { hr: 0, rhythm: 'flatline', energy: 150, isCharging: false, isCharged: false };
+    let monitorState = { hr: 0, rhythm: 'flatline', energy: 120, isCharging: false, isCharged: false };
+
+    // --- 去顫/能量選擇模式狀態與設定 ---
+    let isDefibMode = false;
+    const ENERGY_LEVELS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 30, 40, 50, 70, 80, 100, 120, 150, 200];
+    let currentEnergyIndex = 18; // 預設 120 J (在陣列中的索引為 18)
 
     const screenMsg = document.getElementById('screen-msg'); 
     const btnCharge = document.getElementById('btn-charge'); 
@@ -1697,7 +2032,7 @@
 
     const clickEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
 
-    // --- 12-Lead ECG 狀態與事件綁定 ---
+    // --- 12-Lead ECG 與分析模式設定 ---
     let is12LeadMode = false;
     let isAnalyzeMode = false;
     const btnLeft12Lead = document.getElementById('btn-left-12-lead');
@@ -1719,12 +2054,9 @@
     const btnSoftkeyLead = document.getElementById('btn-softkey-lead');
     btnSoftkeyLead.addEventListener(clickEvent, (e) => {
         e.preventDefault(); e.stopPropagation();
-        if (is12LeadMode) {
-            toggle12LeadMode();
-        }
-        if (isAnalyzeMode) {
-            toggleAnalyzeMode();
-        }
+        if (is12LeadMode) toggle12LeadMode();
+        
+       
         leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
         updateScreenUI();
         
@@ -1733,10 +2065,24 @@
         ctx.fillRect(0, 0, logicalWidth, logicalHeight);
     });
 
+    const btnHardLead = document.getElementById('btn-hard-lead');
+    if (btnHardLead) {
+        btnHardLead.addEventListener(clickEvent, (e) => {
+            e.preventDefault(); e.stopPropagation();
+            if (is12LeadMode) toggle12LeadMode();
+           
+            leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
+            updateScreenUI();
+            
+            xPos = 0;
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+        });
+    }
+
     function toggle12LeadMode() {
-        if (isAnalyzeMode) {
-            toggleAnalyzeMode();
-        }
+        if (isAnalyzeMode) toggleAnalyzeMode();
+        if (isDefibMode) exitDefibMode();
         is12LeadMode = !is12LeadMode;
         const screenBezel = document.querySelector('.screen-bezel');
         screenBezel.classList.toggle('mode-12-lead', is12LeadMode);
@@ -1751,9 +2097,8 @@
     }
 
     function toggleAnalyzeMode() {
-        if (is12LeadMode) {
-            toggle12LeadMode();
-        }
+        if (is12LeadMode) toggle12LeadMode();
+        if (isDefibMode) exitDefibMode();
         isAnalyzeMode = !isAnalyzeMode;
         const screenBezel = document.querySelector('.screen-bezel');
         screenBezel.classList.toggle('mode-analyze', isAnalyzeMode);
@@ -1772,59 +2117,323 @@
         updateWaveformLabels();
         updateScreenUI();
     }
-let analyzeAlternateTimer = null; // 用於來回切換分析文字的計時器
-    let analyzeChargeTimer = null;    // 用於 5 秒後自動充電的計時器
-    
-    let shockCount = 0;               // 儲存總電擊次數
-    let cprCountdownInterval = null;  // CPR 倒數計時器
-    let cprSecondsRemaining = 120;    // CPR 預設倒數秒數 (2 分鐘 = 120秒)
-function updateAnalyzeBanner() {
-    const analyzeBannerText = document.getElementById('analyze-banner-text');
-    const analyzeBannerSub = document.getElementById('analyze-banner-sub');
-    if (!analyzeBannerText || !analyzeBannerSub) return;
 
-    // 每次重新進入分析狀態時，清除倒數與舊計時器
-    clearInterval(analyzeAlternateTimer);
-    clearTimeout(analyzeChargeTimer);
-    clearInterval(cprCountdownInterval);
-    
-    // 恢復所有方格的預設黑色底色
-    document.getElementById('banner-box-adult').style.backgroundColor = "#000000";
-    document.getElementById('banner-box-timer').style.backgroundColor = "#000000";
-    document.getElementById('banner-box-shocks').style.backgroundColor = "#000000";
-    
-    // 🔴 加入這行：確保分析時隱藏「CPR時間」字樣
-    document.getElementById('banner-cpr-label').style.display = 'none';
+    // --- 去顫 / 能量選擇畫面模式控制 ---
+    function enterDefibMode() {
+        if (is12LeadMode) toggle12LeadMode();
+        if (isAnalyzeMode) toggleAnalyzeMode();
+        isDefibMode = true;
+        document.querySelector('.screen-bezel').classList.add('mode-defib');
+        updateWaveformLabels();
+        updateDefibUI();
+        resizeCanvas();
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+        xPos = 0;
+    }
 
-    // 確保此處確實寫入空字串 
-    document.getElementById('banner-cpr-timer-text').innerText = "";
+    function exitDefibMode() {
+        isDefibMode = false;
+        document.querySelector('.screen-bezel').classList.remove('mode-defib');
+        updateWaveformLabels();
+        resizeCanvas();
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+        xPos = 0;
+    }
+
+   // === 1. 新增：統一安全解除充電函數 ===
+function cancelDefibCharge() {
+    // 強制中斷並清除背景中所有的充電/延時定時器
+    if (monitorState.chargeInterval) clearInterval(monitorState.chargeInterval);
+    if (monitorState.chargeTimeout) clearTimeout(monitorState.chargeTimeout);
+    
+    monitorState.isCharging = false;
+    monitorState.isCharged = false;
+    monitorState.chargeProgress = 0;
+    
+    // 還原電擊鍵閃動狀態與指示燈
+    btnShock.classList.remove('ready', 'charging');
+    topLightLeft.className = "indicator-light status-normal"; 
+    topLightRight.className = "indicator-light status-normal";
+    
+    updateDefibUI();
+}
+
+// === 2. 修正：調整能量函數（新增充電中調整自動解除邏輯） ===
+function changeEnergy(direction) {
+    if (!isDefibMode) {
+        enterDefibMode();
+        return;
+    }
+    
+    // === 新增：如果當前處於「正在充電」或「已充電」狀態，調整能量大小會自動安全解除充電！ ===
+    if (monitorState.isCharging || monitorState.isCharged) {
+        cancelDefibCharge();
+    }
+    
+    if (direction === 'up') {
+        if (currentEnergyIndex < ENERGY_LEVELS.length - 1) {
+            currentEnergyIndex++;
+        }
+    } else if (direction === 'down') {
+        if (currentEnergyIndex > 0) {
+            currentEnergyIndex--;
+        }
+    }
+    monitorState.energy = ENERGY_LEVELS[currentEnergyIndex];
+    updateDefibUI();
+}
+
+ function renderEnergyScale() {
+    const container = document.getElementById('energy-scale-container');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    const header = document.createElement('div');
+    header.className = 'energy-scale-title';
+    header.innerText = '能量選擇 (J)';
+    container.appendChild(header);
+
+    const list = document.createElement('div');
+    list.className = 'energy-scale-list';
+
+    const maxLevelIndex = currentEnergyIndex; // 目標選定的能量索引（例如 120J）
+    
+    // 計算黃色刻度亮起的最高位置
+    let currentFillIndex = -1;
+    
+    if (monitorState.isCharging && monitorState.chargeProgress !== undefined) {
+        const p = monitorState.chargeProgress; // 0.0 到 1.0 的線性充電時間進度
+        const transitionIndex = Math.max(0, maxLevelIndex - 5); // 進入倒數慢速格的起點（倒數第 5 格）
+        
+        if (p < 0.20) {
+            // 【第一階段】前 20% 時間（0 ~ 0.6秒）快速攀升：一次跳 3 格
+            let subProgress = p / 0.20;
+            let rawIndex = subProgress * transitionIndex;
+            currentFillIndex = Math.floor(rawIndex / 3) * 3;
+        } else if (p < 0.35) {
+            // 【第二階段：倒數第 5 格】在 20% ~ 35% 時間段（0.6 ~ 1.05秒）
+            currentFillIndex = transitionIndex;
+        } else if (p < 0.52) {
+            // 【第二階段：倒數第 4 格】在 35% ~ 52% 時間段（1.05 ~ 1.56秒）
+            currentFillIndex = transitionIndex + 1;
+        } else if (p < 0.70) {
+            // 【第二階段：倒數第 3 格】在 52% ~ 70% 時間段（1.56 ~ 2.10秒）
+            currentFillIndex = transitionIndex + 2;
+        } else if (p < 0.88) {
+            // 【第二階段：倒數第 2 格】在 70% ~ 88% 時間段（2.10 ~ 2.64秒）
+            currentFillIndex = transitionIndex + 3;
+        } else if (p < 0.98) {
+            // 【第二階段：倒數第 1 格】在 88% ~ 98% 時間段（2.64 ~ 2.94秒）
+            currentFillIndex = transitionIndex + 4;
+        } else {
+            // 接近完成（2.94 ~ 3.0秒），等待同步變橘色
+            currentFillIndex = transitionIndex + 4;
+        }
+    } else if (monitorState.isCharged) {
+        // 到點已充電：填滿至選定格，與底部主板同步變成橘色！
+        currentFillIndex = maxLevelIndex;
+    }
+
+    const descLevels = [...ENERGY_LEVELS].reverse();
+    descLevels.forEach(val => {
+        const item = document.createElement('div');
+        item.className = 'energy-scale-item';
+        
+        const originalIndex = ENERGY_LEVELS.indexOf(val);
+        
+        // 1. 處理選定格子的顏色與字型大小（維持大字體）
+        if (originalIndex === maxLevelIndex) {
+            item.className += ' active'; // 保留 active 類別，確保字體維持 1.3vmin 大小不縮水
+            if (monitorState.isCharged) {
+                // 到點已充電：藍色底色轉為「橘底、白字」，字型依然粗大
+                item.style.backgroundColor = '#e05316';
+                item.style.color = '#ffffff';
+            }
+        }
+        
+        // 2. 處理黃色攀升與留存邏輯
+        if (monitorState.isCharging || monitorState.isCharged) {
+            if (originalIndex <= currentFillIndex) {
+                // 若低於當前亮起高度，且不是最頂端的目標格子，則套用黃色背景
+                if (originalIndex !== maxLevelIndex) {
+                    item.style.backgroundColor = '#efc94c';
+                    item.style.color = '#000000';
+                }
+            }
+        }
+        
+        item.innerText = val;
+        list.appendChild(item);
+    });
+    container.appendChild(list);
+}
+  function updateDefibUI() {
+    if (!isDefibMode) return;
+    
+    const selectedEnergyVal = ENERGY_LEVELS[currentEnergyIndex];
+    document.getElementById('defib-selected-energy-val').innerText = selectedEnergyVal;
+    document.getElementById('defib-shock-count').innerText = shockCount;
+    
+    const statusMain = document.getElementById('defib-status-main');
+    const statusSub = document.getElementById('defib-status-sub');
+    
+    const statusBox = document.querySelector('.defib-status-box');
+    const statusMainBox = document.getElementById('defib-status-main-box');
+    const statusTitle = document.querySelector('.defib-status-title');
+    const energyBox = document.querySelector('.defib-energy-box');
+    const energyTitle = document.querySelector('.defib-energy-title');
+    const energyValBox = document.getElementById('defib-selected-energy-val');
+    const energyUnit = document.querySelector('.defib-energy-unit');
+    const screenBezel = document.querySelector('.screen-bezel');
+
+    // 每次更新前，先移除閃爍類別並恢復基本文字顏色與標籤狀態
+    statusBox.classList.remove('defib-flash-active');
+    statusMainBox.classList.remove('defib-flash-active');
+    statusMain.style.color = '#000000';
+    statusSub.style.color = '#000000';
+
+    // 去顫充電或已充電時，切換左側快捷鍵標籤組至 1, 3, 5, 6
+    if (monitorState.isCharging || monitorState.isCharged) {
+        screenBezel.classList.add('mode-defib-charging');
+    } else {
+        screenBezel.classList.remove('mode-defib-charging');
+    }
+
+    if (monitorState.isCharged) {
+        // === 1. 已充電狀態：停止閃爍，兩側轉為恆亮橘色背景 ===
+        statusMain.innerText = '已充電';
+        statusMain.style.color = '#000000';
+        statusSub.innerText = isPadsConnected ? '已連接' : '檢查電擊貼片';
+        statusSub.style.color = '#000000';
+        statusSub.style.fontSize = '0.95vmin';
+        statusSub.style.fontWeight = 'bold';
+
+        // 轉為恆亮橘色
+        statusBox.style.backgroundColor = '#e05316';
+        statusMainBox.style.backgroundColor = '#e05316';
+        energyBox.style.backgroundColor = '#e05316';
+        
+        energyTitle.style.backgroundColor = '#00a854';
+        energyTitle.style.color = '#ffffff';
+        energyValBox.style.color = '#000000';
+        energyUnit.style.color = '#000000';
+
+    } else if (monitorState.isCharging) {
+        // === 2. 正在充電狀態：啟動左側大框 0.5 秒方波橘色/透明切換 ===
+        statusMain.innerText = '正在充電';
+        statusSub.innerText = isPadsConnected ? '已連接' : '檢查電擊貼片';
+        statusSub.style.fontSize = '0.95vmin';
+        statusSub.style.fontWeight = 'bold';
+
+        // 清除行內顏色，完全交由外框的 CSS 動畫控管
+        statusBox.style.backgroundColor = '';
+        statusMainBox.style.backgroundColor = '';
+        statusMain.style.color = '';
+        statusSub.style.color = '';
+
+        // 啟動 0.5 秒方波硬切換閃爍類別
+        statusBox.classList.add('defib-flash-active');
+        
+        // 右側選定能量框維持黑底黃字
+        energyBox.style.backgroundColor = '#000000';
+        energyTitle.style.backgroundColor = '#00a854';
+        energyTitle.style.color = '#ffffff';
+        energyValBox.style.color = '#efc94c';
+        energyUnit.style.color = '#efc94c';
+
+    } else {
+        // === 3. 未充電（常態）狀態：還原預設黃色底，右側維持黑底 ===
+        statusBox.style.backgroundColor = '#efc94c';
+        statusMainBox.style.backgroundColor = 'transparent';
+        
+        if (!isPadsConnected) {
+            statusMain.innerText = '檢查電極片';
+            statusMain.style.color = '#000000';
+            statusSub.innerText = '';
+        } else {
+            statusMain.innerText = '已連接';
+            statusMain.style.color = '#000000';
+            statusSub.innerText = '';
+        }
+
+        // 右側還原無底色（黑底黃字）
+        energyBox.style.backgroundColor = '#000000';
+        energyTitle.style.backgroundColor = '#00a854';
+        energyTitle.style.color = '#ffffff';
+        energyValBox.style.color = '#efc94c';
+        energyUnit.style.color = '#efc94c';
+    }
+    
+    renderEnergyScale();
+}
+
+
+    // 連結能量選擇實體面板元件
+    const btnEnergyUp = document.getElementById('btn-energy-up');
+    const btnEnergyDown = document.getElementById('btn-energy-down');
+    const energyFramePanel = document.getElementById('energy-frame-panel');
+
+    btnEnergyUp.addEventListener(clickEvent, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        changeEnergy('up');
+    });
+
+    btnEnergyDown.addEventListener(clickEvent, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        changeEnergy('down');
+    });
+
+    energyFramePanel.addEventListener(clickEvent, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        if (!isDefibMode) {
+            enterDefibMode();
+        } else {
+            exitDefibMode();
+        }
+    });
+
+    let analyzeAlternateTimer = null; 
+    let analyzeChargeTimer = null;    
+    
+    let shockCount = 0;               
+    let cprCountdownInterval = null;  
+    let cprSecondsRemaining = 120;    
+    
+    function updateAnalyzeBanner() {
+        const analyzeBannerText = document.getElementById('analyze-banner-text');
+        const analyzeBannerSub = document.getElementById('analyze-banner-sub');
+        if (!analyzeBannerText || !analyzeBannerSub) return;
+
+        clearInterval(analyzeAlternateTimer);
+        clearTimeout(analyzeChargeTimer);
+        clearInterval(cprCountdownInterval);
+        
+        document.getElementById('banner-box-adult').style.backgroundColor = "#000000";
+        document.getElementById('banner-box-timer').style.backgroundColor = "#000000";
+        document.getElementById('banner-box-shocks').style.backgroundColor = "#000000";
+        
+        document.getElementById('banner-cpr-label').style.display = 'none';
+        document.getElementById('banner-cpr-timer-text').innerText = "";
 
         if (!isPadsConnected) {
-            // ==========================================
-            // 【未連接貼片狀態】
-            // ==========================================
             analyzeBannerText.innerText = "連接電擊片";
             analyzeBannerText.parentElement.style.backgroundColor = "#efc94c";
             analyzeBannerText.parentElement.style.color = "#000000";
             analyzeBannerText.parentElement.style.borderColor = "#ffffff";
             analyzeBannerSub.style.display = "flex";
 
-            // 重置電擊次數與倒數狀態
             shockCount = 0;
             document.getElementById('banner-shock-count').innerText = "0";
 
-            // 確保關閉電擊就緒閃爍
-        monitorState.isCharged = false;
-        btnShock.classList.remove('ready', 'charging'); // <-- 確保在此處移除 ready 與 charging
+            monitorState.isCharged = false;
+            btnShock.classList.remove('ready', 'charging'); 
             topLightLeft.className = "indicator-light status-normal"; 
             topLightRight.className = "indicator-light status-normal";
         } else {
-            // ==========================================
-            // 【已連接貼片 ➔ 進入自動分析流程】
-            // ==========================================
             analyzeBannerSub.style.display = "flex";
             
-            // 1. 建立「每 1 秒」來回切換文字的循環 (正在分析 ECG <-> 請勿觸碰病患，皆為白字透明底)
             let isStateA = true;
             analyzeAlternateTimer = setInterval(() => {
                 if (isStateA) {
@@ -1838,51 +2447,43 @@ function updateAnalyzeBanner() {
                 isStateA = !isStateA;
             }, 1000);
             
-            // 初始狀態立即可見
             analyzeBannerText.innerText = "正在分析 ECG";
             analyzeBannerText.parentElement.style.backgroundColor = "transparent";
             analyzeBannerText.parentElement.style.color = "#ffffff";
             analyzeBannerText.parentElement.style.borderColor = "#ffffff";
 
-            // 2. 倒數 5 秒後，自動啟動充電流程
             analyzeChargeTimer = setTimeout(() => {
-                // 停止來回切換分析字體
                 clearInterval(analyzeAlternateTimer);
                 
-                // 上方橫幅顯示為「正在充電」
                 analyzeBannerText.innerText = "正在充電";
                 analyzeBannerText.parentElement.style.backgroundColor = "#efc94c";
                 analyzeBannerText.parentElement.style.color = "#000000";
                 
-                btnShock.classList.add('charging'); // <-- 電擊鍵開始閃爍橘色充電燈
+                btnShock.classList.add('charging'); 
                 
-                // 模擬充電持續 2.5 秒
                 setTimeout(() => {
-                    if (!isPadsConnected) return; // 確保中途沒有拔掉貼片
+                    if (!isPadsConnected) return; 
                     
-                    btnShock.classList.remove('charging'); // <-- 關閉充電燈
+                    btnShock.classList.remove('charging'); 
                     
-                    // 充電完成：上方橫幅變回黃色底、黑字「請按電擊」
                     analyzeBannerText.innerText = "請按電擊";
                     analyzeBannerText.parentElement.style.backgroundColor = "#efc94c";
                     analyzeBannerText.parentElement.style.color = "#000000";
                     analyzeBannerText.parentElement.style.borderColor = "#ffffff";
                     
-                    // 第一個方格「120 J 選定約」底色變為紅色
                     document.getElementById('banner-box-adult').style.backgroundColor = "#da3838";
                     
-                    // 自動進入「就緒、可電擊」狀態
                     monitorState.isCharged = true;
-                    btnShock.classList.add('ready'); // <-- 面板電擊鍵開始劇烈閃爍
+                    btnShock.classList.add('ready'); 
                     topLightLeft.className = "indicator-light status-danger"; 
                     topLightRight.className = "indicator-light status-danger";
-                }, 2500); // 充電時長為 2.5 秒
+                    updateDefibUI();
+                }, 2500); 
                 
-            }, 5000); // 5 秒分析後啟動充電
+            }, 5000); 
         }
     }
 
-    // 更新 2 分鐘倒數計時器格式的輔助函數
     function updateCprTimerDisplay() {
         const timerText = document.getElementById('banner-cpr-timer-text');
         if (!timerText) return;
@@ -1891,71 +2492,6 @@ function updateAnalyzeBanner() {
         timerText.innerText = `${m}:${s}`;
     }
 
-    // ==========================================
-    //  電擊按鍵事件監聽器更新 (施行 CPR 與 2分鐘倒數)
-    // ==========================================
-   btnShock.addEventListener(clickEvent, (e) => {
-        e.preventDefault(); 
-        if (!monitorState.isCharged) return; 
-        
-        // 1. 執行電擊就緒重置
-        monitorState.isCharged = false; 
-        btnShock.classList.remove('ready', 'charging'); // <-- 確保兩者都移除
-        topLightLeft.className = "indicator-light status-normal"; 
-        topLightRight.className = "indicator-light status-normal";
-        
-        // 2. 螢幕閃白
-        const screen = document.querySelector('.screen-bezel'); 
-        screen.style.backgroundColor = "white"; 
-        setTimeout(() => { screen.style.backgroundColor = "#050505"; }, 150);
-
-        // 3. 電擊次數累加並更新 UI
-        shockCount++;
-        document.getElementById('banner-shock-count').innerText = shockCount;
-
-        // 4. 清除分析/充電計時器，以防衝突
-        clearInterval(analyzeAlternateTimer);
-        clearTimeout(analyzeChargeTimer);
-
-        // 5. 變更方格背景樣式
-        // 第一格 (成人模式) ➔ 變為綠色底色
-        document.getElementById('banner-box-adult').style.backgroundColor = "#52a558";
-        // 第二格 (CPR 限制) ➔ 變為灰色底色
-        document.getElementById('banner-box-timer').style.backgroundColor = "#555555";
-        
-        // 6. 上方橫幅 ➔ 透明底，白色文字顯示「施行CPR」
-        const analyzeBannerText = document.getElementById('analyze-banner-text');
-        analyzeBannerText.innerText = "施行CPR";
-        analyzeBannerText.parentElement.style.backgroundColor = "transparent";
-        analyzeBannerText.parentElement.style.color = "#ffffff";
-        analyzeBannerText.parentElement.style.borderColor = "#ffffff";
-
-        // 🔴 加入這行：按下電擊後，顯示出「CPR時間」標籤
-        document.getElementById('banner-cpr-label').style.display = 'block';
-
-        // 7. 啟動 2:00 (120 秒) 倒數計時
-        clearInterval(cprCountdownInterval);
-        cprSecondsRemaining = 120;
-        updateCprTimerDisplay(); // 更新顯示為 2:00
-        cprCountdownInterval = setInterval(() => {
-            cprSecondsRemaining--;
-            updateCprTimerDisplay();
-            
-            if (cprSecondsRemaining <= 0) {
-                clearInterval(cprCountdownInterval);
-                // 倒數結束：自動啟動下一次的心率分析循環
-                updateAnalyzeBanner(); 
-            }
-        }, 1000);
-
-        // 若當前為可電擊心律 (如 VFib/無脈性VT)，電擊後 2 秒轉為正常竇性
-        if(ecgEngine.isShockable()) {
-            setTimeout(() => { 
-                currentSelectedRhythm = '正常竇性'; 
-                triggerRhythmChange('正常竇性'); 
-            }, 2000); 
-        }
-    });
     // 進入 12 導程 (點擊螢幕上的12)
     btnLeft12Lead.addEventListener(clickEvent, (e) => {
         e.preventDefault(); e.stopPropagation();
@@ -2211,6 +2747,7 @@ function updateAnalyzeBanner() {
     btnHardNibp.addEventListener(clickEvent, (e) => {
         e.preventDefault();
         
+        if (isDefibMode) exitDefibMode();
         if (!accState.nibp) return;
 
         if (isMeasuringNIBP) {
@@ -2399,8 +2936,8 @@ function updateAnalyzeBanner() {
         const co2ScaleGroup = document.getElementById('co2-scale-group');
         const plethContainer = document.getElementById('spo2-pleth-container');
 
-        // 在 12 導程或分析模式下，完全隱藏次要波型標籤與血氧脈動條
-        if (is12LeadMode || isAnalyzeMode) {
+        // 在 12 導程、分析模式或去顫能量選擇模式下，隱藏次要波型標籤與血氧脈動條
+        if (is12LeadMode || isAnalyzeMode || isDefibMode) {
             if (co2ScaleGroup) co2ScaleGroup.style.display = 'none';
             if (spo2Label) spo2Label.style.display = 'none';
             if (plethContainer) plethContainer.style.display = 'none';
@@ -2533,16 +3070,14 @@ function updateAnalyzeBanner() {
             if(selectValue === 'flatline') selectEl.value = '正常竇性';
             currentSelectedRhythm = activeRhythm;
             triggerRhythmChange(currentSelectedRhythm);
-            // 此處已移除 "PADS APPLIED - SENSING..." 畫面中央黃色大字提示
         } else {
             isPadsConnected = false;
             triggerRhythmChange(currentSelectedRhythm);
             if (isSternumPlaced || isApexPlaced) showMessage("CHECK ADHESION", 1000);
         }
         updatePadsPanelUI();
-        if (isAnalyzeMode) {
-            updateAnalyzeBanner();
-        }
+        if (isAnalyzeMode) updateAnalyzeBanner();
+        if (isDefibMode) updateDefibUI();
     }
 
     function updatePadsPanelUI() {
@@ -2550,14 +3085,34 @@ function updateAnalyzeBanner() {
         } else { btnTogglePads.innerText = '⚡ 一鍵貼上貼片 (Auto Apply)'; btnTogglePads.className = 'pads-btn btn-connect-pads'; }
     }
 
-    // --- 綁定左側第三個 Softkey 按鈕 (控制 CO2 校正與波形切換) ---
+    // === 修正：合併實體灰色按鍵 3 的雙重邏輯（防觸發 CO2 衝突） ===
     const softkeys = document.querySelectorAll('.softkey');
-    const btnCo2Softkey = softkeys[2]; 
+    const btnThirdSoftkey = softkeys[2]; // 這是第 3 個實體灰色按鈕
     const screenLedCo2 = document.getElementById('co2-screen-led'); 
 
-    btnCo2Softkey.addEventListener(clickEvent, (e) => {
-        e.preventDefault();
+    btnThirdSoftkey.addEventListener(clickEvent, (e) => {
+        e.preventDefault(); e.stopPropagation();
         
+        // 【邏輯 1】：如果當前正處於「正在充電」或「已充電」狀態，此按鍵功能為「解除充電」
+        if (monitorState.isCharging || monitorState.isCharged) {
+            // 立刻中斷並清除所有充電定時器
+            if (monitorState.chargeInterval) clearInterval(monitorState.chargeInterval);
+            if (monitorState.chargeTimeout) clearTimeout(monitorState.chargeTimeout);
+            
+            monitorState.isCharging = false;
+            monitorState.isCharged = false;
+            monitorState.chargeProgress = 0;
+            
+            // 還原按鍵閃爍狀態與指示燈
+            btnShock.classList.remove('ready', 'charging');
+            topLightLeft.className = "indicator-light status-normal"; 
+            topLightRight.className = "indicator-light status-normal";
+            
+            updateDefibUI();
+            return; // 執行完「解除」後直接退出，絕對不向下執行 CO2 偵測！
+        }
+        
+        // 【邏輯 2】：常態模式下（未充電），此按鍵功能為「CO2 校正與波形切換」
         if (!accState.etco2) {
             showMessage("EtCO2 NOT CONNECTED", 1500);
             return;
@@ -2616,7 +3171,7 @@ function updateAnalyzeBanner() {
             accState.etco2 = true;
             co2State = 'off'; 
             updateEtco2MonitorDisplay();
-            btnToggleEtco2.innerText = '拔除'; btnToggleEtco2.classList.add('active');
+            btnToggleEtco2.innerText = '連接'; btnToggleEtco2.classList.add('active');
             document.getElementById('status-etco2').innerHTML = '已連接 (Connected)'; document.getElementById('status-etco2').classList.add('connected');
         } else {
             clearTimeout(etco2Timer);
@@ -2662,7 +3217,7 @@ function updateAnalyzeBanner() {
     }
 
     // ==========================================
-    //  UI 與導線狀態檢查
+    //  UI 與導線狀態檢查（修正：全面解鎖分析與去顫/充電狀態下的導程動態顯示）
     // ==========================================
     function updateScreenUI() {
         const checkPads = document.getElementById('check-pads-text');
@@ -2677,7 +3232,14 @@ function updateAnalyzeBanner() {
 
         if (isAnalyzeMode) {
             checkPads.style.display = 'none';
-            leadText.innerText = 'Pads';
+            leadText.innerText = currentLead; // 允許分析模式下動態變更導程
+            return;
+        }
+
+        if (isDefibMode) {
+            checkPads.style.display = 'none';
+            // === 修正：由固定的 'Pads' 改為動態 currentLead，使其在充電/去顫時也能顯示 V1, V2, I 等導程 ===
+            leadText.innerText = currentLead; 
             return;
         }
 
@@ -2761,36 +3323,96 @@ function updateAnalyzeBanner() {
         applyRhythmStateLocally(actualRhythmName, trueHR, trueSpO2);
     }
 
-  btnCharge.addEventListener(clickEvent, (e) => {
-        e.preventDefault(); 
-        if (monitorState.isCharged || monitorState.isCharging) return;
-        monitorState.isCharging = true; 
-        
-        btnShock.classList.add('charging'); 
-        
-        // （已移除中央黃字提示）
-        topLightLeft.className = "indicator-light status-danger"; topLightRight.className = "indicator-light status-danger";
-        setTimeout(() => { 
-            monitorState.isCharging = false; monitorState.isCharged = true; 
-            
-            btnShock.classList.remove('charging'); 
-            
-            // （已移除中央黃字提示）
-            btnShock.classList.add('ready'); 
-        }, 3000);
-    });
+   btnCharge.addEventListener(clickEvent, (e) => {
+    e.preventDefault(); 
+    if (!isDefibMode) {
+        enterDefibMode();
+    }
+    if (monitorState.isCharged || monitorState.isCharging) return;
+    
+    // 安全起見，啟動前先清除可能殘留的定時器
+    if (monitorState.chargeInterval) clearInterval(monitorState.chargeInterval);
+    if (monitorState.chargeTimeout) clearTimeout(monitorState.chargeTimeout);
+    
+    monitorState.isCharging = true;
+    monitorState.chargeProgress = 0; // 初始化充電進度
+    
+    btnShock.classList.add('charging'); 
+    topLightLeft.className = "indicator-light status-danger"; 
+    topLightRight.className = "indicator-light status-danger";
+    updateDefibUI();
+
+    const chargeStartTime = Date.now();
+    const chargeDuration = 3000; // 充電時間 3 秒
+    
+    // 將計時器 ID 儲存在全域狀態，以便隨時強行關閉
+    monitorState.chargeInterval = setInterval(() => {
+        if (!monitorState.isCharging) {
+            clearInterval(monitorState.chargeInterval);
+            return;
+        }
+        const elapsed = Date.now() - chargeStartTime;
+        const progress = Math.min(1, elapsed / chargeDuration);
+        monitorState.chargeProgress = progress; // 紀錄 0 到 1 的進度
+        updateDefibUI();
+    }, 50);
+
+    // 將非同步延時器 ID 儲存在全域狀態，在按「解除」時必須立刻將其清除
+    monitorState.chargeTimeout = setTimeout(() => { 
+        if (monitorState.chargeInterval) clearInterval(monitorState.chargeInterval);
+        monitorState.isCharging = false; 
+        monitorState.isCharged = true; 
+        btnShock.classList.remove('charging'); 
+        btnShock.classList.add('ready'); 
+        updateDefibUI();
+    }, chargeDuration);
+});
 
     btnShock.addEventListener(clickEvent, (e) => {
         e.preventDefault(); 
         if (!monitorState.isCharged) return; 
-        monitorState.isCharged = false; btnShock.classList.remove('ready');
+        monitorState.isCharged = false; btnShock.classList.remove('ready', 'charging');
         topLightLeft.className = "indicator-light status-normal"; topLightRight.className = "indicator-light status-normal";
         const screen = document.querySelector('.screen-bezel'); screen.style.backgroundColor = "white"; 
         
-        // （已移除中央黃字提示）
         setTimeout(() => { screen.style.backgroundColor = "#050505"; }, 150);
         
-        if(ecgEngine.isShockable()) setTimeout(() => { currentSelectedRhythm = '正常竇性'; triggerRhythmChange('正常竇性'); }, 2000); 
+        // 若是在分析模式下，執行特有 CPR 倒數流程
+        if (isAnalyzeMode) {
+            shockCount++;
+            document.getElementById('banner-shock-count').innerText = shockCount;
+            clearInterval(analyzeAlternateTimer);
+            clearTimeout(analyzeChargeTimer);
+
+            document.getElementById('banner-box-adult').style.backgroundColor = "#52a558";
+            document.getElementById('banner-box-timer').style.backgroundColor = "#555555";
+            
+            const analyzeBannerText = document.getElementById('analyze-banner-text');
+            analyzeBannerText.innerText = "施行CPR";
+            analyzeBannerText.parentElement.style.backgroundColor = "transparent";
+            analyzeBannerText.parentElement.style.color = "#ffffff";
+            analyzeBannerText.parentElement.style.borderColor = "#ffffff";
+
+            document.getElementById('banner-cpr-label').style.display = 'block';
+
+            clearInterval(cprCountdownInterval);
+            cprSecondsRemaining = 120;
+            updateCprTimerDisplay(); 
+            cprCountdownInterval = setInterval(() => {
+                cprSecondsRemaining--;
+                updateCprTimerDisplay();
+                
+                if (cprSecondsRemaining <= 0) {
+                    clearInterval(cprCountdownInterval);
+                    updateAnalyzeBanner(); 
+                }
+            }, 1000);
+        }
+
+        if(ecgEngine.isShockable()) {
+            setTimeout(() => { currentSelectedRhythm = '正常竇性'; triggerRhythmChange('正常竇性'); }, 2000); 
+        }
+        updateDefibUI();
     });
 
     const ecgEngine = new window.ECGCore.ECGEngine();
@@ -2855,14 +3477,15 @@ function updateAnalyzeBanner() {
         return Math.max(0, val);
     }
 
-      // ==========================================
-    //  心電圖訊號繪製主流程 (分析模式下不顯示血氧波形)
+    // ==========================================
+    //  心電圖訊號繪製主流程
     // ==========================================
     function drawECG() {
         let speed = 1.3; let pxPerSec = 70; let dt = speed / pxPerSec; 
         let ecgPxPerMv = logicalHeight * 0.14; let spo2PxPerMv = logicalHeight * 0.13; 
         
-        let limit = is12LeadMode ? (logicalWidth / 2) : logicalWidth;
+        // 如果是去顫能量選擇模式，限縮心電圖水平繪製範圍，以免穿透右側直列刻度欄
+        let limit = is12LeadMode ? (logicalWidth / 2) : (isDefibMode ? logicalWidth * 0.83 : logicalWidth);
         let startX = xPos - speed;
         if (startX < 0) { 
             xPos += speed; simTime += dt; ecgEngine.advance(simTime + dt + 0.5); 
@@ -2934,8 +3557,7 @@ function updateAnalyzeBanner() {
                 }
             }
 
-            // 修正點：若在分析模式下，即使連接了血氧，心電圖仍保持完美垂直置中（0.5）
-            let targetEcgBaseRatio = (accState.spo2 || showCo2Waveform) && !isAnalyzeMode ? 0.28 : 0.5;
+            let targetEcgBaseRatio = (accState.spo2 || showCo2Waveform) && !isAnalyzeMode && !isDefibMode ? 0.28 : 0.5;
             currentEcgBaseRatio += (targetEcgBaseRatio - currentEcgBaseRatio) * 0.1;
             let curY = lastY;
 
@@ -3004,8 +3626,7 @@ function updateAnalyzeBanner() {
                         plethBarFill.style.height = `${fillPercentage}%`;
                     }
                 }
-            } else if (accState.spo2 && !isAnalyzeMode) {
-                // 修正點：僅在非分析模式下，才繪製血氧波形
+            } else if (accState.spo2 && !isAnalyzeMode && !isDefibMode) {
                 ctx.beginPath(); ctx.moveTo(startX, lastSpo2Y);
                 let currentSpo2Val = 0; let curSpo2Y = lastSpo2Y;
                 
@@ -3071,6 +3692,43 @@ function updateAnalyzeBanner() {
 
     triggerRhythmChange('flatline');
     drawECG(); 
+
+// === 註冊去顫充電模式下實體灰色按鍵的點擊事件 ===
+
+// 1. 實體按鈕 1：切換導程
+const btnDefibLeadCycle = document.getElementById('btn-defib-lead-cycle');
+if (btnDefibLeadCycle) {
+    // 實體按鈕 1 的導程切換依舊透過面板與事件驅動
+    btnDefibLeadCycle.addEventListener(clickEvent, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
+        updateScreenUI();
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+        xPos = 0;
+    });
+}
+// 3. 分析模式下第一格標籤：切換導程而不退出分析頁面
+const btnAnalyzeLeadCycle = document.getElementById('btn-analyze-lead-cycle');
+if (btnAnalyzeLeadCycle) {
+    btnAnalyzeLeadCycle.addEventListener(clickEvent, (e) => {
+        e.preventDefault(); e.stopPropagation();
+        leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
+        updateScreenUI();
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(0, 0, logicalWidth, logicalHeight);
+        xPos = 0;
+    });
+}
+
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
