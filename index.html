@@ -628,10 +628,308 @@
         .bottom-continuous-strap::before, .bottom-continuous-strap::after { content: ''; position: absolute; top: -2px; bottom: 0; width: 6%; z-index: 2; border-radius: 4px; }
         .bottom-continuous-strap::before { left: 0; background: linear-gradient(to right, #000 0%, rgba(0,0,0,0.8) 60%, transparent 100%); }
         .bottom-continuous-strap::after { right: 0; background: linear-gradient(to left, #000 0%, rgba(0,0,0,0.8) 60%, transparent 100%); }
-        #dev-panel { position: fixed; top: 10px; right: 10px; background: rgba(255,255,255,0.95); padding: 8px; border-radius: 5px; z-index: 100; display:flex; flex-direction: column; gap: 6px; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.2); width: 220px; font-size: 13px; }
-        #dev-panel select { width: 100%; padding: 4px; font-size: 13px; font-weight: bold; }
-        .dev-btn-group { display: flex; gap: 4px; }
-        #dev-panel button { font-size: 11px; padding: 4px; cursor: pointer; flex: 1; }
+        
+/* =========================================================================
+   Symbio see-thruCPR Simulator 控制器面板 CSS (調整版)
+   ========================================================================= */
+#dev-panel { 
+    position: fixed; 
+    top: 10px; 
+    right: 10px; 
+    background: #e6e4da; 
+    padding: 8px 10px; 
+    border-radius: 10px; 
+    z-index: 100; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 4px; 
+    border: 2px solid #a8a595; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.65), inset 0 1px 2px rgba(255,255,255,0.9); 
+    width: 175px; /* 機器框總寬度保持不變 */
+    font-family: Arial, Helvetica, sans-serif; 
+    user-select: none;
+    box-sizing: border-box;
+}
+
+:root {
+    --symbio-blue: #3b82f6; 
+    --symbio-blue-border: #2563eb;
+}
+
+.symbio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1.8px solid #222;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+.symbio-title {
+    font-family: 'Times New Roman', Georgia, serif;
+    font-weight: bold;
+    font-size: 13px;
+    color: #111;
+    display: flex;
+    align-items: center;
+    gap: 1px;
+}
+.symbio-title-wave { font-family: monospace; font-size: 9px; color: #444; }
+.symbio-sub { font-size: 8px; font-weight: bold; color: #111; text-align: right; line-height: 1.1; }
+.symbio-sub-cpr { color: #d32f2f; font-weight: 900; }
+
+.symbio-power-row {
+    display: flex;
+    justify-content: center;
+    margin: 2px 0 6px 0;
+}
+/* ON-OFF 排版容器（維持不變，確保文字在按鈕正上方置中對齊） */
+.symbio-power-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+
+/* 印在面板上的 ON-OFF 標籤文字 */
+.symbio-power-label {
+    font-size: 7.5px !important;
+    font-weight: 900 !important;
+    color: #222222 !important;
+    line-height: 1;
+    letter-spacing: -0.1px;
+}
+
+/* 調整為對齊圖二比例的長方形電源按鍵（更厚實、高度增加） */
+.symbio-power-btn {
+    width: 34px !important;  /* 調整寬度 */
+    height: 25px !important; /* 增加高度，使比例與實體照完全一致 */
+    background: linear-gradient(to bottom, #ffffff 0%, #f4f4f4 100%) !important;
+    border: 1.2px solid #9fa2a6 !important;
+    border-radius: 3px !important; /* 長方形圓角 */
+    font-size: 7.2px !important;
+    font-weight: 900 !important;
+    color: #111111 !important; /* 預設純黑字 */
+    cursor: pointer;
+    box-shadow: 0 1.2px 1.8px rgba(0,0,0,0.22), inset 0 1px 0 #ffffff !important;
+    transition: transform 0.05s ease, box-shadow 0.05s ease;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;
+    outline: none;
+    line-height: 1;
+}
+
+/* 按下去時的回彈：強制字體維持純黑不變灰，背景維持乾淨的白色質感 */
+.symbio-power-btn:active {
+    color: #111111 !important; /* 強制按壓時字體依然是深黑色，不變灰色 */
+    transform: translateY(1.5px) !important;
+    background: linear-gradient(to bottom, #dddddd 0%, #f9f9f9 100%) !important;
+    box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.3) !important;
+}
+
+/* 採用統一 Grid 排版，分為 4 直欄：前 3 欄為按鈕，第 4 欄為指示燈 */
+.symbio-main-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 33px) 1fr; /* 按鈕固定 33px 寬度，右側留給指示燈 */
+    column-gap: 8px; /* 增大按鈕之間的水平間距 */
+    row-gap: 5px;    /* 增大按鈕之間的垂直間距 */
+    align-items: center;
+    width: 100%;
+}
+
+/* 讓下半部的按鈕靠右放置在第 2, 3, 4 欄 */
+.grid-col-start-2 {
+    grid-column-start: 2;
+}
+
+/* 右側指示燈項目排版 */
+.symbio-side-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 5.8px;
+    font-weight: 900;
+    color: #222;
+    line-height: 1.0;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 2px;
+}
+.symbio-side-item span { text-align: left; }
+
+.symbio-side-led {
+    width: 5.5px;
+    height: 5.5px;
+    border-radius: 50%;
+    background: #777;
+    border: 1px solid #444;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+}
+.symbio-side-led.active-red { background: #ff2222 !important; box-shadow: 0 0 6px #ff2222 !important; }
+
+/* 所有按鈕尺寸與比例 */
+.symbio-btn-frame {
+    width: 33px; /* 縮小寬度，使按鈕看起來更瘦長 */
+    height: 45px !important;
+    background: var(--symbio-blue) !important;
+    border: 1.5px solid var(--symbio-blue-border) !important;
+    border-radius: 4px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 1.5px 2px rgba(0,0,0,0.2);
+    box-sizing: border-box;
+    position: relative;
+}
+
+.symbio-btn-top {
+    background: var(--symbio-blue) !important;
+    color: #ffffff !important;
+    height: 45% !important;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2px;
+    box-sizing: border-box;
+}
+
+.symbio-led-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: #666;
+    border: 1px solid #222;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.6);
+    margin-bottom: 1px;
+    transition: background 0.15s, box-shadow 0.15s;
+}
+
+/* 當滑鼠點擊(active)或有.pressed class時，橘色LED燈亮起，手放開立刻熄滅 */
+.symbio-btn-frame:active .symbio-led-dot,
+.symbio-btn-frame.pressed .symbio-led-dot {
+    background: #ff8c00 !important;
+    box-shadow: 0 0 6px #ff8c00, 0 0 2px #ffea00 !important;
+}
+
+/* 當按鈕被點擊時，白色按壓蓋向下位移 1.5px，產生真實按壓感 */
+.symbio-btn-frame:active .symbio-btn-cap,
+.symbio-btn-frame.pressed .symbio-btn-cap {
+    transform: translateY(1.5px) !important;
+    background: linear-gradient(to bottom, #d5d5d5 0%, #f0f0f0 100%) !important;
+    box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.4) !important;
+}
+
+/* 按鈕外框整體也產生微幅下壓與陰影變化 */
+.symbio-btn-frame:active,
+.symbio-btn-frame.pressed {
+    transform: translateY(0.5px);
+    box-shadow: 0 0.5px 1px rgba(0,0,0,0.15) !important;
+}
+
+.symbio-btn-title {
+    font-size: 7px;
+    font-weight: 900;
+    line-height: 1.0;
+    text-align: center;
+    color: #ffffff !important;
+    letter-spacing: -0.2px;
+}
+
+/* 白色獨立按壓蓋 */
+.symbio-btn-cap {
+    background: linear-gradient(to bottom, #ffffff 0%, #ebebeb 100%) !important;
+    border: 1px solid #b5b5b5 !important;
+    border-radius: 2.5px;
+    color: #111111 !important;
+    height: 55% !important;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5.5px;
+    font-weight: 900;
+    line-height: 0.95;
+    text-align: center;
+    box-shadow: 0 1.2px 1.8px rgba(0,0,0,0.2), inset 0 1px 0 #ffffff;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: transform 0.05s ease, box-shadow 0.05s ease, background 0.05s;
+}
+
+
+
+.symbio-divider { height: 1.5px; background: #a8a598; margin: 6px 0 4px 0; }
+
+.symbio-select-group { display: flex; flex-direction: column; gap: 2px; }
+.symbio-select-label { font-size: 8px; font-weight: bold; color: #1e4585; text-align: center; }
+#dev-rhythm-select {
+    width: 100%; padding: 2px 1px; font-size: 9.5px; font-weight: bold;
+    border-radius: 4px; border: 1px solid #777; background: #fff;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+
+/* 1. LED 指示燈：只有當按鈕「被選中 (.active)」或「手指正在按著」時，LED 燈保持恆亮橘光 */
+.symbio-btn-frame.active .symbio-led-dot,
+.symbio-btn-frame:active .symbio-led-dot,
+.symbio-btn-frame.pressed .symbio-led-dot {
+    background: #ff8c00 !important;
+    box-shadow: 0 0 6px #ff8c00, 0 0 2px #ffea00 !important;
+}
+
+/* 2. 按鈕蓋物理下壓：僅在「手指按著 (:active)」或「剛點擊的瞬間 (.pressed)」才會下壓，選中狀態 (.active) 不會下壓 */
+.symbio-btn-frame:active .symbio-btn-cap,
+.symbio-btn-frame.pressed .symbio-btn-cap {
+    transform: translateY(1.5px) !important;
+    background: linear-gradient(to bottom, #d5d5d5 0%, #f0f0f0 100%) !important;
+    box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.4) !important;
+}
+
+/* 3. 按鈕框整體下壓：僅在點擊時產生微幅下壓，隨後立即回彈 */
+.symbio-btn-frame:active,
+.symbio-btn-frame.pressed {
+    transform: translateY(0.5px);
+    box-shadow: 0 0.5px 1px rgba(0,0,0,0.15) !important;
+}
+/* convert 專用：移除藍底、藍框與陰影，使其上方留空，維持白蓋對齊 */
+.symbio-btn-frame-no-led {
+    width: 33px;
+    height: 45px !important;
+    background: transparent !important;
+    border: 1.5px solid transparent !important;
+    border-radius: 4px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 將按鍵座壓至底部，對齊鄰近的白蓋 */
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* convert 按鈕蓋尺寸維持一致 */
+.symbio-btn-frame-no-led .symbio-btn-cap {
+    height: 55% !important;
+    width: 100%;
+}
+
+/* convert 點擊時的下壓物理觸感 */
+.symbio-btn-frame-no-led:active .symbio-btn-cap,
+.symbio-btn-frame-no-led.pressed .symbio-btn-cap {
+    transform: translateY(1.5px) !important;
+    background: linear-gradient(to bottom, #d5d5d5 0%, #f0f0f0 100%) !important;
+    box-shadow: inset 0 1.5px 3px rgba(0,0,0,0.4) !important;
+}
+
+.symbio-btn-frame-no-led:active,
+.symbio-btn-frame-no-led.pressed {
+    transform: translateY(0.5px);
+}
 
         /* =========================================================================
            去顫模式 (Defib Mode) 樣式
@@ -1287,16 +1585,116 @@
         })(typeof window!=='undefined'?window:globalThis);
     </script>
 
-    <!-- 開發者控制面板 -->
+<!-- Symbio see-thruCPR Simulator 實體遙控控制器 (高擬真 3D 瘦長按壓版) -->
     <div id="dev-panel">
-        <div style="font-weight: bold; text-align: center; margin-bottom: 2px; color: #1a4585;">臨床病理心律選單</div>
-        <select id="dev-rhythm-select"></select>
-        <div class="dev-btn-group">
-            <button id="dev-nsr">設為 NSR</button>
-            <button id="dev-vfib">設為 VFib</button>
-            <button id="dev-flat">設為 Flatline</button>
+        <div class="symbio-header">
+            <span class="symbio-title">Symbio <span class="symbio-title-wave">~</span></span>
+            <span class="symbio-sub"><span style="color:#222;">see-thru</span><span class="symbio-sub-cpr">CPR</span>™<br><span style="font-size:8.5px;">Simulator</span></span>
+        </div>
+
+        <!-- 字在按鈕內部的長方形電源按鍵 -->
+        <div class="symbio-power-row">
+            <button class="symbio-power-btn" id="symbio-power">ON-OFF</button>
+        </div>
+
+        <!-- 整合式主格線排版 -->
+        <div class="symbio-main-grid">
+            <!-- Row 1 -->
+            <div class="symbio-btn-frame" data-rhythm="VF_CPR_FILTERED">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">VF</span></div>
+                <div class="symbio-btn-cap"><span>CPR<br>filtered</span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="VT_HI">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">VT-HI</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="VT_LO">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">VT-LO</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <!-- 右側第 1 排指示燈 (對齊第一排按鈕) -->
+            <div class="symbio-side-item">
+                <span>LOW<br>BATT</span>
+                <div class="symbio-side-led" id="led-low-batt"></div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="symbio-btn-frame" data-rhythm="VF_CPR_ARTIFACT">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">VF</span></div>
+                <div class="symbio-btn-cap"><span>CPR<br>artifact</span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="AFIB">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">AFIB</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="AFLTR">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">AFLTR</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <!-- 右側第 2 排指示燈 (對齊第二排按鈕) -->
+            <div class="symbio-side-item">
+                <span>DEFIB<br>DSCHG</span>
+                <div class="symbio-side-led" id="led-defib-dschg"></div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="symbio-btn-frame" data-rhythm="NSR">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">NSR</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="ASYS">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">ASYS</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <!-- 移除藍色頂框與 LED 的獨立 convert 按鈕 -->
+            <div class="symbio-btn-frame-no-led" id="symbio-convert-btn">
+                <div class="symbio-btn-cap"><span>convert</span></div>
+            </div>
+            <!-- 右側第 3 排指示燈 (對齊第三排按鈕) -->
+            <div class="symbio-side-item">
+                <span>PACER<br>PULSE</span>
+                <div class="symbio-side-led" id="led-pacer-pulse"></div>
+            </div>
+
+            <!-- Row 4 (前 1 欄留空，放置 3 個按鈕) -->
+            <div class="symbio-btn-frame grid-col-start-2" data-rhythm="S_BRDY">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">S BRDY</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="2ND_II">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">2nd II</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="3RD">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">3rd</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div></div>
+
+            <!-- Row 5 (前 1 欄留空，放置 3 個按鈕) -->
+            <div class="symbio-btn-frame grid-col-start-2" data-rhythm="1ST">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">1st</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="2ND_I">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">2nd I</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div class="symbio-btn-frame" data-rhythm="T_DE_P">
+                <div class="symbio-btn-top"><div class="symbio-led-dot"></div><span class="symbio-btn-title">T de P</span></div>
+                <div class="symbio-btn-cap"><span></span></div>
+            </div>
+            <div></div>
+        </div>
+
+        <div class="symbio-divider"></div>
+
+        <div class="symbio-select-group">
+            <span class="symbio-select-label">其他病理心律選單 (More Rhythms)</span>
+            <select id="dev-rhythm-select"></select>
         </div>
     </div>
+
 
     <!-- 主裝備外框 -->
     <div id="machine-assembly">
@@ -3659,72 +4057,141 @@ function changeEnergy(direction) {
         if (xPos >= limit) xPos = 0; 
         requestAnimationFrame(drawECG);
     }
+// ==========================================
+    //  Symbio 控制器選單對應與點擊橘燈邏輯
+    // ==========================================
+    const SYMBIO_MAPPING = {
+        'VF_CPR_FILTERED': '心室顫動 VFib',
+        'VT_HI': '單形性 VT',
+        'VT_LO': '心室自搏 Idioventricular',
+        'VF_CPR_ARTIFACT': '心室顫動 VFib',
+        'AFIB': '心房顫動 AFib',
+        'AFLTR': '心房撲動 2:1',
+        'NSR': '正常竇性',
+        'ASYS': '心搏停止 Asystole',
+        'S_BRDY': '竇性過緩',
+        '2ND_II': '二度 Mobitz II',
+        '3RD': '三度完全阻滯',
+        '1ST': '一度阻滯',
+        '2ND_I': '二度 Mobitz I 文氏',
+        'T_DE_P': '尖端扭轉 Torsades'
+    };
 
     const selectEl = document.getElementById('dev-rhythm-select');
-    const optFlat = document.createElement('option'); optFlat.value = 'flatline'; optFlat.innerText = '未接導線 (Pads 虛線)'; optFlat.selected = true; selectEl.appendChild(optFlat);
+    const optFlat = document.createElement('option'); 
+    optFlat.value = 'flatline'; 
+    optFlat.innerText = '未接導線 (Flatline)'; 
+    optFlat.selected = true; 
+    selectEl.appendChild(optFlat);
 
     window.ECGCore.RHYTHM_GROUPS.forEach(group => {
-        const optGroup = document.createElement('optgroup'); optGroup.label = group.cat;
+        const optGroup = document.createElement('optgroup'); 
+        optGroup.label = group.cat;
         group.items.forEach(([name, obj]) => { 
-            const opt = document.createElement('option'); opt.value = name; opt.innerText = name; optGroup.appendChild(opt); 
+            const opt = document.createElement('option'); 
+            opt.value = name; 
+            opt.innerText = name; 
+            optGroup.appendChild(opt); 
         });
         selectEl.appendChild(optGroup);
     });
 
     selectEl.addEventListener('change', (e) => { 
         currentSelectedRhythm = e.target.value; 
+        clearSymbioHighlights();
+        for (const [key, rhythmName] of Object.entries(SYMBIO_MAPPING)) {
+            if (rhythmName === currentSelectedRhythm) {
+                highlightSymbioButton(key);
+                break;
+            }
+        }
         triggerRhythmChange(currentSelectedRhythm); 
     });
 
-    document.getElementById('dev-nsr').addEventListener('click', () => { 
-        selectEl.value = '正常竇性'; currentSelectedRhythm = '正常竇性'; triggerRhythmChange('正常竇性'); 
+  // 恢復清除高亮功能
+    function clearSymbioHighlights() {
+        document.querySelectorAll('.symbio-btn-frame').forEach(frame => frame.classList.remove('active'));
+    }
+
+    // 恢復並啟用指定按鈕亮燈功能
+    function highlightSymbioButton(rhythmKey) {
+        clearSymbioHighlights();
+        const frame = document.querySelector(`.symbio-btn-frame[data-rhythm="${rhythmKey}"]`);
+        if (frame) frame.classList.add('active');
+    }
+
+    // 綁定 Symbio 控制器按鈕
+    document.querySelectorAll('.symbio-btn-frame[data-rhythm]').forEach(frame => {
+        frame.addEventListener('click', (e) => {
+            e.preventDefault();
+            const rhythmKey = frame.getAttribute('data-rhythm');
+            const rhythmName = SYMBIO_MAPPING[rhythmKey];
+            if (rhythmName) {
+                currentSelectedRhythm = rhythmName;
+                selectEl.value = rhythmName;
+                
+                // 1. 觸發蓋子「短暫下壓，150毫秒後物理回彈」
+                frame.classList.add('pressed');
+                setTimeout(() => {
+                    frame.classList.remove('pressed');
+                }, 150);
+                
+                // 2. 讓該心律按鈕的 LED 指示燈保持恆亮
+                highlightSymbioButton(rhythmKey);
+                
+                triggerRhythmChange(rhythmName);
+            }
+        });
     });
-    
-    document.getElementById('dev-vfib').addEventListener('click', () => { 
-        selectEl.value = '心室顫動 VFib'; currentSelectedRhythm = '心室顫動 VFib'; triggerRhythmChange('心室顫動 VFib'); 
-    });
-    
-    document.getElementById('dev-flat').addEventListener('click', () => { 
-        selectEl.value = 'flatline'; currentSelectedRhythm = 'flatline';
-        isSternumPlaced = false; isApexPlaced = false; isPadsConnected = false; 
-        updateTargetsDisplay(); updatePadsPanelUI(); triggerRhythmChange('flatline'); 
-    });
+
+    // convert 按鈕點擊
+    const btnConvert = document.getElementById('symbio-convert-btn');
+    if (btnConvert) {
+        btnConvert.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // 1. 蓋子下壓回彈
+            btnConvert.classList.add('pressed');
+            setTimeout(() => {
+                btnConvert.classList.remove('pressed');
+            }, 150);
+            
+            // 2. 切換為正常竇性，並讓 NSR 的 LED 燈亮起
+            currentSelectedRhythm = '正常竇性';
+            selectEl.value = '正常竇性';
+            highlightSymbioButton('NSR');
+            triggerRhythmChange('正常竇性');
+        });
+    }
+
+    // Symbio ON-OFF 電源按鈕
+    const btnSymbioPower = document.getElementById('symbio-power');
+    let isSymbioOn = true;
+    if (btnSymbioPower) {
+        btnSymbioPower.addEventListener('click', (e) => {
+            e.preventDefault();
+            isSymbioOn = !isSymbioOn;
+            if (!isSymbioOn) {
+                btnSymbioPower.style.opacity = '0.5';
+                selectEl.value = 'flatline';
+                currentSelectedRhythm = 'flatline';
+                clearSymbioHighlights();
+                triggerRhythmChange('flatline');
+            } else {
+                btnSymbioPower.style.opacity = '1.0';
+                selectEl.value = '正常竇性';
+                currentSelectedRhythm = '正常竇性';
+                highlightSymbioButton('NSR');
+                triggerRhythmChange('正常竇性');
+            }
+        });
+    }
 
     triggerRhythmChange('flatline');
-    drawECG(); 
-
-// === 註冊去顫充電模式下實體灰色按鍵的點擊事件 ===
-
-// 1. 實體按鈕 1：切換導程
-const btnDefibLeadCycle = document.getElementById('btn-defib-lead-cycle');
-if (btnDefibLeadCycle) {
-    // 實體按鈕 1 的導程切換依舊透過面板與事件驅動
-    btnDefibLeadCycle.addEventListener(clickEvent, (e) => {
-        e.preventDefault(); e.stopPropagation();
-        leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
-        updateScreenUI();
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(0, 0, logicalWidth, logicalHeight);
-        xPos = 0;
-    });
-}
-// 3. 分析模式下第一格標籤：切換導程而不退出分析頁面
-const btnAnalyzeLeadCycle = document.getElementById('btn-analyze-lead-cycle');
-if (btnAnalyzeLeadCycle) {
-    btnAnalyzeLeadCycle.addEventListener(clickEvent, (e) => {
-        e.preventDefault(); e.stopPropagation();
-        leadCycleIndex = (leadCycleIndex + 1) % leadCycle.length;
-        updateScreenUI();
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(0, 0, logicalWidth, logicalHeight);
-        xPos = 0;
-    });
-}
-
+    drawECG();
 </script>
 </body>
 </html>
-
 
 
 
