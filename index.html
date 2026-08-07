@@ -651,6 +651,63 @@
     box-sizing: border-box;
 }
 
+/* 1. 為遙控器面板本體加入平滑動畫過渡 */
+#dev-panel {
+    /* ... 保持您現有的樣式不變 ... */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* 2. 當套用 .collapsed 類別時，將面板完美隱藏至螢幕右側外 */
+#dev-panel.collapsed {
+    transform: translateX(calc(100% + 10px)) !important;
+}
+
+/* 3. 左側側邊收折拉環樣式 */
+.symbio-toggle-handle {
+    position: absolute;
+    left: -24px; /* 貼在遙控器左側邊緣外 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 54px;
+    background-color: #e6e4da;
+    border: 2px solid #a8a595;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    box-shadow: -3px 2px 8px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 101;
+    box-sizing: border-box;
+    transition: background-color 0.2s;
+}
+
+.symbio-toggle-handle:hover {
+    background-color: #f2efe4;
+}
+
+/* 拉環內部的文字與箭頭圖示 */
+.symbio-toggle-text {
+    font-size: 7.5px;
+    font-weight: 900;
+    color: #444;
+    line-height: 1;
+    writing-mode: vertical-rl; /* 直書文字 */
+    text-orientation: upright;
+    margin-bottom: 2px;
+}
+
+.symbio-toggle-icon {
+    font-size: 9px;
+    font-weight: 900;
+    color: #111;
+    line-height: 1;
+}
+
+
 :root {
     --symbio-blue: #3b82f6; 
     --symbio-blue-border: #2563eb;
@@ -1585,8 +1642,13 @@
         })(typeof window!=='undefined'?window:globalThis);
     </script>
 
-<!-- Symbio see-thruCPR Simulator 實體遙控控制器 (高擬真 3D 瘦長按壓版) -->
-    <div id="dev-panel">
+<<!-- Symbio see-thruCPR Simulator 實體遙控控制器 (預設收合狀態) -->
+    <div id="dev-panel" class="collapsed">
+        <!-- 側邊收折拉環（預設收合，顯示 ◀ 箭頭指向左方展開） -->
+        <div class="symbio-toggle-handle" id="symbio-toggle" title="展開/收折遙控器">
+            <span class="symbio-toggle-text">遙控器</span>
+            <span class="symbio-toggle-icon">◀</span>
+        </div>
         <div class="symbio-header">
             <span class="symbio-title">Symbio <span class="symbio-title-wave">~</span></span>
             <span class="symbio-sub"><span style="color:#222;">see-thru</span><span class="symbio-sub-cpr">CPR</span>™<br><span style="font-size:8.5px;">Simulator</span></span>
@@ -4163,7 +4225,22 @@ function changeEnergy(direction) {
             triggerRhythmChange('正常竇性');
         });
     }
-
+// 側邊拉環點擊收折/展開控制
+    const devPanel = document.getElementById('dev-panel');
+    const symbioToggle = document.getElementById('symbio-toggle');
+    if (symbioToggle && devPanel) {
+        const toggleIcon = symbioToggle.querySelector('.symbio-toggle-icon');
+        symbioToggle.addEventListener('click', (e) => {
+            e.preventDefault(); e.stopPropagation();
+            devPanel.classList.toggle('collapsed');
+            
+            if (devPanel.classList.contains('collapsed')) {
+                toggleIcon.innerText = '◀'; // 縮回時，箭頭改向左指向展開
+            } else {
+                toggleIcon.innerText = '▶'; // 展開時，箭頭向右指向縮回
+            }
+        });
+    }
     // Symbio ON-OFF 電源按鈕
     const btnSymbioPower = document.getElementById('symbio-power');
     let isSymbioOn = true;
