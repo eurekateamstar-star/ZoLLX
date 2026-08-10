@@ -208,7 +208,28 @@
         .green-btn-inner::after { content: ""; margin-top: 0.12vmin; width: 1.25vmin; height: 0.3vmin; border: 1px solid rgba(255, 255, 255, 0.65); border-top-color: transparent; border-radius: 50%; }
         .green-btn-inner::before { content: ""; position: absolute; top: 0.08vmin; left: 50%; transform: translateX(-50%); width: 1px; height: 0.27vmin; background-color: rgba(255, 255, 255, 0.7); z-index: 2; }
         
-        .status-normal { animation: flash-normal 3s infinite; } .status-danger { animation: flash-danger 0.25s infinite; }
+        /* 平常狀態：指示燈靜止不閃 */
+.status-normal { 
+    animation: none !important; 
+    background: linear-gradient(to bottom, #f4f7f9, #c3c9cd);
+    box-shadow: inset 0 2px 3px rgba(255,255,255,0.9), 0 2px 4px rgba(0,0,0,0.3);
+}
+
+/* 準備電擊時，上面指示燈套用急促閃爍動畫 */
+.status-danger { 
+    animation: shock-top-light-flash 0.35s infinite !important; 
+}
+
+@keyframes shock-top-light-flash {
+    0%, 49% {
+        background: #ff2a00;
+        box-shadow: 0 0 18px #ff2a00, 0 0 35px #ff2a00, inset 0 1px 2px #ffffff;
+    }
+    50%, 100% {
+        background: #541d08;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+}
         .feet-container { position: absolute; bottom: -3%; left: 2%; width: 96%; height: 12%; display: flex; justify-content: space-between; z-index: 1; pointer-events: none; }
         .foot { width: 32%; height: 100%; background-color: var(--zoll-blue-dark); position: relative; }
         #foot-left { border-radius: 0 0 3.9vmin 6.2vmin; box-shadow: inset 8px -3px 12px rgba(255,255,255,0.1), inset -15px -25px 30px rgba(0,0,0,0.9), -5px 15px 20px rgba(0,0,0,0.5); }
@@ -240,7 +261,28 @@
             border-color: #4c82d4 !important;
             color: #ffffff !important;
         }
+/* 充電/已充電時，左上主指示燈亮橘光 */
+.indicator-light.status-orange {
+    background: #ff9100 !important;
+    box-shadow: 0 0 12px #ff9100, inset 0 1px 2px rgba(255,255,255,0.9) !important;
+    animation: none !important;
+}
 
+/* 按下左側按鈕時，旁邊的指示燈亮綠光，手放開即消失 */
+.softkey-light.active-green,
+.softkey:active + .softkey-light {
+    background-color: #32ff32 !important;
+    border-color: #52a558 !important;
+    box-shadow: 0 0 8px #32ff32, inset 0 1px 2px rgba(255,255,255,0.8) !important;
+}
+
+/* 螢幕關機全黑狀態 */
+.screen-bezel.power-off {
+    background-color: #000000 !important;
+}
+.screen-bezel.power-off * {
+    visibility: hidden !important;
+}
         /* 標籤群組排版與切換邏輯 */
         .label-group-standard, .label-group-12lead {
             display: flex;
@@ -617,19 +659,19 @@
         .btn-shock.ready:active { transform: scale(0.96) translateY(1px); box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 3px 6px rgba(0,0,0,0.6) !important; }
         
         @keyframes shock-flash {
-            0%, 49% {
-                background: #ff2a00 !important; 
-                border-color: #ffea00 !important; 
-                box-shadow: 0 0 40px #ff2a00, 0 0 20px #ff8c00, inset 0 0 20px rgba(255, 255, 255, 0.9) !important;
-                filter: brightness(1.3);
-            }
-            50%, 100% {
-                background: #541d08 !important; 
-                border-color: #2b0e03 !important; 
-                box-shadow: 0 3px 5px rgba(0,0,0,0.8), inset 0 2.5px 3.5px rgba(0,0,0,0.9) !important;
-                filter: brightness(0.4);
-            }
-        }
+    0%, 49% {
+        background: #ff2a00; 
+        border-color: #ffea00; 
+        box-shadow: 0 0 40px #ff2a00, 0 0 20px #ff8c00, inset 0 0 20px rgba(255, 255, 255, 0.9);
+        filter: brightness(1.3);
+    }
+    50%, 100% {
+        background: #541d08; 
+        border-color: #2b0e03; 
+        box-shadow: 0 3px 5px rgba(0,0,0,0.8), inset 0 2.5px 3.5px rgba(0,0,0,0.9);
+        filter: brightness(0.4);
+    }
+}
         .blue-bottom-details { width: 100%; height: 11%; padding: 0 5%; box-sizing: border-box; display: flex; justify-content: center; align-items: flex-end; position: relative; z-index: 10; }
         .zoll-embossed-frame { position: absolute; left: 2.8%; top: 4.4vmin; padding: 0.15vmin 0.6vmin; background-color: rgba(0, 0, 0, 0.03); border-radius: 6px; box-shadow: inset 1px 1.5px 2px rgba(0,0,0,0.25), 0 0.5px 0.5px rgba(255,255,255,0.15); display: flex; justify-content: center; align-items: center; }
         .zoll-embossed-text { color: #315a9e; font-size: 5vmin; font-weight: 900; font-family: 'Arial Black', sans-serif; letter-spacing: 1px; line-height: 1; text-shadow: -0.5px -0.5px 0px rgba(255,255,255,0.4), 0.5px 0.5px 0.5px rgba(0,0,0,0.5); }
@@ -2085,7 +2127,7 @@
 
     <!-- 主機身 -->
     <div class="blue-chassis">
-        <div class="green-button-recess"><div class="green-btn-inner"></div></div>
+        <div class="green-button-recess" id="btn-power-main" title="開機 / 關機"><div class="green-btn-inner"></div></div>
         <div class="indicator-light status-normal" id="top-light-left"></div>
         <div class="indicator-light status-normal" id="top-light-right"></div>
 
@@ -2096,15 +2138,14 @@
 
 
             <div class="middle-tier">
-                <div class="left-softkeys">
-                    <div class="softkey-row"><div class="softkey" id="btn-softkey-lead" title="切換導程"></div></div>
-                    <div class="softkey-row"><div class="softkey"></div></div>
-                    <!-- === 修正：為第 3 個實體灰色按鍵加上 ID === -->
-                    <div class="softkey-row"><div class="softkey" id="btn-softkey-cancel" title="解除充電"></div></div>
-                    <div class="softkey-row"><div class="softkey"></div></div>
-                    <div class="softkey-row"><div class="softkey"></div></div>
-                    <div class="softkey-row"><div class="softkey"></div></div>
-                    <div class="softkey-row"><div class="softkey"></div></div>
+               <div class="left-softkeys">
+                    <div class="softkey-row"><div class="softkey" id="btn-softkey-lead" title="切換導程"></div><div class="softkey-light"></div></div>
+                    <div class="softkey-row"><div class="softkey"></div><div class="softkey-light"></div></div>
+                    <div class="softkey-row"><div class="softkey" id="btn-softkey-cancel" title="解除充電"></div><div class="softkey-light" id="softkey-light-cancel"></div></div>
+                    <div class="softkey-row"><div class="softkey"></div><div class="softkey-light"></div></div>
+                    <div class="softkey-row"><div class="softkey"></div><div class="softkey-light"></div></div>
+                    <div class="softkey-row"><div class="softkey"></div><div class="softkey-light"></div></div>
+                    <div class="softkey-row"><div class="softkey"></div><div class="softkey-light"></div></div>
                 </div>
                 
                 <div class="screen-bezel">
@@ -2469,6 +2510,10 @@
     const topLightLeft = document.getElementById('top-light-left'); 
     const topLightRight = document.getElementById('top-light-right');
 
+
+
+
+
     // AED 右側貼片元素
     const rightSideBag = document.getElementById('right-side-bag');
     const padsModal = document.getElementById('pads-modal');
@@ -2502,6 +2547,41 @@
     const btnToggleEtco2 = document.getElementById('btn-toggle-etco2'); 
 
     const clickEvent = ('ontouchstart' in window) ? 'touchstart' : 'click';
+// ==========================================
+    //  主機電源開關邏輯 (綠色按鈕)
+    // ==========================================
+    let isPowerOn = false; // 預設關機 (Power OFF)
+    const btnPowerMain = document.getElementById('btn-power-main');
+    const screenBezel = document.querySelector('.screen-bezel');
+
+   function setPowerState(on) {
+    isPowerOn = on;
+    if (isPowerOn) {
+        // 開機：移除黑屏、開啟指示燈
+        screenBezel.classList.remove('power-off');
+        topLightLeft.className = "indicator-light status-normal";
+        topLightRight.className = "indicator-light status-normal";
+        updateScreenUI();
+    } else {
+        // 關機：螢幕黑屏，但上方兩條指示燈維持原本外觀 (status-normal)
+        if (typeof cancelDefibCharge === 'function') cancelDefibCharge();
+        if (is12LeadMode) toggle12LeadMode();
+        if (isAnalyzeMode) toggleAnalyzeMode();
+        if (isDefibMode) exitDefibMode();
+        
+        screenBezel.classList.add('power-off');
+        topLightLeft.className = "indicator-light status-normal"; // 保留原本顏色
+        topLightRight.className = "indicator-light status-normal"; // 保留原本顏色
+    }
+}
+
+    if (btnPowerMain) {
+        btnPowerMain.addEventListener(clickEvent, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setPowerState(!isPowerOn); // 按一下切換開/關機
+        });
+    }
 
     // --- 12-Lead ECG 與分析模式設定 ---
     let is12LeadMode = false;
@@ -2740,105 +2820,96 @@ function changeEnergy(direction) {
     });
     container.appendChild(list);
 }
-  function updateDefibUI() {
-    if (!isDefibMode) return;
-    
-    const selectedEnergyVal = ENERGY_LEVELS[currentEnergyIndex];
-    document.getElementById('defib-selected-energy-val').innerText = selectedEnergyVal;
-    document.getElementById('defib-shock-count').innerText = shockCount;
-    
-    const statusMain = document.getElementById('defib-status-main');
-    const statusSub = document.getElementById('defib-status-sub');
-    
-    const statusBox = document.querySelector('.defib-status-box');
-    const statusMainBox = document.getElementById('defib-status-main-box');
-    const statusTitle = document.querySelector('.defib-status-title');
-    const energyBox = document.querySelector('.defib-energy-box');
-    const energyTitle = document.querySelector('.defib-energy-title');
-    const energyValBox = document.getElementById('defib-selected-energy-val');
-    const energyUnit = document.querySelector('.defib-energy-unit');
-    const screenBezel = document.querySelector('.screen-bezel');
+ function updateDefibUI() {
+        if (!isDefibMode) return;
+        
+        const selectedEnergyVal = ENERGY_LEVELS[currentEnergyIndex];
+        document.getElementById('defib-selected-energy-val').innerText = selectedEnergyVal;
+        document.getElementById('defib-shock-count').innerText = shockCount;
+        
+        const statusMain = document.getElementById('defib-status-main');
+        const statusSub = document.getElementById('defib-status-sub');
+        
+        const statusBox = document.querySelector('.defib-status-box');
+        const statusMainBox = document.getElementById('defib-status-main-box');
+        const energyBox = document.querySelector('.defib-energy-box');
+        const energyTitle = document.querySelector('.defib-energy-title');
+        const energyValBox = document.getElementById('defib-selected-energy-val');
+        const energyUnit = document.querySelector('.defib-energy-unit');
 
-    // 每次更新前，先移除閃爍類別並恢復基本文字顏色與標籤狀態
-    statusBox.classList.remove('defib-flash-active');
-    statusMainBox.classList.remove('defib-flash-active');
-    statusMain.style.color = '#000000';
-    statusSub.style.color = '#000000';
-
-    // 去顫充電或已充電時，切換左側快捷鍵標籤組至 1, 3, 5, 6
-    if (monitorState.isCharging || monitorState.isCharged) {
-        screenBezel.classList.add('mode-defib-charging');
-    } else {
-        screenBezel.classList.remove('mode-defib-charging');
-    }
-
-    if (monitorState.isCharged) {
-        // === 1. 已充電狀態：停止閃爍，兩側轉為恆亮橘色背景 ===
-        statusMain.innerText = '已充電';
+        statusBox.classList.remove('defib-flash-active');
+        statusMainBox.classList.remove('defib-flash-active');
         statusMain.style.color = '#000000';
-        statusSub.innerText = isPadsConnected ? '已連接' : '檢查電擊貼片';
         statusSub.style.color = '#000000';
-        statusSub.style.fontSize = '0.95vmin';
-        statusSub.style.fontWeight = 'bold';
 
-        // 轉為恆亮橘色
-        statusBox.style.backgroundColor = '#e05316';
-        statusMainBox.style.backgroundColor = '#e05316';
-        energyBox.style.backgroundColor = '#e05316';
-        
-        energyTitle.style.backgroundColor = '#00a854';
-        energyTitle.style.color = '#ffffff';
-        energyValBox.style.color = '#000000';
-        energyUnit.style.color = '#000000';
-
-    } else if (monitorState.isCharging) {
-        // === 2. 正在充電狀態：啟動左側大框 0.5 秒方波橘色/透明切換 ===
-        statusMain.innerText = '正在充電';
-        statusSub.innerText = isPadsConnected ? '已連接' : '檢查電擊貼片';
-        statusSub.style.fontSize = '0.95vmin';
-        statusSub.style.fontWeight = 'bold';
-
-        // 清除行內顏色，完全交由外框的 CSS 動畫控管
-        statusBox.style.backgroundColor = '';
-        statusMainBox.style.backgroundColor = '';
-        statusMain.style.color = '';
-        statusSub.style.color = '';
-
-        // 啟動 0.5 秒方波硬切換閃爍類別
-        statusBox.classList.add('defib-flash-active');
-        
-        // 右側選定能量框維持黑底黃字
-        energyBox.style.backgroundColor = '#000000';
-        energyTitle.style.backgroundColor = '#00a854';
-        energyTitle.style.color = '#ffffff';
-        energyValBox.style.color = '#efc94c';
-        energyUnit.style.color = '#efc94c';
-
-    } else {
-        // === 3. 未充電（常態）狀態：還原預設黃色底，右側維持黑底 ===
-        statusBox.style.backgroundColor = '#efc94c';
-        statusMainBox.style.backgroundColor = 'transparent';
-        
-        if (!isPadsConnected) {
-            statusMain.innerText = '檢查電極片';
+       if (monitorState.isCharged) {
+            // ★ 充電完成準備電擊：觸發左上指示燈紅光閃爍！
+            topLightLeft.className = "indicator-light status-danger";
+            
+            statusMain.innerText = '已充電';
             statusMain.style.color = '#000000';
-            statusSub.innerText = '';
+            statusSub.innerText = isPadsConnected ? '已連接' : '檢查電擊貼片';
+            statusSub.style.color = '#000000';
+            statusSub.style.fontSize = '0.95vmin';
+            statusSub.style.fontWeight = 'bold';
+
+            statusBox.style.backgroundColor = '#e05316';
+            statusMainBox.style.backgroundColor = '#e05316';
+            energyBox.style.backgroundColor = '#e05316';
+            
+            energyTitle.style.backgroundColor = '#00a854';
+            energyTitle.style.color = '#ffffff';
+            energyValBox.style.color = '#000000';
+            energyUnit.style.color = '#000000';
+
         } else {
-            statusMain.innerText = '已連接';
-            statusMain.style.color = '#000000';
-            statusSub.innerText = '';
-        }
+            // ★ 未充電或充電中：上面指示燈保持常態不閃
+            topLightLeft.className = "indicator-light status-normal";
+            topLightRight.className = "indicator-light status-normal";
 
-        // 右側還原無底色（黑底黃字）
-        energyBox.style.backgroundColor = '#000000';
-        energyTitle.style.backgroundColor = '#00a854';
-        energyTitle.style.color = '#ffffff';
-        energyValBox.style.color = '#efc94c';
-        energyUnit.style.color = '#efc94c';
+            if (monitorState.isCharging) {
+                statusMain.innerText = '正在充電';
+                statusSub.innerText = isPadsConnected ? '已連接' : '檢查電擊貼片';
+                statusSub.style.fontSize = '0.95vmin';
+                statusSub.style.fontWeight = 'bold';
+
+                statusBox.style.backgroundColor = '';
+                statusMainBox.style.backgroundColor = '';
+                statusMain.style.color = '';
+                statusSub.style.color = '';
+
+                statusBox.classList.add('defib-flash-active');
+                
+                energyBox.style.backgroundColor = '#000000';
+                energyTitle.style.backgroundColor = '#00a854';
+                energyTitle.style.color = '#ffffff';
+                energyValBox.style.color = '#efc94c';
+                energyUnit.style.color = '#efc94c';
+
+            } else {
+                statusBox.style.backgroundColor = '#efc94c';
+                statusMainBox.style.backgroundColor = 'transparent';
+                
+                if (!isPadsConnected) {
+                    statusMain.innerText = '檢查電極片';
+                    statusMain.style.color = '#000000';
+                    statusSub.innerText = '';
+                } else {
+                    statusMain.innerText = '已連接';
+                    statusMain.style.color = '#000000';
+                    statusSub.innerText = '';
+                }
+
+                energyBox.style.backgroundColor = '#000000';
+                energyTitle.style.backgroundColor = '#00a854';
+                energyTitle.style.color = '#ffffff';
+                energyValBox.style.color = '#efc94c';
+                energyUnit.style.color = '#efc94c';
+            }
+        }
+        
+        renderEnergyScale();
     }
-    
-    renderEnergyScale();
-}
 
 
     // 連結能量選擇實體面板元件
@@ -2872,7 +2943,7 @@ function changeEnergy(direction) {
     let cprCountdownInterval = null;  
     let cprSecondsRemaining = 120;    
     
-    function updateAnalyzeBanner() {
+   function updateAnalyzeBanner() {
         const analyzeBannerText = document.getElementById('analyze-banner-text');
         const analyzeBannerSub = document.getElementById('analyze-banner-sub');
         if (!analyzeBannerText || !analyzeBannerSub) return;
@@ -2923,33 +2994,82 @@ function changeEnergy(direction) {
             analyzeBannerText.parentElement.style.color = "#ffffff";
             analyzeBannerText.parentElement.style.borderColor = "#ffffff";
 
+            // 5秒分析後，判斷心律
             analyzeChargeTimer = setTimeout(() => {
                 clearInterval(analyzeAlternateTimer);
                 
-                analyzeBannerText.innerText = "正在充電";
-                analyzeBannerText.parentElement.style.backgroundColor = "#efc94c";
-                analyzeBannerText.parentElement.style.color = "#000000";
-                
-                btnShock.classList.add('charging'); 
-                
-                setTimeout(() => {
-                    if (!isPadsConnected) return; 
-                    
-                    btnShock.classList.remove('charging'); 
-                    
-                    analyzeBannerText.innerText = "請按電擊";
+                // 檢查當前心律是否為可電擊心律 (VF / VT / Torsades)
+                const isShockable = (typeof ecgEngine !== 'undefined' && ecgEngine.isShockable()) || 
+                                    currentSelectedRhythm === '心室顫動 VFib' || 
+                                    currentSelectedRhythm === '單形性 VT' || 
+                                    currentSelectedRhythm === '多形性 VT' || 
+                                    currentSelectedRhythm === '尖端扭轉 Torsades';
+
+                if (isShockable) {
+                    // === 可電擊心律 (VT / VF) ===
+                    analyzeBannerText.innerText = "正在充電";
                     analyzeBannerText.parentElement.style.backgroundColor = "#efc94c";
                     analyzeBannerText.parentElement.style.color = "#000000";
+                    
+                    btnShock.classList.add('charging'); 
+                    
+                    setTimeout(() => {
+                        if (!isPadsConnected) return; 
+                        
+                        btnShock.classList.remove('charging'); 
+                        
+                        analyzeBannerText.innerText = "請按電擊";
+                        analyzeBannerText.parentElement.style.backgroundColor = "#efc94c";
+                        analyzeBannerText.parentElement.style.color = "#000000";
+                        analyzeBannerText.parentElement.style.borderColor = "#ffffff";
+                        
+                        document.getElementById('banner-box-adult').style.backgroundColor = "#da3838";
+                        
+                        monitorState.isCharged = true;
+                        btnShock.classList.add('ready'); 
+                        topLightLeft.className = "indicator-light status-danger"; 
+                        topLightRight.className = "indicator-light status-danger";
+                        updateDefibUI();
+                    }, 2500); 
+
+                } else {
+                    // === 不可電擊心律 (正常竇性 NSR, 心搏停止 Asystole 等) ===
+                    analyzeBannerText.innerText = "不建議電擊";
+                    analyzeBannerText.parentElement.style.backgroundColor = "#da3838"; // 紅底白字警示
+                    analyzeBannerText.parentElement.style.color = "#ffffff";
                     analyzeBannerText.parentElement.style.borderColor = "#ffffff";
                     
-                    document.getElementById('banner-box-adult').style.backgroundColor = "#da3838";
-                    
-                    monitorState.isCharged = true;
-                    btnShock.classList.add('ready'); 
-                    topLightLeft.className = "indicator-light status-danger"; 
-                    topLightRight.className = "indicator-light status-danger";
-                    updateDefibUI();
-                }, 2500); 
+                    monitorState.isCharged = false;
+                    btnShock.classList.remove('ready', 'charging'); 
+                    topLightLeft.className = "indicator-light status-normal"; 
+                    topLightRight.className = "indicator-light status-normal";
+
+                    // 3 秒後自動轉為「施行 CPR」倒數 2 分鐘
+                    setTimeout(() => {
+                        if (!isPadsConnected || !isAnalyzeMode) return;
+                        
+                        analyzeBannerText.innerText = "施行CPR";
+                        analyzeBannerText.parentElement.style.backgroundColor = "transparent";
+                        analyzeBannerText.parentElement.style.color = "#ffffff";
+
+                        document.getElementById('banner-box-adult').style.backgroundColor = "#52a558";
+                        document.getElementById('banner-box-timer').style.backgroundColor = "#555555";
+                        document.getElementById('banner-cpr-label').style.display = 'block';
+
+                        clearInterval(cprCountdownInterval);
+                        cprSecondsRemaining = 120;
+                        updateCprTimerDisplay(); 
+                        cprCountdownInterval = setInterval(() => {
+                            cprSecondsRemaining--;
+                            updateCprTimerDisplay();
+                            
+                            if (cprSecondsRemaining <= 0) {
+                                clearInterval(cprCountdownInterval);
+                                updateAnalyzeBanner(); // 2分鐘 CPR 結束後再次重新分析
+                            }
+                        }, 1000);
+                    }, 3000);
+                }
                 
             }, 5000); 
         }
@@ -3533,12 +3653,13 @@ function changeEnergy(direction) {
         if (isSternumPlaced || isApexPlaced) { padWires.style.display = 'block'; } else { padWires.style.display = 'none'; }
     }
 
-    function checkPadsConnectionState() {
+   function checkPadsConnectionState() {
         if (isSternumPlaced && isApexPlaced) {
             isPadsConnected = true;
             const selectValue = selectEl.value;
-            const activeRhythm = (selectValue === 'flatline') ? '正常竇性' : selectValue;
-            if(selectValue === 'flatline') selectEl.value = '正常竇性';
+            // 貼上貼片後，若原本無訊號則預設改為 心室顫動 VFib
+            const activeRhythm = (selectValue === 'flatline') ? '心室顫動 VFib' : selectValue;
+            selectEl.value = activeRhythm;
             currentSelectedRhythm = activeRhythm;
             triggerRhythmChange(currentSelectedRhythm);
         } else {
@@ -3952,6 +4073,10 @@ function changeEnergy(direction) {
     //  心電圖訊號繪製主流程
     // ==========================================
     function drawECG() {
+ if (!isPowerOn) {
+            requestAnimationFrame(drawECG);
+            return;
+        }
         let speed = 1.3; let pxPerSec = 70; let dt = speed / pxPerSec; 
         let ecgPxPerMv = logicalHeight * 0.14; let spo2PxPerMv = logicalHeight * 0.13; 
         
@@ -4277,6 +4402,26 @@ function changeEnergy(direction) {
 
     triggerRhythmChange('flatline');
     drawECG();
+
+// 預設開頁面時為關機黑屏狀態
+    setPowerState(false);
+
+// 左側 7 個按鈕按壓亮綠燈，手放開即消失
+    document.querySelectorAll('.left-softkeys .softkey').forEach(btn => {
+        const light = btn.parentElement.querySelector('.softkey-light');
+        if (!light) return;
+
+        btn.addEventListener('pointerdown', () => {
+            light.classList.add('active-green'); // 按下亮綠燈
+        });
+        btn.addEventListener('pointerup', () => {
+            light.classList.remove('active-green'); // 放開消失
+        });
+        btn.addEventListener('pointerleave', () => {
+            light.classList.remove('active-green'); // 離開消失
+        });
+    });
+
 </script>
 </body>
 </html>
