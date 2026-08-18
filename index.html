@@ -2685,7 +2685,11 @@
 
     function exitDefibMode() {
         isDefibMode = false;
-        document.querySelector('.screen-bezel').classList.remove('mode-defib');
+        const screenBezelEl = document.querySelector('.screen-bezel');
+        if (screenBezelEl) {
+            screenBezelEl.classList.remove('mode-defib');
+            screenBezelEl.classList.remove('mode-defib-charging');
+        }
         updateWaveformLabels();
         resizeCanvas();
         ctx.fillStyle = "#000000";
@@ -2693,8 +2697,7 @@
         xPos = 0;
     }
 
-   // === 1. 新增：統一安全解除充電函數 ===
-function cancelDefibCharge() {
+  function cancelDefibCharge() {
     // 強制中斷並清除背景中所有的充電/延時定時器
     if (monitorState.chargeInterval) clearInterval(monitorState.chargeInterval);
     if (monitorState.chargeTimeout) clearTimeout(monitorState.chargeTimeout);
@@ -2702,6 +2705,9 @@ function cancelDefibCharge() {
     monitorState.isCharging = false;
     monitorState.isCharged = false;
     monitorState.chargeProgress = 0;
+    
+    // 移除充電專屬標籤模式
+    document.querySelector('.screen-bezel')?.classList.remove('mode-defib-charging');
     
     // 還原電擊鍵閃動狀態與指示燈
     btnShock.classList.remove('ready', 'charging');
@@ -2821,7 +2827,20 @@ function changeEnergy(direction) {
     container.appendChild(list);
 }
  function updateDefibUI() {
-        if (!isDefibMode) return;
+        const screenBezelEl = document.querySelector('.screen-bezel');
+        if (!isDefibMode) {
+            if (screenBezelEl) screenBezelEl.classList.remove('mode-defib-charging');
+            return;
+        }
+        
+        // 當處於充電中或已充電時，切換左側標籤為解除充電專用組
+        if (screenBezelEl) {
+            if (monitorState.isCharging || monitorState.isCharged) {
+                screenBezelEl.classList.add('mode-defib-charging');
+            } else {
+                screenBezelEl.classList.remove('mode-defib-charging');
+            }
+        }
         
         const selectedEnergyVal = ENERGY_LEVELS[currentEnergyIndex];
         document.getElementById('defib-selected-energy-val').innerText = selectedEnergyVal;
