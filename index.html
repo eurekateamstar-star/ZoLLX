@@ -3371,18 +3371,20 @@ function changeEnergy(direction) {
         const cuffAssembly = document.querySelector('#nibp-interact .cuff-front-assembly');
         clearInterval(nibpMeasureInterval);
         nibpMeasureInterval = setInterval(() => {
-            if (!isMeasuringNIBP) return;
-            
-            if (phase === 'up') {
-                currentPressure += Math.floor(Math.random() * 15 + 10); 
-                if (currentPressure >= 165) phase = 'down';
-            } else {
-                currentPressure -= Math.floor(Math.random() * 4 + 2); 
-                if (currentPressure <= 80) { 
-                    clearInterval(nibpMeasureInterval); 
-                    finishNIBPMeasurement(); 
-                }
-            }
+    if (!isMeasuringNIBP) return;
+    
+    if (phase === 'up') {
+        // 降低上升速度：每次隨機增加 3 到 7 mmHg (原先為 10 到 24)
+        currentPressure += Math.floor(Math.random() * 5 + 3); 
+        if (currentPressure >= 165) phase = 'down';
+    } else {
+        // 降低下降速度：每次隨機減少 1 到 2 mmHg (原先為 2 到 5)
+        currentPressure -= Math.floor(Math.random() * 2 + 1); 
+        if (currentPressure <= 80) { 
+            clearInterval(nibpMeasureInterval); 
+            finishNIBPMeasurement(); 
+        }
+    }
             
             if(isMeasuringNIBP && currentPressure > 0) {
                 document.getElementById('nibp-sys-text').innerText = currentPressure;
