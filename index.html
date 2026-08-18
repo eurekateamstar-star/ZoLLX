@@ -4159,8 +4159,7 @@ function changeEnergy(direction) {
             // 單欄標準繪製模式
             ctx.fillStyle = "#000000"; 
             ctx.fillRect(xPos, 0, 12, logicalHeight); 
-
-            if (showCo2Waveform) {
+if (showCo2Waveform && !isAnalyzeMode && !isDefibMode) {
                 ctx.fillStyle = "rgba(255, 51, 153, 0.5)"; 
                 let y60 = logicalHeight * 0.55; 
                 let y30 = logicalHeight * 0.75; 
@@ -4205,7 +4204,7 @@ function changeEnergy(direction) {
                 lastY = curY;
             }
 
-            if (showCo2Waveform) {
+        if (showCo2Waveform && !isAnalyzeMode && !isDefibMode) {
                 let curCo2Y = lastSpo2Y;
                 let pts = [];
                 let co2BaselineY = logicalHeight * 0.95; 
@@ -4243,7 +4242,8 @@ function changeEnergy(direction) {
                         plethBarFill.style.height = `${fillPercentage}%`;
                     }
                 }
-            } else if (accState.spo2 && !isAnalyzeMode && !isDefibMode) {
+            }
+else if (accState.spo2 && !isAnalyzeMode && !isDefibMode) {
                 ctx.beginPath(); ctx.moveTo(startX, lastSpo2Y);
                 let currentSpo2Val = 0; let curSpo2Y = lastSpo2Y;
                 
@@ -4266,7 +4266,7 @@ function changeEnergy(direction) {
                 lastSpo2Y = logicalHeight * 0.98; 
             }
 
-            if (showCo2Waveform) {
+          if (showCo2Waveform && !isAnalyzeMode && !isDefibMode) {
                 ctx.fillStyle = "#000000";
                 ctx.fillRect(0, logicalHeight * 0.48, logicalWidth * 0.065, logicalHeight * 0.52);
             }
